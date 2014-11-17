@@ -1,0 +1,19 @@
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:state_enabled="false"
+        android:drawable="@color/bg_btn_join4" />
+    <item
+    	android:state_pressed="true"
+    	android:state_enabled="true"
+        android:drawable="@color/bg_btn_join3" />
+    <item
+    	android:state_focused="true"
+    	android:state_enabled="true"
+        android:drawable="@color/bg_btn_join2" />
+    <item
+    	android:state_enabled="true"
+        android:drawable="@color/bg_btn_join"
+         />
+    
+    
+</selector>
