@@ -1,7 +1,9 @@
 package com.fahad.ornob.sust.hitthedeal;
 
 
+
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.regex.Pattern;
@@ -24,10 +26,27 @@ import com.fahad.ornob.sust.hitthedeal.connectiondetector.AlertDialogForAnything
 import com.fahad.ornob.sust.hitthedeal.connectiondetector.ConnectionDetector;
 import com.fahad.ornob.sust.hitthedeal.contants.Constants;
 import com.fahad.ornob.sust.hitthedeal.contants.DataBaseKeys;
+import com.fahad.ornob.sust.hitthedeal.item.CreatorTypeItem;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GooglePlayServicesUtil;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.GoogleMap.OnMapLongClickListener;
+import com.google.android.gms.maps.MapFragment;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
 
 import android.support.v7.app.ActionBarActivity;
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.FragmentManager;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.location.Criteria;
+import android.location.Location;
+import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
@@ -35,8 +54,13 @@ import android.util.Patterns;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -58,20 +82,16 @@ public class LoginPage extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.login_signup_page);
+        setContentView(R.layout.login_page);
         getActionBar().hide();
-        initLogin();
-        listenerLogin();
-        showOrHideLogin(Constants.Show);        
+        initLogin();      
+        listenerLogin();                           
         new animationLoginAsync().execute();    
         
         
     }
 
     
-    
-    
-
 
 
 	class animationLoginAsync extends AsyncTask<String, String, String> {
@@ -121,7 +141,7 @@ public class LoginPage extends Activity {
 				// TODO Auto-generated method stub
 				if(showWarningDialog()){
 					String url=Constants.urlLogin+"email="+emailEd.getText().toString()+"&password="+passEd.getText().toString();    	
-					loginAsync(url);
+					jsonUniAsync(url,Constants.loginType);
 				}
 			}
 		});
@@ -140,10 +160,10 @@ public class LoginPage extends Activity {
 			@Override
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
-				/*mTarget3.setVisibility(View.VISIBLE);
+				mTarget3.setVisibility(View.VISIBLE);
 				YoYo.with(Techniques.SlideInDown)
 		        .duration(700)
-		        .playOn(mTarget3);*/
+		        .playOn(mTarget3);
 			}
 		});
 		signUpCreatorB.setOnClickListener(new View.OnClickListener() {
@@ -154,6 +174,11 @@ public class LoginPage extends Activity {
 				YoYo.with(Techniques.SlideOutUp)
 		        .duration(700)
 		        .playOn(mTarget3);
+				
+				Intent intent = new Intent(LoginPage.this,SignUpCreatorPage.class);
+				startActivity(intent);
+				finish();
+				
 			}
 		});
 		signUpViwerB.setOnClickListener(new View.OnClickListener() {
@@ -203,19 +228,10 @@ public class LoginPage extends Activity {
         
 	}
 
-	public void showOrHideLogin(int showOrHide){
-		if(showOrHide==Constants.Show){
-			findViewById(R.id.login_page_include_id).setVisibility(View.VISIBLE);
-			findViewById(R.id.signup_creator_page_include_id).setVisibility(View.GONE);
-		}else if(showOrHide==Constants.Hide){
-			findViewById(R.id.login_page_include_id).setVisibility(View.GONE);
-			findViewById(R.id.signup_creator_page_include_id).setVisibility(View.VISIBLE);
-		}
-	}
 	
-
-	private String URL_FEED = "http://api.androidhive.info/feed/feed.json";
-	private void loginAsync(String url) {
+	
+	
+	private void jsonUniAsync(String url,final int itemType) {
 		
     	cd = new ConnectionDetector(this);
     	if(!cd.isConnectingToInternet()){
@@ -226,7 +242,7 @@ public class LoginPage extends Activity {
 				try {
 					String data = new String(entry.data, "UTF-8");
 					try {
-						parseJsonFeed(new JSONObject(data));
+						parseJsonFeed(new JSONObject(data),itemType);
 					} catch (JSONException e) {
 						e.printStackTrace();
 					}
@@ -242,7 +258,7 @@ public class LoginPage extends Activity {
 						public void onResponse(JSONObject response) {
 							VolleyLog.d(TAG, "Response: " + response.toString());
 							if (response != null) {
-								parseJsonFeed(response);
+								parseJsonFeed(response,itemType);
 							}
 						}
 					}, new Response.ErrorListener() {
@@ -259,16 +275,18 @@ public class LoginPage extends Activity {
 		
 	}
 	
-	private void parseJsonFeed(JSONObject response) {
+	private void parseJsonFeed(JSONObject response,int itemType) {
 		try {
 			
 			 int success = response.getInt(DataBaseKeys.Success);
 			 if(success==1){
-				 int userTypeID = response.getInt(DataBaseKeys.user_type_id);
-				 if(userTypeID==Constants.Creator){
-					 Toast.makeText(this, "Creator", Toast.LENGTH_SHORT).show();
-				 }else{
-					 Toast.makeText(this, "Visitor", Toast.LENGTH_SHORT).show();
+				 if(itemType==Constants.loginType){
+					 int userTypeID = response.getInt(DataBaseKeys.user_type_id);
+					 if(userTypeID==Constants.Creator){
+						 Toast.makeText(this, "Creator", Toast.LENGTH_SHORT).show();
+					 }else{
+						 Toast.makeText(this, "Visitor", Toast.LENGTH_SHORT).show();
+					 }
 				 }
 			 }else{
 				 Toast.makeText(this, "Fail", Toast.LENGTH_SHORT).show();
@@ -306,4 +324,6 @@ public class LoginPage extends Activity {
 	    Pattern pattern = Patterns.EMAIL_ADDRESS;
 	    return pattern.matcher(email).matches();
 	}
+	
+	
 }

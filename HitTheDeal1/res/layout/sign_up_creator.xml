@@ -1,136 +1,136 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	    android:id="@+id/viwerSignUpFullPageRL"
-	    android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/splashgreen"
-        >
-	
-	    <RelativeLayout
-	        android:id="@+id/viwerSignUpRA"
-	        android:layout_width="match_parent"
-	        android:layout_height="match_parent" >
+    android:id="@+id/sdosdos"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/splashgreen" >
 
-	        <Button
-	            android:id="@+id/signSignupB"
-	            android:layout_width="wrap_content"
-	            android:layout_height="wrap_content"
-	            android:layout_alignParentBottom="true"
-	            android:layout_centerHorizontal="true"
-	            android:layout_marginBottom="16dp"
-	            android:background="@drawable/signup_button"
-	            android:scaleY=".9" />
+    <RelativeLayout
+        android:id="@+id/creatorSignUpInnerRA1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
 
-	        <RelativeLayout
-	            android:id="@+id/relativeLayout1"
-	            android:layout_width="fill_parent"
-	            android:layout_height="130dp"
-	            android:layout_alignParentLeft="true"
-	            android:layout_alignParentRight="true"
-	            android:layout_alignParentTop="true"
-	            android:background="@color/darkpink" >
+        <Button
+            android:id="@+id/signupCreatorB"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="16dp"
+            android:background="@drawable/signup_button"
+            android:scaleY=".9" />
 
-	            <ImageView
-	                android:id="@+id/logoAnimImg"
-	                android:layout_width="wrap_content"
-	                android:layout_height="wrap_content"
-	                android:layout_alignBottom="@+id/browseImgB"
-	                android:layout_alignParentTop="true"
-	                android:layout_centerHorizontal="true"
-	                android:background="@drawable/img"
-	                android:scaleType="centerCrop"
-	                android:src="@drawable/fahad" />
+        
 
-	            <Button
-	                android:id="@+id/captureImgB"
-	                style="?android:attr/buttonStyleSmall"
-	                android:layout_width="wrap_content"
-	                android:layout_height="wrap_content"
-	                android:layout_alignLeft="@+id/logoAnimImg"
-	                android:layout_alignParentBottom="true"
-	                android:text="Capture" />
+        <RelativeLayout
+            android:id="@+id/relativeLayout1"
+            android:layout_width="fill_parent"
+            android:layout_height="130dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:background="@color/darkpink" >
 
-	            <Button
-	                android:id="@+id/browseImgB"
-	                android:layout_width="wrap_content"
-	                android:layout_height="wrap_content"
-	                android:layout_alignBaseline="@+id/captureImgB"
-	                android:layout_alignBottom="@+id/captureImgB"
-	                android:layout_alignRight="@+id/logoAnimImg"
-	                android:text="Brow" />
-	        </RelativeLayout>
+            <ImageView
+                android:id="@+id/organizationImgView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/browseCreatImgB"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:background="@drawable/img"
+                android:scaleType="centerCrop"
+                android:src="@drawable/fahad" />
 
-	        <EditText
-	            android:id="@+id/emailSignEd"
-	            android:layout_width="wrap_content"
-	            android:layout_height="wrap_content"
-	            android:layout_alignLeft="@+id/signSignupB"
-	            android:layout_below="@+id/userNameSignUpEd"
-	            android:background="@drawable/user_name_ed"
-	            android:ems="10"
-	            android:hint="Email"
-	            android:layout_centerHorizontal="true"
-	            android:inputType="textEmailAddress"
-	            android:paddingLeft="10dp"
-	            android:scaleY=".9" />
+            <Button
+                android:id="@+id/captureCreateImgB"
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@+id/organizationImgView"
+                android:layout_alignParentBottom="true"
+                android:text="Capture" />
 
-	        <EditText
-	            android:id="@+id/addressSignCEd"
-	            android:layout_width="wrap_content"
-	            android:layout_height="wrap_content"
-	            android:layout_alignLeft="@+id/passSignEd"
-	            android:layout_alignRight="@+id/emailSignEd"
-	            android:layout_below="@+id/emailSignEd"
-	            android:background="@drawable/user_name_ed"
-	            android:ems="10"
-	            android:paddingLeft="10dp"
-	            android:layout_centerHorizontal="true"
-	            android:hint="Address" />
+            <Button
+                android:id="@+id/browseCreatImgB"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@+id/captureCreateImgB"
+                android:layout_alignBottom="@+id/captureCreateImgB"
+                android:layout_alignRight="@+id/organizationImgView"
+                android:text="Brow" />
+        </RelativeLayout>
 
-	        <EditText
-	            android:id="@+id/passSignEd"
-	            android:layout_width="wrap_content"
-	            android:layout_height="wrap_content"
-	            android:layout_alignRight="@+id/emailSignEd"
-	            android:layout_below="@+id/addressSignCEd"
-	            android:background="@drawable/user_name_ed"
-	            android:ems="10"
-	            android:hint="Password"
-	            android:layout_centerHorizontal="true"
-	            android:inputType="textPassword"
-	            android:paddingLeft="10dp"
-	            android:scaleY=".9" />
+        <EditText
+            android:id="@+id/emailCreatSignEd"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/signupCreatorB"
+            android:layout_below="@+id/orgNameCreatorSignUpEd"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/user_name_ed"
+            android:ems="10"
+            android:hint="Email"
+            android:inputType="textEmailAddress"
+            android:paddingLeft="10dp"
+            android:scaleY=".9" />
 
-	        <EditText
-	            android:id="@+id/userNameSignUpEd"
-	            android:layout_width="wrap_content"
-	            android:layout_height="wrap_content"
-	            android:layout_alignLeft="@+id/emailSignEd"
-	            android:layout_below="@+id/relativeLayout1"
-	            android:layout_marginTop="45dp"
-	            android:background="@drawable/user_name_ed"
-	            android:ems="10"
-	            android:hint="Organization name"
-	            android:inputType="text"
-	            android:paddingLeft="10dp"
-	            android:scaleY=".9" />
+        <EditText
+            android:id="@+id/addressCreatSignCEd"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/passCreatSignEd"
+            android:layout_alignRight="@+id/emailCreatSignEd"
+            android:layout_below="@+id/emailCreatSignEd"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/user_name_ed"
+            android:ems="10"
+            android:hint="Address"
+            android:paddingLeft="10dp" />
 
-	        <ImageButton
-	            android:id="@+id/addLocationCreatorB"
-	            android:layout_width="wrap_content"
-	            android:layout_height="wrap_content"
-	            android:layout_above="@+id/signSignupB"
-	            android:layout_alignRight="@+id/passSignEd"
-	            android:src="@drawable/add_location_b" />
+        <EditText
+            android:id="@+id/passCreatSignEd"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignRight="@+id/emailCreatSignEd"
+            android:layout_below="@+id/addressCreatSignCEd"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/user_name_ed"
+            android:ems="10"
+            android:hint="Password"
+            android:inputType="textPassword"
+            android:paddingLeft="10dp"
+            android:scaleY=".9" />
 
-	        <Spinner
-	            android:id="@+id/creatorTypeIdSpin"
-	            android:layout_width="wrap_content"
-	            android:layout_height="wrap_content"
-	            android:layout_alignLeft="@+id/passSignEd"
-	            android:layout_alignTop="@+id/addLocationCreatorB"
-	            android:layout_toLeftOf="@+id/addLocationCreatorB" />
+        <EditText
+            android:id="@+id/orgNameCreatorSignUpEd"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/emailCreatSignEd"
+            android:layout_below="@+id/relativeLayout1"
+            android:layout_marginTop="45dp"
+            android:background="@drawable/user_name_ed"
+            android:ems="10"
+            android:hint="Organization name"
+            android:inputType="text"
+            android:paddingLeft="10dp"
+            android:scaleY=".9" />
 
-	    </RelativeLayout>
+        <ImageButton
+            android:id="@+id/addLocationCreatorB"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/signupCreatorB"
+            android:layout_alignRight="@+id/passCreatSignEd"
+            android:src="@drawable/add_location_b" />
 
+        <Spinner
+            android:id="@+id/creatorTypeIdSpin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/passCreatSignEd"
+            android:layout_alignTop="@+id/addLocationCreatorB"
+            android:layout_toLeftOf="@+id/addLocationCreatorB" />
     </RelativeLayout>
+
+</RelativeLayout>

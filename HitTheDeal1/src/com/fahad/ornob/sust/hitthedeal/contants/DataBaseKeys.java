@@ -12,4 +12,6 @@ public class DataBaseKeys {
 	public final static String user_type_id="user_type_id";
 	
 	public final static String Success = "success";
+	
+	public final static String creatorTypekey[] = {"creator_type_id", "creator_type_name"};
 }

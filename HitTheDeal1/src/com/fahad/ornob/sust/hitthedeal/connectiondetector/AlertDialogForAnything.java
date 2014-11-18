@@ -1,12 +1,16 @@
 package com.fahad.ornob.sust.hitthedeal.connectiondetector;
 
+import java.util.regex.Pattern;
+
 import com.fahad.ornob.sust.hitthedeal.R;
+import com.fahad.ornob.sust.hitthedeal.contants.Constants;
 
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.util.Patterns;
 
 
 

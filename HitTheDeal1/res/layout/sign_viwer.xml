@@ -30,11 +30,11 @@
 	        android:layout_above="@+id/fbSignUpRL">
 	
 	        <EditText
-	            android:id="@+id/userNameSignUpEd"
+	            android:id="@+id/orgNameViwerSignUpEd"
 	            android:layout_width="wrap_content"
 	            android:layout_height="wrap_content"
 	            android:layout_centerHorizontal="true"
-	            android:layout_above="@+id/emailSignEd"
+	            android:layout_above="@+id/emailViwerSignEd"
 	            android:ems="10" 
 	            android:background="@drawable/user_name_ed"
 	            android:hint="Username"
@@ -44,11 +44,11 @@
 	            />
 	
 	        <EditText
-	            android:id="@+id/emailSignEd"
+	            android:id="@+id/emailViwerSignEd"
 	            android:layout_width="wrap_content"
 	            android:layout_height="wrap_content"
 	            android:layout_centerHorizontal="true"
-	            android:layout_above="@+id/passSignEd"
+	            android:layout_above="@+id/pasViwerSignEd"
 	            android:background="@drawable/password_ed"
 	            android:ems="10" 
 	            android:hint="Email"
@@ -59,11 +59,11 @@
 	        </EditText>
 	
 	        <EditText
-	            android:id="@+id/passSignEd"
+	            android:id="@+id/pasViwerSignEd"
 	            android:layout_width="wrap_content"
 	            android:layout_height="wrap_content"
 	            android:layout_centerHorizontal="true"
-	            android:layout_above="@+id/signSignupB"
+	            android:layout_above="@+id/signupViwerB"
 	            android:layout_marginBottom="15dp"
 	            android:background="@drawable/password_ed"
 	            android:ems="10" 
@@ -73,7 +73,7 @@
 	            android:scaleY=".9"/>
 	
 	        <Button
-	            android:id="@+id/signSignupB"
+	            android:id="@+id/signupViwerB"
 	            android:layout_width="wrap_content"
 	            android:layout_height="wrap_content"
 	            android:layout_centerHorizontal="true"
@@ -91,7 +91,7 @@
 	            android:background="@color/darkpink" >
 
 	            <ImageView
-	                android:id="@+id/logoAnimImg"
+	                android:id="@+id/userProPicImg"
 	                android:layout_width="wrap_content"
 	                android:layout_height="wrap_content"
 	                android:layout_alignParentTop="true"
@@ -101,21 +101,21 @@
 	                android:src="@drawable/fahad" />
 
 	            <Button
-	                android:id="@+id/captureImgB"
+	                android:id="@+id/captureViwerImgB"
 	                style="?android:attr/buttonStyleSmall"
 	                android:layout_width="wrap_content"
 	                android:layout_height="wrap_content"
-	                android:layout_alignLeft="@+id/logoAnimImg"
+	                android:layout_alignLeft="@+id/userProPicImg"
 	                android:layout_alignParentBottom="true"
 	                android:text="Capture" />
 
 	            <Button
-	                android:id="@+id/browseImgB"
+	                android:id="@+id/browseViwerImgB"
 	                android:layout_width="wrap_content"
 	                android:layout_height="wrap_content"
-	                android:layout_alignBaseline="@+id/captureImgB"
-	                android:layout_alignBottom="@+id/captureImgB"
-	                android:layout_alignRight="@+id/logoAnimImg"
+	                android:layout_alignBaseline="@+id/captureViwerImgB"
+	                android:layout_alignBottom="@+id/captureViwerImgB"
+	                android:layout_alignRight="@+id/userProPicImg"
 	                android:text="Brow" />
 
 	        </RelativeLayout>
