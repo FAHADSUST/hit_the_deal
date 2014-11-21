@@ -30,6 +30,7 @@ import android.os.Bundle;
 //import android.support.v4.app.FragmentManager;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -40,7 +41,7 @@ public class GoogleMap_RegLocation extends Activity implements
 	private GoogleMap myMap;
 
 	Location myLocation;
-	TextView tvLocInfo;
+	Button closeMapB;
 	Marker marker = null;
 
 	Double donor_latitude;
@@ -52,7 +53,7 @@ public class GoogleMap_RegLocation extends Activity implements
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.map_fragment_layout);
 
-		tvLocInfo = (TextView) findViewById(R.id.tv_location);
+		closeMapB = (Button) findViewById(R.id.closeB);
 
 		FragmentManager myFragmentManager = getFragmentManager();
 		MapFragment myMapFragment = (MapFragment) myFragmentManager
@@ -112,15 +113,13 @@ public class GoogleMap_RegLocation extends Activity implements
 	}
 
 	@Override
-	public void onMapClick(LatLng point) {
-		tvLocInfo
-				.setText("Zoom In Or Zoom Out then pick your fixed Location by long clicking on it: ");
+	public void onMapClick(LatLng point) {		
 		myMap.animateCamera(CameraUpdateFactory.newLatLng(point));
 	}
 
 	@Override
 	public void onMapLongClick(LatLng point) {
-		tvLocInfo.setText("Marker added@" + point.toString());
+		
 		if (marker != null) {
 			marker.remove();
 		}

@@ -448,6 +448,7 @@ int id browseViwerImgB 0x7f060068
 int id captureCreateImgB 0x7f060057
 int id captureViwerImgB 0x7f060067
 int id checkbox 0x7f060030
+int id closeB 0x7f06004f
 int id collapseActionView 0x7f060011
 int id creatorB 0x7f060042
 int id creatorSignUpInnerRA1 0x7f060052
@@ -526,7 +527,6 @@ int id tabMode 0x7f060006
 int id terrain 0x7f060003
 int id title 0x7f06002e
 int id top_action_bar 0x7f060023
-int id tv_location 0x7f06004f
 int id up 0x7f060024
 int id useLogo 0x7f060007
 int id userProPicImg 0x7f060066

@@ -36,8 +36,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignBottom="@+id/browseCreatImgB"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentRight="true"
                 android:layout_alignParentTop="true"
-                android:layout_centerHorizontal="true"
+                android:adjustViewBounds="true"
                 android:background="@drawable/img"
                 android:scaleType="centerCrop"
                 android:src="@drawable/fahad" />
@@ -86,6 +88,7 @@
             android:background="@drawable/user_name_ed"
             android:ems="10"
             android:hint="Address"
+            android:inputType="text"
             android:paddingLeft="10dp" />
 
         <EditText

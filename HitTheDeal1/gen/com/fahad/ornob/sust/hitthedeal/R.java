@@ -1433,6 +1433,7 @@ containing a value of this type.
         public static final int captureCreateImgB=0x7f060057;
         public static final int captureViwerImgB=0x7f060067;
         public static final int checkbox=0x7f060030;
+        public static final int closeB=0x7f06004f;
         public static final int collapseActionView=0x7f060011;
         public static final int creatorB=0x7f060042;
         public static final int creatorSignUpInnerRA1=0x7f060052;
@@ -1511,7 +1512,6 @@ containing a value of this type.
         public static final int terrain=0x7f060003;
         public static final int title=0x7f06002e;
         public static final int top_action_bar=0x7f060023;
-        public static final int tv_location=0x7f06004f;
         public static final int up=0x7f060024;
         public static final int useLogo=0x7f060007;
         public static final int userProPicImg=0x7f060066;

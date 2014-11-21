@@ -12,9 +12,10 @@
     
     <include 
         android:id="@+id/map_fragment_layout_id"
-        android:layout_width="match_parent"
-    	android:layout_height="match_parent"
+        android:layout_width="300dp"
+    	android:layout_height="400dp"
         layout="@layout/map_fragment_layout"
-        android:visibility="gone"/>
+        android:layout_gravity="center"
+        android:visibility="visible"/>
 
 </FrameLayout>

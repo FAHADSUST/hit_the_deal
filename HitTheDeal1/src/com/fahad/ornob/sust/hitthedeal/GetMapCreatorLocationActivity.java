@@ -19,6 +19,7 @@ import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,7 +29,7 @@ public class GetMapCreatorLocationActivity extends Activity{
 	
 	private GoogleMap myMap;
 	Location myLocation;
-	TextView tvLocInfo;
+	Button closeMapB;
 	Marker marker = null;	
 	Double donor_latitude;
 	Double donor_longitude;
@@ -40,7 +41,7 @@ public class GetMapCreatorLocationActivity extends Activity{
 		
 		
 
-		tvLocInfo = (TextView) findViewById(R.id.tv_location);
+		closeMapB = (Button) findViewById(R.id.closeB);
 
 		FragmentManager myFragmentManager = getFragmentManager();
 		MapFragment myMapFragment = (MapFragment) myFragmentManager
