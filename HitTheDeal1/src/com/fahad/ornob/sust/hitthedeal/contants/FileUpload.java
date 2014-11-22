@@ -13,6 +13,7 @@ import java.net.URL;
 import java.util.Random;
 
 import com.fahad.ornob.sust.hitthedeal.SignUpCreatorPage;
+import com.fahad.ornob.sust.hitthedeal.SignupViewerPage;
 
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -173,7 +174,7 @@ public class FileUpload {
 		return to.getPath().toString();
 	}
 
-	public static File getFileForCaptureCreatorSignUp() {
+	public static File getFileForCaptureCreatorSignUp(int userType) {
 		// TODO Auto-generated method stub
 		final File path = Constants.mainFolderpath;
 		if (!path.exists()) {
@@ -185,7 +186,9 @@ public class FileUpload {
 		int rand;
 		rand = new Random().nextInt(n);
 		name = "Image-" + rand + ".jpg";
-		SignUpCreatorPage.imageFileName = name;
+		if(userType==Constants.CreatorTypeID)
+			SignUpCreatorPage.imageFileName = name;
+		else SignupViewerPage.imageFileName = name;
 		File fileimage = new File(path, name);
 
 		return fileimage;

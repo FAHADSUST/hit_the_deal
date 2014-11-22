@@ -14,7 +14,7 @@
 	        android:layout_alignParentBottom="true" >
 	
 	        <Button
-	            android:id="@+id/fbSignupB"
+	            android:id="@+id/fbSignupViwerB"
 	            android:layout_width="wrap_content"
 	            android:layout_height="50dp"
 	            android:layout_centerHorizontal="true"
@@ -30,31 +30,32 @@
 	        android:layout_above="@+id/fbSignUpRL">
 	
 	        <EditText
-	            android:id="@+id/orgNameViwerSignUpEd"
+	            android:id="@+id/userNameViwerSignUpEd"
 	            android:layout_width="wrap_content"
 	            android:layout_height="wrap_content"
-	            android:layout_centerHorizontal="true"
 	            android:layout_above="@+id/emailViwerSignEd"
-	            android:ems="10" 
-	            android:background="@drawable/user_name_ed"
+	            android:layout_alignLeft="@+id/signupViwerB"
+	            android:layout_alignRight="@+id/signupViwerB"
+	            android:background="@drawable/password_ed"
+	            android:ems="10"
 	            android:hint="Username"
-	            android:paddingLeft="10dp"
 	            android:inputType="text"
-	            android:scaleY=".9"
-	            />
+	            android:paddingLeft="10dp"
+	            android:scaleY=".9" />
 	
 	        <EditText
 	            android:id="@+id/emailViwerSignEd"
 	            android:layout_width="wrap_content"
 	            android:layout_height="wrap_content"
-	            android:layout_centerHorizontal="true"
 	            android:layout_above="@+id/pasViwerSignEd"
+	            android:layout_alignLeft="@+id/userNameViwerSignUpEd"
+	            android:layout_alignRight="@+id/userNameViwerSignUpEd"
 	            android:background="@drawable/password_ed"
-	            android:ems="10" 
+	            android:ems="10"
 	            android:hint="Email"
 	            android:inputType="textEmailAddress"
 	            android:paddingLeft="10dp"
-	            android:scaleY=".9">
+	            android:scaleY=".9" >
 	           
 	        </EditText>
 	
@@ -62,15 +63,16 @@
 	            android:id="@+id/pasViwerSignEd"
 	            android:layout_width="wrap_content"
 	            android:layout_height="wrap_content"
-	            android:layout_centerHorizontal="true"
 	            android:layout_above="@+id/signupViwerB"
+	            android:layout_alignLeft="@+id/emailViwerSignEd"
+	            android:layout_alignRight="@+id/emailViwerSignEd"
 	            android:layout_marginBottom="15dp"
 	            android:background="@drawable/password_ed"
-	            android:ems="10" 
-	            android:inputType="textPassword"
+	            android:ems="10"
 	            android:hint="Password"
+	            android:inputType="textPassword"
 	            android:paddingLeft="10dp"
-	            android:scaleY=".9"/>
+	            android:scaleY=".9" />
 	
 	        <Button
 	            android:id="@+id/signupViwerB"
@@ -91,11 +93,12 @@
 	            android:background="@color/darkpink" >
 
 	            <ImageView
-	                android:id="@+id/userProPicImg"
+	                android:id="@+id/viwerProPicImg"
 	                android:layout_width="wrap_content"
 	                android:layout_height="wrap_content"
+	                android:layout_alignParentLeft="true"
+	                android:layout_alignParentRight="true"
 	                android:layout_alignParentTop="true"
-	                android:layout_centerHorizontal="true"
 	                android:background="@drawable/img"
 	                android:scaleType="centerCrop"
 	                android:src="@drawable/fahad" />
@@ -113,9 +116,8 @@
 	                android:id="@+id/browseViwerImgB"
 	                android:layout_width="wrap_content"
 	                android:layout_height="wrap_content"
-	                android:layout_alignBaseline="@+id/captureViwerImgB"
-	                android:layout_alignBottom="@+id/captureViwerImgB"
-	                android:layout_alignRight="@+id/userProPicImg"
+	                android:layout_alignParentBottom="true"
+	                android:layout_alignParentRight="true"
 	                android:text="Brow" />
 
 	        </RelativeLayout>

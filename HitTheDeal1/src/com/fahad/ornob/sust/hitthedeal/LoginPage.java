@@ -171,13 +171,9 @@ public class LoginPage extends Activity {
 			@Override
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
-				YoYo.with(Techniques.SlideOutUp)
-		        .duration(700)
-		        .playOn(mTarget3);
 				
-				Intent intent = new Intent(LoginPage.this,SignUpCreatorPage.class);
-				startActivity(intent);
-				finish();
+				
+				gotoNextPage(Constants.CreatorSignUpPage);
 				
 			}
 		});
@@ -186,9 +182,10 @@ public class LoginPage extends Activity {
 			@Override
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
-				YoYo.with(Techniques.SlideOutUp)
-		        .duration(700)
-		        .playOn(mTarget3);
+				
+				
+				
+				gotoNextPage(Constants.ViwerSignUpPage);
 			}
 		});
 		
@@ -284,8 +281,10 @@ public class LoginPage extends Activity {
 					 int userTypeID = response.getInt(DataBaseKeys.user_type_id);
 					 if(userTypeID==Constants.Creator){
 						 Toast.makeText(this, "Creator", Toast.LENGTH_SHORT).show();
+						 gotoNextPage(Constants.CreatorTypeID);
 					 }else{
 						 Toast.makeText(this, "Visitor", Toast.LENGTH_SHORT).show();
+						 gotoNextPage(Constants.ViwerTypeID);
 					 }
 				 }
 			 }else{
@@ -299,6 +298,27 @@ public class LoginPage extends Activity {
 	}
 	
 	
+	private void gotoNextPage(int typeid) {
+		// TODO Auto-generated method stub
+		if(typeid==Constants.CreatorActivityPage){
+			Intent intent = new Intent(LoginPage.this,CreatorActivity.class);
+			startActivity(intent);
+		}else if(typeid==Constants.ViwerActivityPage){
+			Intent intent = new Intent(LoginPage.this,ViwerActivity.class);
+			startActivity(intent);
+		}else if(typeid==Constants.ViwerSignUpPage){
+			Intent intent = new Intent(LoginPage.this,SignupViewerPage.class);
+			startActivity(intent);
+			
+		}else if(typeid==Constants.CreatorSignUpPage){
+			Intent intent = new Intent(LoginPage.this,SignUpCreatorPage.class);
+			startActivity(intent);						
+		}
+		
+		finish();
+	}
+
+
 	public boolean showWarningDialog(){
 		
 		/*if(.getText().toString().isEmpty()){
