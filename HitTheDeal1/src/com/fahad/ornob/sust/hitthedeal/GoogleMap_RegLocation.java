@@ -57,7 +57,7 @@ public class GoogleMap_RegLocation extends Activity implements
 
 		FragmentManager myFragmentManager = getFragmentManager();
 		MapFragment myMapFragment = (MapFragment) myFragmentManager
-				.findFragmentById(R.id.map);
+				.findFragmentById(R.id.mapCreatorSignUp);
 		myMap = myMapFragment.getMap();
 
 		myMap.setMyLocationEnabled(true);

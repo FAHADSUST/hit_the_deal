@@ -45,7 +45,7 @@ public class GetMapCreatorLocationActivity extends Activity{
 
 		FragmentManager myFragmentManager = getFragmentManager();
 		MapFragment myMapFragment = (MapFragment) myFragmentManager
-				.findFragmentById(R.id.map);
+				.findFragmentById(R.id.mapCreatorSignUp);
 		myMap = myMapFragment.getMap();
 
 		myMap.setMyLocationEnabled(true);

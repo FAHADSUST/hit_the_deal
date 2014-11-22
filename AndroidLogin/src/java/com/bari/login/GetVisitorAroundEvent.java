@@ -64,9 +64,10 @@ public class GetVisitorAroundEvent extends HttpServlet {
 
         response.setContentType("text/html");
         PrintWriter out = response.getWriter();
-        String eventkey[] = {"event_id", "creator_id", "event_description", "start_date", "end_date", "longitude", "latitude"};
+        String eventkey[] = {"event_id", "creator_id", "event_description", "start_date", "end_date", "longitude", "latitude","event_img", "event_url"};
+        String creatorNeededKey[]={"user_name","image_url","creator_type_id"};
         int length = eventkey.length;
-
+        int creatorLength=creatorNeededKey.length;
         
         String params[] = new String[3];
         //for(int i=0;i<length;i++){
@@ -77,8 +78,10 @@ public class GetVisitorAroundEvent extends HttpServlet {
         double lon1 = Double.parseDouble(params[0]);
         double lat1 = Double.parseDouble(params[1]);
         double dist = Double.parseDouble(params[2]);
-        
-        String sql = "SELECT * FROM `events` WHERE 1";
+        //`event_id`, `creator_id`, `event_description`, `start_date`, `end_date`, `events.longitude`, `events.latitude`, `user_name`, `image_url`
+        String selectedEventItem="`event_id`, `creator_id`, `event_description`, `start_date`, `end_date`, events.longitude, events.latitude, event_img, event_url";
+        String selectedCreatorItem=", `user_name`, `image_url`, `creator_type_id`";
+        String sql = "SELECT "+selectedEventItem+" "+selectedCreatorItem+" FROM `events`,`user` WHERE creator_id=user_id";
         Connection con = DBConnectionHandler.getConnection();
 
         JSONObject json = new JSONObject();
@@ -101,6 +104,9 @@ public class GetVisitorAroundEvent extends HttpServlet {
                     for (int i = 0; i < length; i++) {
 
                         jsonInner.put(eventkey[i], rs.getString(eventkey[i]));
+                    }
+                    for(int i=0;i<creatorLength;i++){
+                        jsonInner.put(creatorNeededKey[i], rs.getString(creatorNeededKey[i]));
                     }
                     jsonArray.add(jsonInner);
                 }

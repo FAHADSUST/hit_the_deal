@@ -245,7 +245,11 @@ public class GoogleMapFragment extends Fragment {
 								eventJsonObject.getLong(DataBaseKeys.START_DATE),
 								eventJsonObject.getLong(DataBaseKeys.END_DATE),
 								eventJsonObject.getDouble(DataBaseKeys.LATITUDE),
-								eventJsonObject.getDouble(DataBaseKeys.LONGITUDE));
+								eventJsonObject.getDouble(DataBaseKeys.LONGITUDE),
+								eventJsonObject
+								.getString(DataBaseKeys.EVENT_IMG),
+								eventJsonObject
+								.getString(DataBaseKeys.EVENT_URL));
 						events.add(event);
 					}
 				 

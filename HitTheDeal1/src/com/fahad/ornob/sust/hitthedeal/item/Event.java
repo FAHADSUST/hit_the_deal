@@ -5,13 +5,20 @@ public class Event {
 	String eventDescription;
 	long startDate, endDate;
 	double latitude, longitude;
+	String event_img,event_url;
 
 	public Event() {
 		// TODO Auto-generated constructor stub
 	}
 
+	
+
+	
+
 	public Event(int eventId, int creatorId, String eventDescription,
-			long startDate, long endDate, double latitude, double longitude) {
+			long startDate, long endDate, double latitude, double longitude,
+			String event_img, String event_url) {
+		super();
 		this.eventId = eventId;
 		this.creatorId = creatorId;
 		this.eventDescription = eventDescription;
@@ -19,6 +26,36 @@ public class Event {
 		this.endDate = endDate;
 		this.latitude = latitude;
 		this.longitude = longitude;
+		this.event_img = event_img;
+		this.event_url = event_url;
+	}
+
+
+
+
+
+	public String getEvent_url() {
+		return event_url;
+	}
+
+
+
+
+
+	public void setEvent_url(String event_url) {
+		this.event_url = event_url;
+	}
+
+
+
+
+
+	public String getEvent_img() {
+		return event_img;
+	}
+
+	public void setEvent_img(String event_img) {
+		this.event_img = event_img;
 	}
 
 	public int getEventId() {

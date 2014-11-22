@@ -30,9 +30,11 @@ public class Constants {
 	public final static String urlCreatorType = urlCommon+"GetCreatorType";	
 	public final static String urlInsertSignUpData=urlCommon+"SignUp?";
 	public final static String urlGetEventAround=urlCommon+"GetVisitorAroundEvent?";
+	public final static String urlGetAllEvent = urlCommon+"GetAllEvent";
 	
 	public final static String urlFileUpload="http://192.168.2.105/db_project_uploaded_img/upload_image_swing.php";
 	public final static String urlImg="http://192.168.2.105/db_project_uploaded_img/img/";
+	
 	
 	
 	public static String warnUserName;

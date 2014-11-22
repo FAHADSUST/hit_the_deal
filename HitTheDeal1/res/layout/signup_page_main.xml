@@ -14,7 +14,7 @@
         android:id="@+id/map_fragment_layout_id"
         android:layout_width="300dp"
     	android:layout_height="400dp"
-        layout="@layout/map_fragment_layout"
+        layout="@layout/map_creator_signup"
         android:layout_gravity="center"
         android:visibility="visible"/>
 

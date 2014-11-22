@@ -125,7 +125,7 @@ public class SignUpCreatorPage extends Activity {
 		closeMapB = (Button) findViewById(R.id.closeB);
 		FragmentManager myFragmentManager = getFragmentManager();
 		MapFragment myMapFragment = (MapFragment) myFragmentManager
-				.findFragmentById(R.id.map);
+				.findFragmentById(R.id.mapCreatorSignUp);
 		myMap = myMapFragment.getMap();
 		myMap.setMyLocationEnabled(true);
 		myMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
