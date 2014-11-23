@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_parent_rounded_corner"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="@drawable/bg_parent_rounded_corner"
+        android:orientation="vertical"
+         >
+
+        <com.fahad.ornob.sust.hitthedeal.FeedImageView
+            android:id="@+id/eventFeedImgView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#E8E8E8"
+            android:scaleType="fitXY"
+            android:src="@drawable/abc_ab_bottom_solid_dark_holo"
+            android:visibility="visible" />
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingBottom="@dimen/feed_item_padding_top_bottom"
+            android:paddingLeft="@dimen/feed_item_padding_left_right"
+            android:paddingRight="@dimen/feed_item_padding_left_right"
+            android:paddingTop="@dimen/feed_item_padding_top_bottom" >
+
+            <com.android.volley.toolbox.NetworkImageView
+                android:id="@+id/organizationEventProPic"
+                android:layout_width="@dimen/feed_item_profile_pic"
+                android:layout_height="@dimen/feed_item_profile_pic"
+                android:scaleType="fitCenter"
+                android:src="@drawable/ic_launcher" >
+            </com.android.volley.toolbox.NetworkImageView>
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingLeft="@dimen/feed_item_profile_info_padd" >
+
+                <TextView
+                    android:id="@+id/eventNameEvDTxt"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:text="marakha"
+                    android:textSize="@dimen/feed_item_profile_name"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/orgNameEvDTxt"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:text="company Name"
+                    android:textColor="@color/timestamp"
+                    android:textSize="@dimen/feed_item_timestamp" />
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal" >
+
+                    <TextView
+                        android:id="@+id/eventStartTimeEvDTxt"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="khamuna"
+                        android:textColor="@color/timestamp"
+                        android:textSize="@dimen/feed_item_timestamp" />
+
+                    <TextView
+                        android:id="@+id/eventEndTimeEvDTxt"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2.5"
+                        android:text="khamuna"
+                        android:textColor="@color/timestamp"
+                        android:textSize="@dimen/feed_item_timestamp" />
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dip"
+            android:layout_margin="15dp"
+            android:background="#E8E8E8" />
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingBottom="5dp"
+            android:paddingTop="5dp" 
+            android:weightSum="3">
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" 
+                android:layout_weight="2"
+                >
+
+                <TextView
+                    android:id="@+id/ratingStampEvDTxt"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/green_custom_circle_button"
+                    android:gravity="center"
+                    android:text="4.5"
+                    android:textColor="#4CD964"
+                    android:textSize="18dp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/ratingPeopleNumberEvDTxt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="5dp"
+                    android:layout_weight="1"
+                    android:drawablePadding="5dip"
+                    android:drawableRight="@drawable/people_image"
+                    android:text="19564525"
+                    android:textColor="@color/timestamp"
+                    android:textSize="@dimen/feed_item_timestamp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" 
+                android:layout_weight="1" 
+                android:layout_gravity="center_vertical">
+
+                <RatingBar
+                    android:id="@+id/setRating"
+                    style="?android:attr/ratingBarStyleSmall"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"                    
+                    android:isIndicator="true"
+                    android:numStars="5"
+                    android:stepSize="0.1" 
+                    android:layout_gravity="center_horizontal"/>
+                
+                <RatingBar
+                    android:id="@+id/getRating"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:numStars="5"
+                    android:stepSize="1.0" 
+                    style="?android:attr/ratingBarStyleIndicator"
+                    android:layout_gravity="center_horizontal"/>
+
+                
+            </LinearLayout>
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dip"
+            android:layout_margin="15dp"
+            android:background="#E8E8E8" />
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="10dp"
+                android:paddingTop="10dp"
+                android:text="Description"
+                android:textSize="17dp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/eventDescEvDTxt"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="5dp"
+                android:paddingLeft="10dp"
+                android:paddingTop="5dp"
+                android:text="kaoa khamu tore moira lamu" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dip"
+            android:layout_margin="15dp"
+            android:background="#E8E8E8" />
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="200dp"
+            android:orientation="vertical" >
+
+            <ListView
+                android:id="@+id/feedEvDListView"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="7dp" 
+                android:divider="@null">
+            </ListView>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:background="@color/white"
+            android:orientation="horizontal"
+            android:weightSum="3" >
+
+            <EditText
+                android:id="@+id/giveFeedBackEvDEd"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
+                android:background="@color/bg_msg_input"
+                android:hint="Give a Feedback"
+                android:paddingLeft="6dp"
+                android:paddingRight="6dp"
+                android:textColor="@color/text_msg_input" />
+
+            <Button
+                android:id="@+id/giveFeedBackEvDB"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="2"
+                android:background="@color/bg_btn_join"
+                android:text="Send"
+                android:textColor="@color/white" />
+        </LinearLayout>
+    </LinearLayout>
+
+</ScrollView>

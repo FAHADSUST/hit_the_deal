@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingTop="3dp"
+    android:orientation="horizontal" 
+    >
+
+    <com.android.volley.toolbox.NetworkImageView
+        android:id="@+id/visitorProPic"
+        android:layout_width="@dimen/feed_item_profile_pic"
+        android:layout_height="@dimen/feed_item_profile_pic"
+        android:scaleType="fitCenter"
+        android:src="@drawable/ic_launcher" >
+    </com.android.volley.toolbox.NetworkImageView>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingLeft="@dimen/feed_item_profile_info_padd" >
+
+        <TextView
+            android:id="@+id/feedBackUserName"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="marakha"
+            android:textSize="@dimen/feed_item_profile_name"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/timestampFeedback"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="khamuna"
+                android:textColor="@color/timestamp"
+                android:textSize="@dimen/feed_item_timestamp" />
+
+            <TextView
+                android:id="@+id/feedbackTxt"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="2.5"
+                android:text="khamuna"                
+                android:textSize="@dimen/feed_item_timestamp" />
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>

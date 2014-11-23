@@ -18,6 +18,7 @@ import com.android.volley.VolleyLog;
 import com.android.volley.Cache.Entry;
 import com.android.volley.Request.Method;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.fahad.ornob.sust.hitthedeal.EventDetailActivity;
 import com.fahad.ornob.sust.hitthedeal.R;
 import com.fahad.ornob.sust.hitthedeal.ViwerActivity;
 import com.fahad.ornob.sust.hitthedeal.adapter.FeedListAdapter;
@@ -27,22 +28,28 @@ import com.fahad.ornob.sust.hitthedeal.contants.Constants;
 import com.fahad.ornob.sust.hitthedeal.contants.DataBaseKeys;
 import com.fahad.ornob.sust.hitthedeal.item.Event;
 import com.fahad.ornob.sust.hitthedeal.item.UserItem;
+import com.markupartist.android.widget.PullToRefreshListView;
+import com.markupartist.android.widget.PullToRefreshListView.OnRefreshListener;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.Toast;
 
 public class AroundMeFragment extends Fragment {
 
 	private static final String TAG = ViwerActivity.class.getSimpleName();
-	private ListView listView;
+	private PullToRefreshListView listView;
 	private FeedListAdapter listAdapter;
 	private List<Event> eventItems;
 	private ArrayList<UserItem> userItems;
@@ -55,15 +62,47 @@ public class AroundMeFragment extends Fragment {
 		View rootView = inflater.inflate(R.layout.fragment_top_rated, container, false);
 		
 		cd = new ConnectionDetector(getActivity());
-		listView = (ListView) rootView.findViewById(R.id.list);
-
+		listView = (PullToRefreshListView) rootView.findViewById(R.id.list);
+		listView.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                // Do work to refresh the list here.
+                //new GetDataTask().execute();
+            	GetDataTask();
+            }
+        });
+						
 		eventItems = new ArrayList<Event>();
 		userItems = new ArrayList<UserItem>();
 
 		listAdapter = new FeedListAdapter(getActivity(), eventItems,userItems);
 		listView.setAdapter(listAdapter);
+						
+		
+		listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view,
+					int position, long id) {
+				Event eventItem = eventItems.get(position-1);
+				Toast.makeText(getActivity(), "position:"+position+" , id: "+eventItem.getEventId(), Toast.LENGTH_SHORT).show();
+			    
+			    Intent intent = new Intent(getActivity(),EventDetailActivity.class);
+			    intent.putExtra("selectedEventId", eventItem.getEventId());
+			    startActivity(intent);
+			}
+		});
+		
+		GetDataTask();
 		
 		
+		return rootView;
+
+	}
+
+	
+	
+	private void GetDataTask() {
+		// TODO Auto-generated method stub
 		Cache cache = AppController.getInstance().getRequestQueue().getCache();
 		Entry entry = cache.get(Constants.urlGetAllEvent);
 		
@@ -103,13 +142,10 @@ public class AroundMeFragment extends Fragment {
 			}
 
 		}
-		
-		return rootView;
-
 	}
 
-	
-	
+
+
 	private  void parseJsonFeed(JSONObject response,int itemType) {
 		try {
 			eventItems.clear();
@@ -123,6 +159,8 @@ public class AroundMeFragment extends Fragment {
 						Event event = new Event(
 								eventJsonObject.getInt(DataBaseKeys.EVENT_ID),
 								eventJsonObject.getInt(DataBaseKeys.CREATOR_ID),
+								eventJsonObject
+								.getString(DataBaseKeys.EVENT_NAME),
 								eventJsonObject
 										.getString(DataBaseKeys.EVENT_DESCRIPTIOPN),
 								eventJsonObject.getLong(DataBaseKeys.START_DATE),
@@ -141,6 +179,7 @@ public class AroundMeFragment extends Fragment {
 					}
 					
 					listAdapter.notifyDataSetChanged();
+					listView.onRefreshComplete();
 				 
 			 }else{
 				 Toast.makeText(getActivity(), "Fail", Toast.LENGTH_SHORT).show();

@@ -80,7 +80,7 @@ public class FeedListAdapter extends BaseAdapter {
 		Event eventItem = eventItems.get(position);
 		UserItem userItem = userItems.get(position);
 		
-		name.setText(userItem.getUser_name());
+		name.setText(eventItem.getEvent_name());
 
 		// Converting timestamp into x ago format
 		CharSequence timeAgo = DateUtils.getRelativeTimeSpanString(

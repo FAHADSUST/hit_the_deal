@@ -203,6 +203,8 @@ public class EventNotifierService extends Service implements LocationListener {
 						eventJsonObject.getInt(DataBaseKeys.EVENT_ID),
 						eventJsonObject.getInt(DataBaseKeys.CREATOR_ID),
 						eventJsonObject
+						.getString(DataBaseKeys.EVENT_NAME),
+						eventJsonObject
 								.getString(DataBaseKeys.EVENT_DESCRIPTIOPN),
 						eventJsonObject.getLong(DataBaseKeys.START_DATE),
 						eventJsonObject.getLong(DataBaseKeys.END_DATE),

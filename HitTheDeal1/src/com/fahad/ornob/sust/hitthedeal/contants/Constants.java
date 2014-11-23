@@ -2,6 +2,8 @@ package com.fahad.ornob.sust.hitthedeal.contants;
 
 import java.io.File;
 
+import com.fahad.ornob.sust.hitthedeal.item.UserItem;
+
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Environment;
@@ -10,6 +12,8 @@ public class Constants {
 	
 	public static final File mainFolderpath = new File(Environment.getExternalStorageDirectory(),
 			"Image keeper");
+	
+	public static UserItem userItem=null;
 	
 	//public final static String URL = "http://192.168.2.105:8084/AndroidLogin/";
 	public final static String MY_PREFS = "MyPrefs";
@@ -31,6 +35,8 @@ public class Constants {
 	public final static String urlInsertSignUpData=urlCommon+"SignUp?";
 	public final static String urlGetEventAround=urlCommon+"GetVisitorAroundEvent?";
 	public final static String urlGetAllEvent = urlCommon+"GetAllEvent";
+	public final static String urlInserRating =urlCommon+"InsertEventRating?";
+	public final static String urlGetSelectedEventDetail =urlCommon+"GetSelectedEventDetail?";
 	
 	public final static String urlFileUpload="http://192.168.2.105/db_project_uploaded_img/upload_image_swing.php";
 	public final static String urlImg="http://192.168.2.105/db_project_uploaded_img/img/";
