@@ -18,6 +18,8 @@ import com.android.volley.Request.Method;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.NetworkImageView;
+import com.daimajia.androidanimations.library.Techniques;
+import com.daimajia.androidanimations.library.YoYo;
 import com.fahad.ornob.sust.hitthedeal.adapter.EventFeedBackAdapter;
 import com.fahad.ornob.sust.hitthedeal.adapter.FeedListAdapter;
 import com.fahad.ornob.sust.hitthedeal.app.AppController;
@@ -29,9 +31,25 @@ import com.fahad.ornob.sust.hitthedeal.item.Event;
 import com.fahad.ornob.sust.hitthedeal.item.FeedBackItem;
 import com.fahad.ornob.sust.hitthedeal.item.RatingResultItem;
 import com.fahad.ornob.sust.hitthedeal.item.UserItem;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GooglePlayServicesUtil;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapFragment;
+import com.google.android.gms.maps.GoogleMap.OnMapLongClickListener;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.markupartist.android.widget.PullToRefreshListView;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.FragmentManager;
+import android.content.DialogInterface;
+import android.graphics.Point;
+import android.location.Criteria;
+import android.location.Location;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.provider.ContactsContract.Contacts.Data;
 import android.text.format.DateUtils;
@@ -44,6 +62,10 @@ import android.widget.RatingBar.OnRatingBarChangeListener;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.view.MotionEvent;
+import android.view.animation.AccelerateInterpolator;
+import android.view.animation.Animation;
+import android.view.animation.Animation.AnimationListener;
+import android.view.animation.TranslateAnimation;
 
 public class EventDetailActivity extends Activity  {
 	ImageLoader imageLoader = AppController.getInstance().getImageLoader();
@@ -65,6 +87,7 @@ public class EventDetailActivity extends Activity  {
 	ListView feedEvDListView;
 	EditText giveFeedBackEvDEd;
 	Button giveFeedBackEvDB;
+	TextView showMapTxt;
 
 	private static final String TAG = EventDetailActivity.class.getSimpleName();
 	private EventFeedBackAdapter listAdapter;
@@ -146,6 +169,8 @@ public class EventDetailActivity extends Activity  {
 		listAdapter = new EventFeedBackAdapter(this, feedbackItems, userItems);
 		feedEvDListView.setAdapter(listAdapter);
 
+		showMapTxt = (TextView)findViewById(R.id.showMapTxt);
+		initMap();
 	}
 	
 	private void addItemToComponent() {
@@ -243,6 +268,21 @@ public class EventDetailActivity extends Activity  {
 	            return true;
 	        }
 	    });
+		
+		showMapTxt.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View arg0) {
+				// TODO Auto-generated method stub
+				if(showMapTxt.getText().toString().equals("Show Map")){
+					expandOrCollapse(findViewById(R.id.map_fragment_eventDetailId),"expand");	
+					showMapTxt.setText("Close Map");
+				}else{
+					expandOrCollapse(findViewById(R.id.map_fragment_eventDetailId),"close");	
+					showMapTxt.setText("Show Map");
+				}
+			}
+		});
 		
 	}
 
@@ -345,7 +385,16 @@ public class EventDetailActivity extends Activity  {
 					myViwerRating=response.getInt(DataBaseKeys.MYViwerRatingTag);
 					
 					addItemToComponent();					
-					listAdapter.notifyDataSetChanged();		
+					listAdapter.notifyDataSetChanged();	
+					
+					
+					double latitude = eventItem.getLatitude();
+					double longitude = eventItem.getLongitude();
+					latLng = new LatLng(latitude, longitude);
+					MarkerOptions marker = new MarkerOptions().position(latLng).title(
+							eventItem.getEvent_name());
+					myMap.addMarker(marker);
+					myMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15.0f));
 					
 				}else if(itemType==DataBaseKeys.InsertRatingType){
 					
@@ -400,6 +449,77 @@ public class EventDetailActivity extends Activity  {
 
 	}
 
+	
+	
+	 public void expandOrCollapse(final View v,String exp_or_colpse) {
+		    TranslateAnimation anim = null;
+		    if(exp_or_colpse.equals("expand"))
+		    {
+		        anim = new TranslateAnimation(0.0f, 0.0f, -v.getHeight(), 0.0f);
+		        v.setVisibility(View.VISIBLE);  
+		    }
+		    else{
+		        anim = new TranslateAnimation(0.0f, 0.0f, 0.0f, -v.getHeight());
+		        AnimationListener collapselistener= new AnimationListener() {
+		            @Override
+		            public void onAnimationStart(Animation animation) {
+		            }
 
+		            @Override
+		            public void onAnimationRepeat(Animation animation) {
+		            }
+
+		            @Override
+		            public void onAnimationEnd(Animation animation) {
+		            v.setVisibility(View.GONE);
+		            }
+		        };
+
+		        anim.setAnimationListener(collapselistener);
+		    }
+
+		     // To Collapse
+		        //
+
+		    anim.setDuration(300);
+		    anim.setInterpolator(new AccelerateInterpolator(0.5f));
+		    v.startAnimation(anim);
+		}
+
+	 final int RQS_GooglePlayServices = 1;
+		private GoogleMap myMap;
+		Location myLocation;
+		LatLng latLng=null;
+		Marker marker = null;
+		
+
+		private void initMap() {
+			// TODO Auto-generated method stub
+			Button closeMapB = (Button) findViewById(R.id.closeB);
+			closeMapB.setVisibility(View.GONE);
+			FragmentManager myFragmentManager = getFragmentManager();
+			MapFragment myMapFragment = (MapFragment) myFragmentManager
+					.findFragmentById(R.id.mapCreatorSignUp);
+			myMap = myMapFragment.getMap();
+			myMap.setMyLocationEnabled(true);
+			myMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);		
+					
+			
+		}		
+		@Override
+		protected void onResume() {
+			// TODO Auto-generated method stub
+			super.onResume();
+			int resultCode = GooglePlayServicesUtil
+					.isGooglePlayServicesAvailable(getApplicationContext());
+
+			if (resultCode == ConnectionResult.SUCCESS) {
+				
+			} else {
+				GooglePlayServicesUtil.getErrorDialog(resultCode, this,
+						RQS_GooglePlayServices);
+			}
+
+		}
 	
 }

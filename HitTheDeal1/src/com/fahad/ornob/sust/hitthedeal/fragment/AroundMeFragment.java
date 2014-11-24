@@ -27,6 +27,7 @@ import com.fahad.ornob.sust.hitthedeal.connectiondetector.ConnectionDetector;
 import com.fahad.ornob.sust.hitthedeal.contants.Constants;
 import com.fahad.ornob.sust.hitthedeal.contants.DataBaseKeys;
 import com.fahad.ornob.sust.hitthedeal.item.Event;
+import com.fahad.ornob.sust.hitthedeal.item.RatingResultItem;
 import com.fahad.ornob.sust.hitthedeal.item.UserItem;
 import com.markupartist.android.widget.PullToRefreshListView;
 import com.markupartist.android.widget.PullToRefreshListView.OnRefreshListener;
@@ -53,6 +54,7 @@ public class AroundMeFragment extends Fragment {
 	private FeedListAdapter listAdapter;
 	private List<Event> eventItems;
 	private ArrayList<UserItem> userItems;
+	private ArrayList<RatingResultItem> ratingResultItems;
 	ConnectionDetector cd;
 	
 	@Override
@@ -62,6 +64,11 @@ public class AroundMeFragment extends Fragment {
 		View rootView = inflater.inflate(R.layout.fragment_top_rated, container, false);
 		
 		cd = new ConnectionDetector(getActivity());
+		
+		eventItems = new ArrayList<Event>();
+		userItems = new ArrayList<UserItem>();
+		ratingResultItems = new ArrayList<RatingResultItem>();
+		
 		listView = (PullToRefreshListView) rootView.findViewById(R.id.list);
 		listView.setOnRefreshListener(new OnRefreshListener() {
             @Override
@@ -72,10 +79,9 @@ public class AroundMeFragment extends Fragment {
             }
         });
 						
-		eventItems = new ArrayList<Event>();
-		userItems = new ArrayList<UserItem>();
+		
 
-		listAdapter = new FeedListAdapter(getActivity(), eventItems,userItems);
+		listAdapter = new FeedListAdapter(getActivity(), eventItems,userItems,ratingResultItems);
 		listView.setAdapter(listAdapter);
 						
 		
@@ -176,6 +182,14 @@ public class AroundMeFragment extends Fragment {
 						
 						UserItem userItem = new UserItem(eventJsonObject.getInt(DataBaseKeys.CREATOR_ID), eventJsonObject.getString(DataBaseKeys.USER_NAME), eventJsonObject.getString(DataBaseKeys.USER_IMAGE_URL), eventJsonObject.getInt(DataBaseKeys.USER_CREATOR_TYPE_ID));
 						userItems.add(userItem);
+						
+						JSONObject ratingJsonObject = eventJsonObject
+								.getJSONObject(DataBaseKeys.RatingDetailTag);
+						RatingResultItem ratingResultItem = new RatingResultItem(
+								ratingJsonObject.getDouble(DataBaseKeys.RatingTag),
+								ratingJsonObject.getInt(DataBaseKeys.RatingCounNumberTag));
+						ratingResultItems.add(ratingResultItem);
+						
 					}
 					
 					listAdapter.notifyDataSetChanged();

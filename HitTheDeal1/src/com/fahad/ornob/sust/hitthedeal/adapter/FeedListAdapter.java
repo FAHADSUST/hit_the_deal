@@ -14,7 +14,9 @@ import android.text.method.LinkMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebView.FindListener;
 import android.widget.BaseAdapter;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.android.volley.toolbox.ImageLoader;
@@ -23,6 +25,7 @@ import com.fahad.ornob.sust.hitthedeal.FeedImageView;
 import com.fahad.ornob.sust.hitthedeal.R;
 import com.fahad.ornob.sust.hitthedeal.app.AppController;
 import com.fahad.ornob.sust.hitthedeal.item.Event;
+import com.fahad.ornob.sust.hitthedeal.item.RatingResultItem;
 import com.fahad.ornob.sust.hitthedeal.item.UserItem;
 
 public class FeedListAdapter extends BaseAdapter {	
@@ -30,12 +33,14 @@ public class FeedListAdapter extends BaseAdapter {
 	private LayoutInflater inflater;
 	private List<Event> eventItems;
 	private ArrayList<UserItem> userItems;
+	private ArrayList<RatingResultItem> ratingResultItems;
 	ImageLoader imageLoader = AppController.getInstance().getImageLoader();
 
-	public FeedListAdapter(Activity activity, List<Event> eventItems, ArrayList<UserItem> userItems) {
+	public FeedListAdapter(Activity activity, List<Event> eventItems, ArrayList<UserItem> userItems, ArrayList<RatingResultItem> ratingResultItems) {
 		this.activity = activity;
 		this.eventItems = eventItems;
 		this.userItems = userItems;
+		this.ratingResultItems = ratingResultItems;
 	}
 
 	@Override
@@ -66,8 +71,20 @@ public class FeedListAdapter extends BaseAdapter {
 			imageLoader = AppController.getInstance().getImageLoader();
 
 		TextView name = (TextView) convertView.findViewById(R.id.name);
-		TextView timestamp = (TextView) convertView
-				.findViewById(R.id.timestamp);
+		
+		TextView orgName = (TextView) convertView.findViewById(R.id.orgName);
+		
+		TextView startTimestamp = (TextView) convertView
+				.findViewById(R.id.startTimestamp);
+		
+		TextView endTimestamp = (TextView) convertView
+				.findViewById(R.id.endTimestamp);
+		RatingBar setRatingbar = (RatingBar) convertView
+				.findViewById(R.id.setRatingFeedItemBar);
+		
+		TextView setRatingBarTxt = (TextView) convertView
+				.findViewById(R.id.setRatingFeedItemTxt);
+		
 		TextView statusMsg = (TextView) convertView
 				.findViewById(R.id.txtStatusMsg);
 		TextView url = (TextView) convertView.findViewById(R.id.txtUrl);
@@ -79,14 +96,24 @@ public class FeedListAdapter extends BaseAdapter {
 
 		Event eventItem = eventItems.get(position);
 		UserItem userItem = userItems.get(position);
+		RatingResultItem ratingResultItem = ratingResultItems.get(position);
 		
 		name.setText(eventItem.getEvent_name());
+		orgName.setText(userItem.getUser_name());
 
 		// Converting timestamp into x ago format
 		CharSequence timeAgo = DateUtils.getRelativeTimeSpanString(
 				eventItem.getStartDate(),
 				System.currentTimeMillis(), DateUtils.SECOND_IN_MILLIS);
-		timestamp.setText(timeAgo);
+		startTimestamp.setText(timeAgo);
+		
+		CharSequence timeAgo2 = DateUtils.getRelativeTimeSpanString(
+				eventItem.getEndDate(),
+				System.currentTimeMillis(), DateUtils.SECOND_IN_MILLIS);
+		endTimestamp.setText(timeAgo2);
+		
+		setRatingbar.setRating((float)ratingResultItem.getRating());
+		setRatingBarTxt.setText(String.valueOf(ratingResultItem.getRating()));
 
 		// Chcek for empty status message
 		if (!TextUtils.isEmpty(eventItem.getEventDescription())) {

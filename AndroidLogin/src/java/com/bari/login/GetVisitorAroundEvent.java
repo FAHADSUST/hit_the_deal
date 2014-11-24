@@ -96,10 +96,12 @@ public class GetVisitorAroundEvent extends HttpServlet {
             JSONArray jsonArray = new JSONArray();
             boolean checkNull = true;
             while (rs.next()) {              
-                JSONObject jsonInner = new JSONObject();
+                
                 double lon2 = Double.parseDouble(rs.getString(eventkey[5]));
                 double lat2 = Double.parseDouble(rs.getString(eventkey[6]));
                 if(distance(lat1,  lon1,  lat2,  lon2)<=dist){
+                    JSONObject jsonInner = new JSONObject();
+                    JSONObject jsonObjRating;
                     checkNull = false;
                     for (int i = 0; i < length; i++) {
 
@@ -109,6 +111,10 @@ public class GetVisitorAroundEvent extends HttpServlet {
                     for(int i=0;i<creatorLength;i++){
                         jsonInner.put(creatorNeededKey[i], rs.getString(creatorNeededKey[i]));
                     }
+                    
+                    jsonObjRating = getEventRatingDetail(rs.getString(eventkey[0]));
+                    jsonInner.put("ratingDetail", jsonObjRating);
+                    
                     jsonArray.add(jsonInner);
                 }
             }
@@ -154,5 +160,49 @@ public class GetVisitorAroundEvent extends HttpServlet {
 
     private double rad2deg(double rad) {
         return (rad * 180.0 / Math.PI);
+    }
+    
+    private JSONObject getEventRatingDetail(String params) {
+        String ratingkey[] = {"rating_id", "event_id", "viewer_id", "rating"};
+        int length = ratingkey.length;
+        String sql = "SELECT avg(rating) as rating,count(rating) as countNumber FROM `rating` WHERE event_id=?";
+        Connection con = DBConnectionHandler.getConnection();
+        JSONObject json = new JSONObject();
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setString(1, params);
+            ResultSet rs = ps.executeQuery();
+
+
+            boolean checkNull = true;
+            int count = 0;
+            double reting = 0.0;
+            if (rs.next()) {
+                checkNull = false;     
+                double retingtemp = rs.getDouble("rating");
+                count = rs.getInt("countNumber");
+                reting = roundMyData(retingtemp,1);
+            }
+
+            if (!checkNull) {
+                json.put("rating", reting);
+                json.put("countNumber", count);
+            } else {
+                json.put("rating", "0");
+                json.put("countNumber", 0);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return json;
+    }
+
+    public static double roundMyData(double Rval, int numberOfDigitsAfterDecimal) {
+        double p = (float) Math.pow(10, numberOfDigitsAfterDecimal);
+        Rval = Rval * p;
+        double tmp = Math.floor(Rval);
+
+        return (double) tmp / p;
     }
 }
