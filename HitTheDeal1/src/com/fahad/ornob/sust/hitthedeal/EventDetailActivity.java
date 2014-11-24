@@ -22,6 +22,7 @@ import com.fahad.ornob.sust.hitthedeal.adapter.EventFeedBackAdapter;
 import com.fahad.ornob.sust.hitthedeal.adapter.FeedListAdapter;
 import com.fahad.ornob.sust.hitthedeal.app.AppController;
 import com.fahad.ornob.sust.hitthedeal.connectiondetector.ConnectionDetector;
+import com.fahad.ornob.sust.hitthedeal.contants.CommonMethod;
 import com.fahad.ornob.sust.hitthedeal.contants.Constants;
 import com.fahad.ornob.sust.hitthedeal.contants.DataBaseKeys;
 import com.fahad.ornob.sust.hitthedeal.item.Event;
@@ -39,10 +40,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.RatingBar;
+import android.widget.RatingBar.OnRatingBarChangeListener;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.view.MotionEvent;
 
-public class EventDetailActivity extends Activity {
+public class EventDetailActivity extends Activity  {
 	ImageLoader imageLoader = AppController.getInstance().getImageLoader();
 
 	RatingBar getRatingBar;
@@ -51,6 +54,7 @@ public class EventDetailActivity extends Activity {
     float curRate;
     int count;
     float newrating;
+    int myViwerRating;
 	
 	FeedImageView eventFeedImgView;
 	NetworkImageView organizationEventProPic;
@@ -92,14 +96,16 @@ public class EventDetailActivity extends Activity {
 	private void loadData(int selectedEventId) {
 		// http://192.168.2.105:8084/AndroidLogin/GetSelectedEventDetail?event_id=1
 		
-		GetDataTask(Constants.urlGetSelectedEventDetail+"event_id="+selectedEventId+"",DataBaseKeys.GetEventDetailType);
+		GetDataTask(Constants.urlGetSelectedEventDetail+"event_id="+selectedEventId+"&viewer_id="+Constants.userItem.getUser_id()+"",DataBaseKeys.GetEventDetailType);
 	}
 
 	
 
 	private void addItemToFeedListView() {
 		// TODO Auto-generated method stub
-		
+		listAdapter = new EventFeedBackAdapter(this, feedbackItems, userItems);
+		feedEvDListView.setAdapter(listAdapter);
+		listAdapter.notifyDataSetChanged();
 	}
 
 	private void Init() {
@@ -156,7 +162,7 @@ public class EventDetailActivity extends Activity {
 						@Override
 						public void onError() {
 						}
-
+						
 						@Override
 						public void onSuccess() {
 						}
@@ -181,6 +187,8 @@ public class EventDetailActivity extends Activity {
 		ratingStampEvDTxt.setText(String.valueOf(ratingResultItem.getRating()));
 		ratingPeopleNumberEvDTxt.setText(String.valueOf(ratingResultItem.getCountNumber()));
 		eventDescEvDTxt.setText(eventItem.getEventDescription());
+		
+		getRatingBar.setRating((float)myViwerRating);
 	}
 
 	private void listener() {
@@ -195,9 +203,47 @@ public class EventDetailActivity extends Activity {
 				String url=Constants.urlInserRating+"event_id="+eventItem.getEventId()+"&viewer_id="+Constants.userItem.getUser_id()+"&rating="+rating+"";
 				GetDataTask(url, DataBaseKeys.InsertRatingType);
 				
-		        
+				
 			}
 		});
+		
+		giveFeedBackEvDB.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View arg0) {
+				// TODO Auto-generated method stub
+				
+				String feed=giveFeedBackEvDEd.getText().toString();
+				if(!feed.isEmpty()){
+					Toast.makeText(EventDetailActivity.this, "start:"+feed, Toast.LENGTH_SHORT).show();
+					String url=Constants.urlInsertFeedBack+"event_id="+eventItem.getEventId()+"&viewer_id="+Constants.userItem.getUser_id()+"&feedback="+feed+"&date="+CommonMethod.currentTimeFrom1970()+"";
+					GetDataTask(url, DataBaseKeys.InserFeedBackType);
+				}
+			}
+		});
+		
+		feedEvDListView.setOnTouchListener(new ListView.OnTouchListener() {
+	        @Override
+	        public boolean onTouch(View v, MotionEvent event) {
+	            int action = event.getAction();
+	            switch (action) {
+	            case MotionEvent.ACTION_DOWN:
+	                // Disallow ScrollView to intercept touch events.
+	                v.getParent().requestDisallowInterceptTouchEvent(true);
+	                break;
+
+	            case MotionEvent.ACTION_UP:
+	                // Allow ScrollView to intercept touch events.
+	                v.getParent().requestDisallowInterceptTouchEvent(false);
+	                break;
+	            }
+
+	            // Handle ListView touch events.
+	            v.onTouchEvent(event);
+	            return true;
+	        }
+	    });
+		
 	}
 
 	private void GetDataTask(String url,final int typeItem) {
@@ -296,17 +342,51 @@ public class EventDetailActivity extends Activity {
 						userItems.add(userItem);
 					}
 					
-					addItemToComponent();
-					addItemToFeedListView();
-					listAdapter.notifyDataSetChanged();					
+					myViwerRating=response.getInt(DataBaseKeys.MYViwerRatingTag);
+					
+					addItemToComponent();					
+					listAdapter.notifyDataSetChanged();		
+					
 				}else if(itemType==DataBaseKeys.InsertRatingType){
+					
 					Toast.makeText(this, "Success", Toast.LENGTH_SHORT).show();
 					DecimalFormat decimalFormat = new DecimalFormat("#.#");
-			        curRate = Float.valueOf(decimalFormat.format((curRate * count + newrating)
-			                / ++count));
-			        Toast.makeText(EventDetailActivity.this,
-			                "New Rating: " + curRate, Toast.LENGTH_SHORT).show();
+					JSONObject ratingJsonObject = response.getJSONObject(DataBaseKeys.RatingDetailTag);
+					RatingResultItem ratingResultItem = new RatingResultItem(
+							ratingJsonObject.getDouble(DataBaseKeys.RatingTag),
+							ratingJsonObject.getInt(DataBaseKeys.RatingCounNumberTag));
+			        curRate = (float)ratingResultItem.getRating() ;
 			        setRatingBar.setRating(curRate);
+			        ratingStampEvDTxt.setText(String.valueOf(ratingResultItem.getRating()));
+			        ratingPeopleNumberEvDTxt.setText(String.valueOf(ratingResultItem.getCountNumber()));
+			        
+				}else if(itemType==DataBaseKeys.InserFeedBackType){
+					
+					Toast.makeText(this, "Success", Toast.LENGTH_SHORT).show();
+					
+					
+					
+					
+					JSONObject feedbackJsonObject = response
+							.getJSONObject(DataBaseKeys.FeedBackJsonObjTag);					
+					JSONArray feedbackJsonArray = feedbackJsonObject.getJSONArray(DataBaseKeys.FeedBackJsonArrayTag);
+					for(int i=0;i<feedbackJsonArray.length();i++){
+						JSONObject feedbackObjectItem = (JSONObject) feedbackJsonArray.get(i);
+											
+						FeedBackItem item  = new FeedBackItem(feedbackObjectItem.getInt(DataBaseKeys.FeedBackTag[0]), feedbackObjectItem.getInt(DataBaseKeys.FeedBackTag[1]), feedbackObjectItem.getInt(DataBaseKeys.FeedBackTag[2]), feedbackObjectItem.getString(DataBaseKeys.FeedBackTag[3]), feedbackObjectItem.getLong(DataBaseKeys.FeedBackTag[4]));
+						feedbackItems.add(item);
+						
+						UserItem userItem = new UserItem(
+								feedbackObjectItem.getInt(DataBaseKeys.FeedBackTag[2]),
+								feedbackObjectItem.getString(DataBaseKeys.USER_NAME),
+								feedbackObjectItem.getString(DataBaseKeys.USER_IMAGE_URL),
+								1);
+						userItems.add(userItem);
+					}
+					
+					giveFeedBackEvDEd.setText("");
+					
+					addItemToFeedListView();
 				}
 												
 			} else {
@@ -319,4 +399,7 @@ public class EventDetailActivity extends Activity {
 		}
 
 	}
+
+
+	
 }

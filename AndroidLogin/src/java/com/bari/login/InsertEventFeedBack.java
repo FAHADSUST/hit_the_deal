@@ -9,11 +9,13 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 /**
@@ -45,6 +47,8 @@ public class InsertEventFeedBack extends HttpServlet {
         }
     }
 
+    String params[];
+    Connection con;
     
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -55,13 +59,13 @@ public class InsertEventFeedBack extends HttpServlet {
         PrintWriter out = response.getWriter();  
         String feedBackkey[] = {"event_id","viewer_id","feedback","date"};
         int length = feedBackkey.length;
-        String params[] = new String[length]; 
+        params = new String[length]; 
         for(int i=0;i<length;i++){
             params[i]=request.getParameter(feedBackkey[i]);
         }   
                 
         String sql = "INSERT INTO `hit_the_deal`.`feedback` (`feedback_id`, `event_id`, `viewer_id`, `feedback`, `date`) VALUES (NULL, ?, ?, ?, ?)";
-        Connection con = DBConnectionHandler.getConnection();
+        con = DBConnectionHandler.getConnection();
          
         try {
             System.out.println("dssdsfdf");
@@ -71,8 +75,10 @@ public class InsertEventFeedBack extends HttpServlet {
             }          
             int rsInt = ps.executeUpdate();
             if (rsInt !=0) {
+                JSONObject jsonObj = getAllFeedForThisEvent();
+                
                 json.put("success", "1");
-                //json.put("user_type_id",params[0]);
+                json.put("feedDetail",jsonObj);
             } else {
                 json.put("success", "0");
             }
@@ -99,4 +105,57 @@ public class InsertEventFeedBack extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
+    
+    private JSONObject getAllFeedForThisEvent() {
+        String feedBackkey[] = {"feedback_id","event_id","viewer_id","feedback","date"};
+        int length = feedBackkey.length;
+        String feedBackUserkey[] = {"user_name","image_url"};
+        int userLength=feedBackUserkey.length;
+        
+        
+        String feedBack = "`feedback_id`, `event_id`, `viewer_id`, `feedback`, `date`";
+        String userNedd = ", user_name, image_url";
+
+        String sql = "SELECT "+feedBack+" "+userNedd+" FROM `feedback`,user  WHERE viewer_id=user_id and event_id=?";
+
+        JSONObject json = new JSONObject();
+
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+//            for (int i = 0; i < 2; i++) {
+            ps.setString(1, params[0]);
+//            }
+            ResultSet rs = ps.executeQuery();
+
+            JSONArray jsonArray = new JSONArray();
+            boolean checkNull = true;
+            while (rs.next()) {
+                JSONObject jsonInner = new JSONObject();
+
+
+                checkNull = false;
+                for (int i = 0; i < length; i++) {
+
+                    jsonInner.put(feedBackkey[i], rs.getString(feedBackkey[i]));
+                }
+                for (int i = 0; i < userLength; i++) {
+
+                    jsonInner.put(feedBackUserkey[i], rs.getString(feedBackUserkey[i]));
+                }
+                
+                jsonArray.add(jsonInner);
+
+            }
+            if (!checkNull) {              
+                json.put("allFeedBack", jsonArray);
+            } else {
+                json.put("allFeedBack", "0");
+            }
+            return json;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return json;
+    }
 }

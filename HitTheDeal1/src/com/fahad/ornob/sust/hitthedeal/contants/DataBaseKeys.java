@@ -33,7 +33,11 @@ public class DataBaseKeys {
 	
 	public static final int GetEventDetailType = 1;
 	public static final int InsertRatingType = 2;
+	public static final int InserFeedBackType = 3;
 	
 	public static final String  UserDataTAG="userData";
 	public static final String  userKey[] = {"user_id", "user_type_id", "user_name", "address", "email", "phn_no", "date_of_creation", "latitude", "longitude", "image_url", "password", "creator_type_id"};
+	
+	public static final String  MYViwerRatingTag="myViwerRating";
+	
 }

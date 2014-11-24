@@ -56,15 +56,18 @@ public class GetEventFeedback extends HttpServlet {
         PrintWriter out = response.getWriter();
         String feedBackkey[] = {"feedback_id","event_id","viewer_id","feedback","date"};
         int length = feedBackkey.length;
+        String feedBackUserkey[] = {"user_name","image_url"};
+        int userLength=feedBackUserkey.length;
 
 
         String params[] = new String[1];
         //for(int i=0;i<length;i++){
         params[0] = request.getParameter(feedBackkey[1]);
 
-        
+        String feedBack = "`feedback_id`, `event_id`, `viewer_id`, `feedback`, `date`";
+        String userNedd = ", user_name, image_url";
 
-        String sql = "SELECT * FROM `feedback` WHERE event_id=?";
+        String sql = "SELECT "+feedBack+" "+userNedd+" FROM `feedback`,user  WHERE viewer_id=user_id and event_id=?";
         Connection con = DBConnectionHandler.getConnection();
 
         JSONObject json = new JSONObject();
@@ -87,6 +90,11 @@ public class GetEventFeedback extends HttpServlet {
 
                     jsonInner.put(feedBackkey[i], rs.getString(feedBackkey[i]));
                 }
+                for (int i = 0; i < userLength; i++) {
+
+                    jsonInner.put(feedBackUserkey[i], rs.getString(feedBackUserkey[i]));
+                }
+                
                 jsonArray.add(jsonInner);
 
             }

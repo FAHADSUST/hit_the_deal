@@ -37,6 +37,7 @@ public class Constants {
 	public final static String urlGetAllEvent = urlCommon+"GetAllEvent";
 	public final static String urlInserRating =urlCommon+"InsertEventRating?";
 	public final static String urlGetSelectedEventDetail =urlCommon+"GetSelectedEventDetail?";
+	public final static String urlInsertFeedBack=urlCommon+"InsertEventFeedBack?";
 	
 	public final static String urlFileUpload="http://192.168.2.105/db_project_uploaded_img/upload_image_swing.php";
 	public final static String urlImg="http://192.168.2.105/db_project_uploaded_img/img/";

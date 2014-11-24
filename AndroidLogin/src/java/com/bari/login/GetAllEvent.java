@@ -65,7 +65,7 @@ public class GetAllEvent extends HttpServlet {
                   
         response.setContentType("text/html");  
         PrintWriter out = response.getWriter();  
-        String eventkey[] = {"event_id", "creator_id", "event_description", "start_date", "end_date", "longitude", "latitude","event_img","event_url"};
+        String eventkey[] = {"event_id", "creator_id", "event_name","event_description", "start_date", "end_date", "longitude", "latitude","event_img","event_url"};
         String creatorNeededKey[]={"user_name","image_url","creator_type_id"};
         int length = eventkey.length;
         int creatorLength=creatorNeededKey.length;
@@ -74,7 +74,7 @@ public class GetAllEvent extends HttpServlet {
 //            params[i]=request.getParameter(signUpkey[i]);
 //        }   
                 
-        String selectedEventItem="`event_id`, `creator_id`, `event_description`, `start_date`, `end_date`, events.longitude, events.latitude, event_img, event_url";
+        String selectedEventItem="`event_id`, `creator_id`, event_name,`event_description`, `start_date`, `end_date`, events.longitude, events.latitude, event_img, event_url";
         String selectedCreatorItem=", `user_name`, `image_url`, `creator_type_id`";
         String sql = "SELECT "+selectedEventItem+" "+selectedCreatorItem+" FROM `events`,`user` WHERE creator_id=user_id";
         Connection con = DBConnectionHandler.getConnection();
