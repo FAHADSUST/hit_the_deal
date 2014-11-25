@@ -33,14 +33,16 @@ import android.widget.Toast;
 import com.android.volley.Request.Method;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.fahad.ornob.sust.hitthedeal.LoginPage;
 import com.fahad.ornob.sust.hitthedeal.R;
+import com.fahad.ornob.sust.hitthedeal.ViwerActivity;
 import com.fahad.ornob.sust.hitthedeal.contants.Constants;
 import com.fahad.ornob.sust.hitthedeal.contants.DataBaseKeys;
 import com.fahad.ornob.sust.hitthedeal.item.Event;
 import com.fahad.ornob.sust.hitthedeal.necessary_method.Methods;
+
 
 
 @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
@@ -135,31 +137,30 @@ public class EventNotifierService extends Service implements LocationListener {
 
 	void makeVolleyRequest() {
 
-		final StringRequest strReq = new StringRequest(Method.POST,
-				Constants.URL + "AndroidConnector",
-				new Response.Listener<String>() {
+		JsonObjectRequest strReq = new JsonObjectRequest(Method.GET,
+				Constants.urlCommon+"GetVisitorAroundEvent",null,
+				new Response.Listener<JSONObject>() {
 
 					@Override
-					public void onResponse(String response) {
+					public void onResponse(JSONObject response) {
 						if (response != null) {
 							try {
-								JSONArray eventsJsonArray = new JSONArray(
-										response);
-								JSONObject successObject = (JSONObject) eventsJsonArray
-										.get(eventsJsonArray.length() - 1);
-								if (successObject.getBoolean("success") == false) {
-									Toast.makeText(EventNotifierService.this,
-											"Database Connection Failed",
-											Toast.LENGTH_LONG).show();
-								} else {
+								int success = response.getInt(DataBaseKeys.Success);
+								if(success==1){
+									JSONArray eventsJsonArray = response.getJSONArray("all");
+									
 									notifyUser(Methods
-											.eventJsonArrayToList(eventsJsonArray));
-
+												.eventJsonArrayToList(eventsJsonArray));
+	
+									
+								}else{
+									Toast.makeText(EventNotifierService.this, "Fail", Toast.LENGTH_SHORT).show();
 								}
 							} catch (JSONException e) {
 								// TODO Auto-generated catch block
 								e.printStackTrace();
 							}
+							
 						} else {
 
 						}
@@ -176,10 +177,13 @@ public class EventNotifierService extends Service implements LocationListener {
 			@Override
 			protected Map<String, String> getParams() {
 				Map<String, String> params = new HashMap<String, String>();
-				params.put("latitude",
-						Double.toString(currentLocation.getLatitude()));
 				params.put("longitude",
 						Double.toString(currentLocation.getLongitude()));
+				params.put("latitude",
+						Double.toString(currentLocation.getLatitude()));
+				params.put("distance",
+						Double.toString(Constants.Distance));
+				
 
 				return params;
 			}
@@ -199,11 +203,17 @@ public class EventNotifierService extends Service implements LocationListener {
 						eventJsonObject.getInt(DataBaseKeys.EVENT_ID),
 						eventJsonObject.getInt(DataBaseKeys.CREATOR_ID),
 						eventJsonObject
+						.getString(DataBaseKeys.EVENT_NAME),
+						eventJsonObject
 								.getString(DataBaseKeys.EVENT_DESCRIPTIOPN),
 						eventJsonObject.getLong(DataBaseKeys.START_DATE),
 						eventJsonObject.getLong(DataBaseKeys.END_DATE),
 						eventJsonObject.getDouble(DataBaseKeys.LATITUDE),
-						eventJsonObject.getDouble(DataBaseKeys.LONGITUDE));
+						eventJsonObject.getDouble(DataBaseKeys.LONGITUDE),
+						eventJsonObject
+						.getString(DataBaseKeys.EVENT_IMG),
+						eventJsonObject
+						.getString(DataBaseKeys.EVENT_URL));
 				events.add(event);
 			} catch (JSONException e) {
 				Methods.makeToast(EventNotifierService.this, e.toString(),
@@ -240,7 +250,7 @@ public class EventNotifierService extends Service implements LocationListener {
 	@SuppressLint("NewApi")
 	void fireNotification(Event event) {
 		notificationCount++;
-		Intent intent = new Intent(this, LoginPage.class);
+		Intent intent = new Intent(this, ViwerActivity.class);
 		PendingIntent pIntent = PendingIntent.getActivity(this, 0, intent, 0);
 
 		// build notification

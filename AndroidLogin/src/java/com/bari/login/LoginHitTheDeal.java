@@ -37,6 +37,9 @@ public class LoginHitTheDeal extends HttpServlet {
         
         params[0]=request.getParameter("email");  
         params[1]=request.getParameter("password"); 
+        
+        String userToken[] = {"user_id", "user_type_id", "user_name", "address", "email", "phn_no", "date_of_creation", "latitude", "longitude", "image_url", "password", "creator_type_id"};
+        int length = userToken.length;
  
         String sql = "SELECT * FROM `user` WHERE email=? and password=?";
         Connection con = DBConnectionHandler.getConnection();
@@ -47,8 +50,13 @@ public class LoginHitTheDeal extends HttpServlet {
             ps.setString(2, params[1]);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
+                
+                JSONObject jsonObj = new JSONObject();
+                for(int i=0;i<length;i++){
+                    jsonObj.put(userToken[i], rs.getString(userToken[i]));
+                }                               
                 json.put("success", "1");
-                json.put("user_type_id",rs.getString("user_type_id"));
+                json.put("userData",jsonObj);
             } else {
                 json.put("success", "0");
             }

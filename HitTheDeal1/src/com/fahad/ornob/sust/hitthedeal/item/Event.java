@@ -2,23 +2,74 @@ package com.fahad.ornob.sust.hitthedeal.item;
 
 public class Event {
 	int eventId, creatorId;
-	String eventDescription;
+	String event_name,eventDescription;
 	long startDate, endDate;
 	double latitude, longitude;
+	String event_img,event_url;
 
 	public Event() {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Event(int eventId, int creatorId, String eventDescription,
-			long startDate, long endDate, double latitude, double longitude) {
+	
+	
+
+	public Event(int eventId, int creatorId, String event_name,
+			String eventDescription, long startDate, long endDate,
+			double latitude, double longitude, String event_img,
+			String event_url) {
+		super();
 		this.eventId = eventId;
 		this.creatorId = creatorId;
+		this.event_name = event_name;
 		this.eventDescription = eventDescription;
 		this.startDate = startDate;
 		this.endDate = endDate;
 		this.latitude = latitude;
 		this.longitude = longitude;
+		this.event_img = event_img;
+		this.event_url = event_url;
+	}
+
+
+
+
+	public String getEvent_name() {
+		return event_name;
+	}
+
+
+
+
+	public void setEvent_name(String event_name) {
+		this.event_name = event_name;
+	}
+
+
+
+
+	public String getEvent_url() {
+		return event_url;
+	}
+
+
+
+
+
+	public void setEvent_url(String event_url) {
+		this.event_url = event_url;
+	}
+
+
+
+
+
+	public String getEvent_img() {
+		return event_img;
+	}
+
+	public void setEvent_img(String event_img) {
+		this.event_img = event_img;
 	}
 
 	public int getEventId() {

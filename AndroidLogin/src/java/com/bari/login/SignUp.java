@@ -61,27 +61,43 @@ public class SignUp extends HttpServlet {
         for(int i=0;i<length;i++){
             params[i]=request.getParameter(signUpkey[i]);
         }   
-                
-        String sql = "INSERT INTO `hit_the_deal`.`user` (`user_id`, `user_type_id`, `user_name`, `address`, `email`, `phn_no`, `date_of_creation`, `latitude`, `longitude`, `image_url`, `password`, `creator_type_id`) VALUES (NULL, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-        Connection con = DBConnectionHandler.getConnection();
-         
+        
+        
+        String checkingDql = "SELECT * FROM `user` WHERE email=?";
+        Connection chekingCon = DBConnectionHandler.getConnection();
         try {
-            System.out.println("dssdsfdf");
-            PreparedStatement ps = con.prepareStatement(sql);
-            for(int i=0;i<length;i++){
-                ps.setString(i+1, params[i]);
-            }
-           System.out.println("343434dssdsfdf");
-            int rsInt = ps.executeUpdate();
-            if (rsInt !=0) {
-                json.put("success", "1");
-                //json.put("user_type_id",params[0]);
-            } else {
+            PreparedStatement ps1 = chekingCon.prepareStatement(checkingDql);          
+            ps1.setString(1, params[3]);           
+            ResultSet rs = ps1.executeQuery();
+            if (rs.next()) {
                 json.put("success", "0");
+                
+            } else {
+                String sql = "INSERT INTO `hit_the_deal`.`user` (`user_id`, `user_type_id`, `user_name`, `address`, `email`, `phn_no`, `date_of_creation`, `latitude`, `longitude`, `image_url`, `password`, `creator_type_id`) VALUES (NULL, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                Connection con = DBConnectionHandler.getConnection();
+
+                try {
+                    PreparedStatement ps = con.prepareStatement(sql);
+                    for(int i=0;i<length;i++){
+                        ps.setString(i+1, params[i]);
+                    }
+                System.out.println("343434dssdsfdf");
+                    int rsInt = ps.executeUpdate();
+                    if (rsInt !=0) {
+                        json.put("success", "1");
+                        //json.put("user_type_id",params[0]);
+                    } else {
+                        json.put("success", "0");
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
+        
+        
         //System.out.println(json);
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
@@ -94,12 +110,7 @@ public class SignUp extends HttpServlet {
             throws ServletException, IOException {
         processRequest(request, response);
     }
-
-    /**
-     * Returns a short description of the servlet.
-     *
-     * @return a String containing servlet description
-     */
+    
     @Override
     public String getServletInfo() {
         return "Short description";

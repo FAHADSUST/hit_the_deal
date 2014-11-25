@@ -45,61 +45,75 @@ public class GetAllEvent extends HttpServlet {
              */
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet GetAllEvent</title>");            
+            out.println("<title>Servlet GetAllEvent</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet GetAllEvent at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
-        } finally {            
+        } finally {
             out.close();
         }
     }
 
-    
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+
         JSONObject json = new JSONObject();
-                  
-        response.setContentType("text/html");  
-        PrintWriter out = response.getWriter();  
-        String eventkey[] = {"event_id","creator_id","event_description","start_date","end_date","longitude","latitude"};
+
+        response.setContentType("text/html");
+        PrintWriter out = response.getWriter();
+        String eventkey[] = {"event_id", "creator_id", "event_name", "event_description", "start_date", "end_date", "longitude", "latitude", "event_img", "event_url"};
+        String creatorNeededKey[] = {"user_name", "image_url", "creator_type_id"};
         int length = eventkey.length;
+        int creatorLength = creatorNeededKey.length;
 //        String params[] = new String[length]; 
 //        for(int i=0;i<length;i++){
 //            params[i]=request.getParameter(signUpkey[i]);
 //        }   
-                
-        String sql = "SELECT * FROM `events` WHERE 1";
+
+        String selectedEventItem = "`event_id`, `creator_id`, event_name,`event_description`, `start_date`, `end_date`, events.longitude, events.latitude, event_img, event_url";
+        String selectedCreatorItem = ", `user_name`, `image_url`, `creator_type_id`";
+        String sql = "SELECT " + selectedEventItem + " " + selectedCreatorItem + " FROM `events`,`user` WHERE creator_id=user_id";
         Connection con = DBConnectionHandler.getConnection();
-         
+
         try {
             PreparedStatement ps = con.prepareStatement(sql);
 //            for(int i=0;i<length;i++){
 //                ps.setString(i+1, params[i]);
 //            }           
             ResultSet rs = ps.executeQuery();
-            
+
             JSONArray jsonArray = new JSONArray();
             boolean checkNull = true;
-            while(rs.next()) {
+            while (rs.next()) {
                 checkNull = false;
                 JSONObject jsonInner = new JSONObject();
-                for(int i=0;i<length;i++){
-                    
+                JSONObject jsonObjRating;
+                for (int i = 0; i < length; i++) {
+
                     jsonInner.put(eventkey[i], rs.getString(eventkey[i]));
-                }                
+
+                }
+                for (int i = 0; i < creatorLength; i++) {
+                    jsonInner.put(creatorNeededKey[i], rs.getString(creatorNeededKey[i]));
+                }
+
+                jsonObjRating = getEventRatingDetail(rs.getString(eventkey[0]));
+
+                jsonInner.put("ratingDetail", jsonObjRating);
+
                 jsonArray.add(jsonInner);
                 //json.put("info", "success");
             }
-            if(!checkNull){
+            if (!checkNull) {
                 json.put("success", "1");
                 json.put("all", jsonArray);
+            } else {
+                json.put("success", "0");
             }
-            else json.put("success", "0");
-            
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -109,16 +123,58 @@ public class GetAllEvent extends HttpServlet {
         response.getWriter().write(json.toString());
     }
 
-    
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
     }
 
-    
     @Override
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
+
+    private JSONObject getEventRatingDetail(String params) {
+        String ratingkey[] = {"rating_id", "event_id", "viewer_id", "rating"};
+        int length = ratingkey.length;
+        String sql = "SELECT avg(rating) as rating,count(rating) as countNumber FROM `rating` WHERE event_id=?";
+        Connection con = DBConnectionHandler.getConnection();
+        JSONObject json = new JSONObject();
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setString(1, params);
+            ResultSet rs = ps.executeQuery();
+
+
+            boolean checkNull = true;
+            int count = 0;
+            double reting = 0.0;
+            if (rs.next()) {
+                checkNull = false;     
+                double retingtemp = rs.getDouble("rating");
+                count = rs.getInt("countNumber");
+                reting = roundMyData(retingtemp,1);
+            }
+
+            if (!checkNull) {
+                json.put("rating", reting);
+                json.put("countNumber", count);
+            } else {
+                json.put("rating", "0");
+                json.put("countNumber", 0);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return json;
+    }
+
+    public static double roundMyData(double Rval, int numberOfDigitsAfterDecimal) {
+        double p = (float) Math.pow(10, numberOfDigitsAfterDecimal);
+        Rval = Rval * p;
+        double tmp = Math.floor(Rval);
+
+        return (double) tmp / p;
+    }
 }

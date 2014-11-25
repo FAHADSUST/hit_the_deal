@@ -2,7 +2,7 @@ package com.fahad.ornob.sust.hitthedeal.adapter;
 
 
 import com.fahad.ornob.sust.hitthedeal.R;
-import com.fahad.ornob.sust.hitthedeal.fragment.GamesFragment;
+import com.fahad.ornob.sust.hitthedeal.fragment.AroundMeFragment;
 import com.fahad.ornob.sust.hitthedeal.fragment.GoogleMapFragment;
 import com.fahad.ornob.sust.hitthedeal.fragment.MoviesFragment;
 import com.fahad.ornob.sust.hitthedeal.fragment.TopRatedFragment;
@@ -24,10 +24,10 @@ public class TabsPagerAdapter extends FragmentPagerAdapter {
 		switch (index) {
 		case 0:
 			// Top Rated fragment activity
-			return new GoogleMapFragment();//TopRatedFragment();//
+			return new GoogleMapFragment();//TopRatedFragment();
 		case 1:
 			// Games fragment activity
-			return new GamesFragment();
+			return new AroundMeFragment();
 		case 2:
 			// Movies fragment activity
 			return new MoviesFragment();

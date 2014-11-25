@@ -125,7 +125,7 @@ public class SignUpCreatorPage extends Activity {
 		closeMapB = (Button) findViewById(R.id.closeB);
 		FragmentManager myFragmentManager = getFragmentManager();
 		MapFragment myMapFragment = (MapFragment) myFragmentManager
-				.findFragmentById(R.id.map);
+				.findFragmentById(R.id.mapCreatorSignUp);
 		myMap = myMapFragment.getMap();
 		myMap.setMyLocationEnabled(true);
 		myMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
@@ -281,7 +281,7 @@ public class SignUpCreatorPage extends Activity {
 				// TODO Auto-generated method stub
 				Intent cameraIntent = new Intent(
 						android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-				image = FileUpload.getFileForCaptureCreatorSignUp();
+				image = FileUpload.getFileForCaptureCreatorSignUp(Constants.CreatorTypeID);
 				cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT,
 						Uri.fromFile(image));
 				startActivityForResult(cameraIntent, CAMERA_REQUEST);
@@ -400,7 +400,7 @@ public class SignUpCreatorPage extends Activity {
 			Bitmap bitmap = BitmapFactory.decodeFile(picturePath);
 			orgImgView.setImageBitmap(bitmap);
 
-			File destinationFile = FileUpload.getFileForCaptureCreatorSignUp();
+			File destinationFile = FileUpload.getFileForCaptureCreatorSignUp(Constants.CreatorTypeID);
 			try {
 				destinationFile = FileUpload.copyFile(new File(picturePath), destinationFile);
 			} catch (IOException e) {

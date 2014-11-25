@@ -9,9 +9,9 @@ public class CommonMethod {
 		Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
 		calendar.clear();
 		calendar.set(2011, Calendar.OCTOBER, 1);
-		long secondsSinceEpoch = calendar.getTimeInMillis() / 1000L;
+		long millSecondsSinceEpoch = calendar.getTimeInMillis();
 		
-		return  secondsSinceEpoch;
+		return  millSecondsSinceEpoch;
 	}
 	
 	
