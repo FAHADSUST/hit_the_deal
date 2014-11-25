@@ -4,7 +4,7 @@ public class UserItem {
 
 	int user_id, user_type_id;
 	String user_name, address, email, phn_no; 
-	int date_of_creation;
+	Long date_of_creation;
 	double latitude, longitude;
 	String image_url, password;
 	int creator_type_id;
@@ -25,7 +25,7 @@ public class UserItem {
 
 
 	public UserItem(int user_id, int user_type_id, String user_name,
-			String address, String email, String phn_no, int date_of_creation,
+			String address, String email, String phn_no, Long date_of_creation,
 			double latitude, double longitude, String image_url,
 			String password, int creator_type_id) {
 		super();
@@ -130,14 +130,14 @@ public class UserItem {
 
 
 
-	public int getDate_of_creation() {
+	public Long getDate_of_creation() {
 		return date_of_creation;
 	}
 
 
 
 
-	public void setDate_of_creation(int date_of_creation) {
+	public void setDate_of_creation(Long date_of_creation) {
 		this.date_of_creation = date_of_creation;
 	}
 

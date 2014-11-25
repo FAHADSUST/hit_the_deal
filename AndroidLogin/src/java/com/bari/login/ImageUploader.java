@@ -53,9 +53,6 @@ public class ImageUploader extends HttpServlet {
 		String imageDataString = request.getParameter("image");
                 String imageName = request.getParameter("image_name");
 		byte[] imageByteArray = decodeImage(imageDataString);
-//C:\\xampp\\tomcat\\webapps\\ROOT\\Newfolder
-//		File imageDirectory = new File("C:\\Program Files\\Apache Software Foundation\\Apache Tomcat 7.0.22\\webapps\\ROOT"
-//				+ File.separator + "profile_images");
                 File imageDirectory = new File(getServletContext().getRealPath("")
 				+ File.separator + "profile_images");
                 

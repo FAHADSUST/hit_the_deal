@@ -1,6 +1,8 @@
 package com.fahad.ornob.sust.hitthedeal.contants;
 
 public class DataBaseKeys {
+	public final static String USER_ID = "user_id";
+	
 	public final static String EVENT_ID = "event_id";
 	public final static String CREATOR_ID = "creator_id";
 	public final static String EVENT_NAME = "event_name";
@@ -39,5 +41,7 @@ public class DataBaseKeys {
 	public static final String  userKey[] = {"user_id", "user_type_id", "user_name", "address", "email", "phn_no", "date_of_creation", "latitude", "longitude", "image_url", "password", "creator_type_id"};
 	
 	public static final String  MYViwerRatingTag="myViwerRating";
+	
+	public static final String  FeedBackSuccessTAG="feedBackSuccess";
 	
 }

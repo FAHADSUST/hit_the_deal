@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" 
+            android:layout_margin="5dp"
+            android:orientation="vertical" 
+            >
+
+            <TextView
+                android:id="@+id/textView1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Email: " 
+                android:padding="5dp"
+                android:textSize="17dp"
+                android:textColor="@color/bluelight"/>
+
+            <TextView
+                android:id="@+id/emailMyProfileFrgTxt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:textColor="@color/white"
+                android:layout_marginLeft="35dp"
+                android:text="mdashfahad@gmail.com" 
+                android:textStyle="bold"/>
+
+        </LinearLayout>
+        
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" 
+            android:layout_margin="5dp"
+            android:orientation="vertical" 
+            >
+
+            <TextView                
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Address: " 
+                android:padding="5dp"
+                android:textSize="17dp"
+                android:textColor="@color/bluelight"/>
+
+            <TextView
+                android:id="@+id/addressMyProfileFrgTxt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:textColor="@color/white"
+                android:layout_marginLeft="35dp"
+                android:text="mdashfahad@gmail.com" 
+                android:textStyle="bold"/>
+
+        </LinearLayout>
+        
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" 
+            android:layout_margin="5dp"
+            android:orientation="vertical" 
+            >
+
+            <TextView                
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Phone :" 
+                android:padding="5dp"
+                android:textSize="17dp"
+                android:textColor="@color/bluelight"/>
+
+            <TextView
+                android:id="@+id/phoneMyProfileFrgTxt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:textColor="@color/white"
+                android:layout_marginLeft="35dp"
+                android:text="01675906629" 
+                android:textStyle="bold"/>
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" 
+            android:layout_margin="5dp"
+            android:orientation="vertical" 
+            >
+
+            <TextView                
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Date Of creation: " 
+                android:padding="5dp"
+                android:textSize="17dp"
+                android:textColor="@color/bluelight"/>
+
+            <TextView
+                android:id="@+id/dateCreatMyProfileFrgTxt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:textColor="@color/white"
+                android:layout_marginLeft="35dp"
+                android:text="19 jan 1999"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</ScrollView>

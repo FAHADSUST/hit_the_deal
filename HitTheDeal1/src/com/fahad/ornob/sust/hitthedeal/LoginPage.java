@@ -272,7 +272,7 @@ public class LoginPage extends Activity {
 							jsonObject.getString(DataBaseKeys.userKey[3]),
 							jsonObject.getString(DataBaseKeys.userKey[4]),
 							jsonObject.getString(DataBaseKeys.userKey[5]),
-							jsonObject.getInt(DataBaseKeys.userKey[6]),
+							jsonObject.getLong(DataBaseKeys.userKey[6]),
 							jsonObject.getDouble(DataBaseKeys.userKey[7]),
 							jsonObject.getDouble(DataBaseKeys.userKey[8]),
 							jsonObject.getString(DataBaseKeys.userKey[9]),

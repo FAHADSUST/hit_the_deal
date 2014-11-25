@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/sdosdos"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/splashgreen" >
+
+    <RelativeLayout
+        android:id="@+id/creatorSignUpInnerRA1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+        <Button
+            android:id="@+id/editViwerProB"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="16dp"
+            android:background="@drawable/signup_button"
+            android:scaleY=".9" />
+
+        
+
+        <RelativeLayout
+            android:id="@+id/relativeLayout1"
+            android:layout_width="fill_parent"
+            android:layout_height="130dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:background="@color/darkpink" >
+
+            <ImageView
+                android:id="@+id/editViwerProImgView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/editViwerProBrowsImgView"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentTop="true"
+                android:adjustViewBounds="true"
+                android:background="@drawable/img"
+                android:scaleType="centerCrop"
+                android:src="@drawable/fahad" />
+
+            <Button
+                android:id="@+id/editViwerProCaptureImgView"
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@+id/editViwerProImgView"
+                android:layout_alignParentBottom="true"
+                android:text="Capture" />
+
+            <Button
+                android:id="@+id/editViwerProBrowsImgView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@+id/editViwerProCaptureImgView"
+                android:layout_alignBottom="@+id/editViwerProCaptureImgView"
+                android:layout_alignRight="@+id/editViwerProImgView"
+                android:text="Brow" />
+        </RelativeLayout>
+
+        <EditText
+            android:id="@+id/editViwerEmailEd"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/editViwerProB"
+            android:layout_below="@+id/editViwerOrgNameEd"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/user_name_ed"
+            android:ems="10"
+            android:hint="Email"
+            android:inputType="textEmailAddress"
+            android:paddingLeft="10dp"
+            android:scaleY=".9" />
+        
+        <EditText
+            android:id="@+id/editViwerPhoneEd"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/editViwerPassEd"
+            android:layout_alignRight="@+id/editViwerEmailEd"
+            android:layout_below="@+id/editViwerEmailEd"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/user_name_ed"
+            android:ems="10"
+            android:hint="Address"
+            android:inputType="text"
+            android:paddingLeft="10dp" />
+
+        <EditText
+            android:id="@+id/editViwerAddressEd"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/editViwerPassEd"
+            android:layout_alignRight="@+id/editViwerEmailEd"
+            android:layout_below="@+id/editViwerPhoneEd"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/user_name_ed"
+            android:ems="10"
+            android:hint="Address"
+            android:inputType="text"
+            android:paddingLeft="10dp" />
+
+        <EditText
+            android:id="@+id/editViwerPassEd"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignRight="@+id/editViwerEmailEd"
+            android:layout_below="@+id/editViwerAddressEd"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/user_name_ed"
+            android:ems="10"
+            android:hint="Password"
+            android:inputType="textPassword"
+            android:paddingLeft="10dp"
+            android:scaleY=".9" />
+
+        <ImageButton
+            android:id="@+id/editViwerLocationEd"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            
+            android:layout_above="@+id/editViwerProB"
+            android:layout_below="@+id/editViwerPassEd"
+            android:layout_alignRight="@+id/editViwerPassEd"
+            android:src="@drawable/add_location_b" />
+
+        <EditText
+            android:id="@+id/editViwerOrgNameEd"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/editViwerEmailEd"
+            android:layout_below="@+id/relativeLayout1"
+            android:layout_marginTop="27dp"
+            android:background="@drawable/user_name_ed"
+            android:ems="10"
+            android:hint="Organization name"
+            android:inputType="text"
+            android:paddingLeft="10dp"
+            android:scaleY=".9" >
+
+            <requestFocus />
+        </EditText>
+
+    </RelativeLayout>
+
+</RelativeLayout>

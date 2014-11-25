@@ -8,19 +8,19 @@ package com.markupartist.android.widget.pulltorefresh;
 
 public final class R {
 	public static final class drawable {
-		public static final int ic_pulltorefresh_arrow = 0x7f020094;
-		public static final int icon = 0x7f020095;
-		public static final int pull_to_refresh_header_background = 0x7f0200a8;
+		public static final int ic_pulltorefresh_arrow = 0x7f020096;
+		public static final int icon = 0x7f020097;
+		public static final int pull_to_refresh_header_background = 0x7f0200aa;
 	}
 	public static final class id {
-		public static final int pull_to_refresh_header = 0x7f070071;
-		public static final int pull_to_refresh_image = 0x7f070073;
-		public static final int pull_to_refresh_progress = 0x7f070072;
-		public static final int pull_to_refresh_text = 0x7f070074;
-		public static final int pull_to_refresh_updated_at = 0x7f070075;
+		public static final int pull_to_refresh_header = 0x7f070086;
+		public static final int pull_to_refresh_image = 0x7f070088;
+		public static final int pull_to_refresh_progress = 0x7f070087;
+		public static final int pull_to_refresh_text = 0x7f070089;
+		public static final int pull_to_refresh_updated_at = 0x7f07008a;
 	}
 	public static final class layout {
-		public static final int pull_to_refresh_header = 0x7f030021;
+		public static final int pull_to_refresh_header = 0x7f030024;
 	}
 	public static final class string {
 		public static final int app_name = 0x7f050000;

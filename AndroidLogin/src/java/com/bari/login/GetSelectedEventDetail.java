@@ -180,8 +180,9 @@ public class GetSelectedEventDetail extends HttpServlet {
             }
             if (!checkNull) {              
                 json.put("allFeedBack", jsonArray);
+                json.put("feedBackSuccess", "1");
             } else {
-                json.put("allFeedBack", "0");
+                json.put("feedBackSuccess", "0");
             }
             return json;
 
@@ -250,4 +251,6 @@ public class GetSelectedEventDetail extends HttpServlet {
         }
         return 0;
     }
+    
+    
 }

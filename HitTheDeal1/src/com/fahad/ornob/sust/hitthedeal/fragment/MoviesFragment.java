@@ -14,7 +14,7 @@ public class MoviesFragment extends Fragment {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 
-		View rootView = inflater.inflate(R.layout.fragment_games, container, false);
+		View rootView = inflater.inflate(R.layout.viwer_profile_fragment, container, false);
 		
 		return rootView;
 	}

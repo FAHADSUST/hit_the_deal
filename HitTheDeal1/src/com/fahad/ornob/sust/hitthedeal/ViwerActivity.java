@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
+
 import com.fahad.ornob.sust.hitthedeal.adapter.TabsPagerAdapter;
 import com.fahad.ornob.sust.hitthedeal.fragment.GoogleMapFragment;
 import com.fahad.ornob.sust.hitthedeal.item.Event;
@@ -25,7 +26,10 @@ import android.support.v4.view.ViewPager;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.style.ImageSpan;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.app.Service;
+import android.content.Intent;
 
 import android.location.Location;
 import android.location.LocationListener;
@@ -202,5 +206,21 @@ public class ViwerActivity extends FragmentActivity implements
 		// TODO Auto-generated method stub
 
 	}
+	
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		getMenuInflater().inflate(R.menu.main, menu);
+		return true;
+	}
+	
+	@Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.action_settings) {
+            startActivity(new Intent(this,ViwerProfileActivity.class));
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
 }

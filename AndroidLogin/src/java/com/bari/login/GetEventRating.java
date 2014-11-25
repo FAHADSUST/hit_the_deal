@@ -65,37 +65,31 @@ public class GetEventRating extends HttpServlet {
 
         
 
-        String sql = "SELECT * FROM `rating` WHERE event_id=?";
+        String sql = "SELECT avg(rating) as rating,count(rating) as countNumber FROM `rating` WHERE event_id=?";
         Connection con = DBConnectionHandler.getConnection();
-
         JSONObject json = new JSONObject();
-
         try {
             PreparedStatement ps = con.prepareStatement(sql);
-//            for (int i = 0; i < 2; i++) {
             ps.setString(1, params[0]);
-//            }
             ResultSet rs = ps.executeQuery();
 
-            JSONArray jsonArray = new JSONArray();
+
             boolean checkNull = true;
-            while (rs.next()) {
-                JSONObject jsonInner = new JSONObject();
-
-
-                checkNull = false;
-                for (int i = 0; i < length; i++) {
-
-                    jsonInner.put(ratingkey[i], rs.getString(ratingkey[i]));
-                }
-                jsonArray.add(jsonInner);
-
+            int count = 0;
+            double reting = 0.0;
+            if (rs.next()) {
+                checkNull = false;     
+                double retingtemp = rs.getDouble("rating");
+                count = rs.getInt("countNumber");
+                reting = roundMyData(retingtemp,1);
             }
+
             if (!checkNull) {
-                json.put("success", "1");
-                json.put("all", jsonArray);
+                json.put("rating", reting);
+                json.put("countNumber", count);
             } else {
-                json.put("success", "0");
+                json.put("rating", "0");
+                json.put("countNumber", 0);
             }
 
         } catch (Exception e) {
@@ -119,4 +113,12 @@ public class GetEventRating extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
+    
+    public static double roundMyData(double Rval, int numberOfDigitsAfterDecimal) {
+        double p = (float) Math.pow(10, numberOfDigitsAfterDecimal);
+        Rval = Rval * p;
+        double tmp = Math.floor(Rval);
+
+        return (double) tmp / p;
+    }
 }
