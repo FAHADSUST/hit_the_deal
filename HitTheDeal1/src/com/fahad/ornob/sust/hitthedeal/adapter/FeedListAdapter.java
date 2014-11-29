@@ -12,6 +12,7 @@ import android.text.TextUtils;
 import android.text.format.DateUtils;
 import android.text.method.LinkMovementMethod;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView.FindListener;
@@ -24,9 +25,12 @@ import com.android.volley.toolbox.NetworkImageView;
 import com.fahad.ornob.sust.hitthedeal.FeedImageView;
 import com.fahad.ornob.sust.hitthedeal.R;
 import com.fahad.ornob.sust.hitthedeal.app.AppController;
+import com.fahad.ornob.sust.hitthedeal.contants.Constants;
 import com.fahad.ornob.sust.hitthedeal.item.Event;
 import com.fahad.ornob.sust.hitthedeal.item.RatingResultItem;
 import com.fahad.ornob.sust.hitthedeal.item.UserItem;
+
+import databaseEntities.Creator1;
 
 public class FeedListAdapter extends BaseAdapter {	
 	private Activity activity;
@@ -138,11 +142,11 @@ public class FeedListAdapter extends BaseAdapter {
 		}
 
 		// user profile pic
-		profilePic.setImageUrl(userItem.getImage_url(), imageLoader);
+		profilePic.setImageUrl(Constants.urlgetImgServlet+userItem.getImage_url(), imageLoader);
 
 		// Feed image
 		if (eventItem.getEvent_img() != null) {
-			feedImageView.setImageUrl(eventItem.getEvent_img(), imageLoader);
+			feedImageView.setImageUrl(Constants.urlgetImgServlet+eventItem.getEvent_img(), imageLoader);
 			feedImageView.setVisibility(View.VISIBLE);
 			feedImageView
 					.setResponseObserver(new FeedImageView.ResponseObserver() {
@@ -157,6 +161,17 @@ public class FeedListAdapter extends BaseAdapter {
 		} else {
 			feedImageView.setVisibility(View.GONE);
 		}
+		
+		
+		profilePic.setOnTouchListener(new View.OnTouchListener() {
+			
+			@Override
+			public boolean onTouch(View v, MotionEvent event) {
+				// TODO Auto-generated method stub
+				
+				return false;
+			}
+		});
 
 		return convertView;
 	}

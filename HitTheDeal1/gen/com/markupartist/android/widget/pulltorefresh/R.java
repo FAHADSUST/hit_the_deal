@@ -8,25 +8,25 @@ package com.markupartist.android.widget.pulltorefresh;
 
 public final class R {
 	public static final class drawable {
-		public static final int ic_pulltorefresh_arrow = 0x7f020096;
-		public static final int icon = 0x7f020097;
-		public static final int pull_to_refresh_header_background = 0x7f0200aa;
+		public static final int ic_pulltorefresh_arrow = 0x7f02009e;
+		public static final int icon = 0x7f02009f;
+		public static final int pull_to_refresh_header_background = 0x7f0200bc;
 	}
 	public static final class id {
-		public static final int pull_to_refresh_header = 0x7f070086;
-		public static final int pull_to_refresh_image = 0x7f070088;
-		public static final int pull_to_refresh_progress = 0x7f070087;
-		public static final int pull_to_refresh_text = 0x7f070089;
-		public static final int pull_to_refresh_updated_at = 0x7f07008a;
+		public static final int pull_to_refresh_header = 0x7f0500e0;
+		public static final int pull_to_refresh_image = 0x7f0500e2;
+		public static final int pull_to_refresh_progress = 0x7f0500e1;
+		public static final int pull_to_refresh_text = 0x7f0500e3;
+		public static final int pull_to_refresh_updated_at = 0x7f0500e4;
 	}
 	public static final class layout {
-		public static final int pull_to_refresh_header = 0x7f030024;
+		public static final int pull_to_refresh_header = 0x7f030032;
 	}
 	public static final class string {
-		public static final int app_name = 0x7f050000;
-		public static final int pull_to_refresh_pull_label = 0x7f050001;
-		public static final int pull_to_refresh_refreshing_label = 0x7f050003;
-		public static final int pull_to_refresh_release_label = 0x7f050002;
-		public static final int pull_to_refresh_tap_label = 0x7f050004;
+		public static final int app_name = 0x7f0b0000;
+		public static final int pull_to_refresh_pull_label = 0x7f0b0001;
+		public static final int pull_to_refresh_refreshing_label = 0x7f0b0003;
+		public static final int pull_to_refresh_release_label = 0x7f0b0002;
+		public static final int pull_to_refresh_tap_label = 0x7f0b0004;
 	}
 }

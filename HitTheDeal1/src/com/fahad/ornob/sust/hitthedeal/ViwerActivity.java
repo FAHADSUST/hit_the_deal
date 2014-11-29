@@ -1,17 +1,17 @@
 package com.fahad.ornob.sust.hitthedeal;
 
-
 import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import services.EventNotifierService;
 
 import com.fahad.ornob.sust.hitthedeal.adapter.TabsPagerAdapter;
 import com.fahad.ornob.sust.hitthedeal.fragment.GoogleMapFragment;
 import com.fahad.ornob.sust.hitthedeal.item.Event;
 import com.google.android.gms.maps.model.Marker;
 
-
+import constants.Constants;
 
 import android.annotation.SuppressLint;
 import android.app.ActionBar;
@@ -29,35 +29,53 @@ import android.text.style.ImageSpan;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.app.Service;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 
 import android.location.Location;
 import android.location.LocationListener;
 
-
 @SuppressLint("NewApi")
 public class ViwerActivity extends FragmentActivity implements
-		ActionBar.TabListener , LocationListener{
+		ActionBar.TabListener, LocationListener {
 
 	LocationManager locationManager;
 	boolean isGPSFixed = false;
 	Timer timer = null;
 	TimerTask timerTask;
 	public static Location currentLocation = null;
-	
+
 	private ViewPager viewPager;
 	private TabsPagerAdapter mAdapter;
 	private ActionBar actionBar;
 	// Tab titles
-	private String[] tabs = { "Map", "Around", "All","Fav","Profile" };
+	private String[] tabs = { "Map", "Around", "All", "Fav", "Profile" };
+
+	SharedPreferences sharedPreferences;
+	Editor editor;
+	Intent eventNotifierServiceIntent;
+	boolean isEventNotifierOn = true;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_main);
+		setContentView(R.layout.viewer_activity_main);
 
-		
-		GoogleMapFragment.events = new ArrayList<Event>();	
+		sharedPreferences = getSharedPreferences(Constants.MY_PREFS,
+				Context.MODE_WORLD_WRITEABLE);
+		eventNotifierServiceIntent = new Intent(ViwerActivity.this,
+				EventNotifierService.class);
+		editor = sharedPreferences.edit();
+//		if (sharedPreferences.getBoolean(Constants.SERVICE_STATUS, true)) {
+//			stopService(eventNotifierServiceIntent);
+//			editor.putBoolean(Constants.SERVICE_STATUS, false);
+//			editor.commit();
+//			isEventNotifierOn = false;
+//		}
+
+		GoogleMapFragment.events = new ArrayList<Event>();
 		GoogleMapFragment.markers = new ArrayList<Marker>();
 		createLocationManager();
 		// Initilization
@@ -65,8 +83,6 @@ public class ViwerActivity extends FragmentActivity implements
 		viewPager.setOffscreenPageLimit(5);
 		actionBar = getActionBar();
 		mAdapter = new TabsPagerAdapter(getSupportFragmentManager());
-		
-		
 
 		viewPager.setAdapter(mAdapter);
 		actionBar.setHomeButtonEnabled(false);
@@ -109,14 +125,14 @@ public class ViwerActivity extends FragmentActivity implements
 		// on tab selected
 		// show respected fragment view
 		viewPager.setCurrentItem(tab.getPosition());
-		
-		
+
 	}
 
 	@Override
 	public void onTabUnselected(Tab tab, FragmentTransaction ft) {
 	}
-	////Ornob ko//
+
+	// //Ornob ko//
 	private void createLocationManager() {
 		locationManager = (LocationManager) this
 				.getSystemService(Service.LOCATION_SERVICE);
@@ -180,6 +196,12 @@ public class ViwerActivity extends FragmentActivity implements
 	@Override
 	protected void onDestroy() {
 		cancelTimer();
+//		if (!sharedPreferences.getBoolean(Constants.SERVICE_STATUS, false)) {
+//			startService(eventNotifierServiceIntent);
+//			editor.putBoolean(Constants.SERVICE_STATUS, true);
+//			editor.commit();
+//			isEventNotifierOn = true;
+//		}
 		super.onDestroy();
 	}
 
@@ -206,21 +228,24 @@ public class ViwerActivity extends FragmentActivity implements
 		// TODO Auto-generated method stub
 
 	}
-	
+
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		getMenuInflater().inflate(R.menu.main, menu);
 		return true;
 	}
-	
+
 	@Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            startActivity(new Intent(this,ViwerProfileActivity.class));
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
+	public boolean onOptionsItemSelected(MenuItem item) {
+		int id = item.getItemId();
+		if (id == R.id.action_settings) {
+			startActivity(new Intent(this, ViwerProfileActivity.class));
+			return true;
+		} else if (id == R.id.editprofilemenu) {
+			startActivity(new Intent(this, EditViewerProfileActivity.class));
+			return true;
+		}
+		return super.onOptionsItemSelected(item);
+	}
 
 }

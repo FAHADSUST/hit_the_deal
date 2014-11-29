@@ -51,13 +51,24 @@ public class SignUp extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
-        JSONObject json = new JSONObject();
-                  
+        
+    }
+
+    String params[];
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        
+        JSONObject json = new JSONObject();                 
         response.setContentType("text/html");  
-        PrintWriter out = response.getWriter();  
+        PrintWriter out = response.getWriter(); 
+        
+        String imageDataString = request.getParameter("image");
+        String imageName = request.getParameter("image_name");
+        
         String signUpkey[] = {"user_type_id", "user_name", "address", "email", "phn_no", "date_of_creation", "latitude", "longitude", "image_url", "password", "creator_type_id"};
         int length = signUpkey.length;
-        String params[] = new String[length]; 
+        params = new String[length]; 
         for(int i=0;i<length;i++){
             params[i]=request.getParameter(signUpkey[i]);
         }   
@@ -73,6 +84,9 @@ public class SignUp extends HttpServlet {
                 json.put("success", "0");
                 
             } else {
+                 //if(!imageDataString.equals(""))
+                    ImageUpload.imageUploadToServer(getServletContext(), imageName, imageDataString);
+                
                 String sql = "INSERT INTO `hit_the_deal`.`user` (`user_id`, `user_type_id`, `user_name`, `address`, `email`, `phn_no`, `date_of_creation`, `latitude`, `longitude`, `image_url`, `password`, `creator_type_id`) VALUES (NULL, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
                 Connection con = DBConnectionHandler.getConnection();
 
@@ -85,6 +99,7 @@ public class SignUp extends HttpServlet {
                     int rsInt = ps.executeUpdate();
                     if (rsInt !=0) {
                         json.put("success", "1");
+                        json.put("user_id", getUserId());
                         //json.put("user_type_id",params[0]);
                     } else {
                         json.put("success", "0");
@@ -102,17 +117,32 @@ public class SignUp extends HttpServlet {
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
         response.getWriter().write(json.toString());
-    }
-
-    
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        processRequest(request, response);
+        
     }
     
     @Override
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
+    
+    public String getUserId(){
+        String sql = "SELECT * FROM `user` WHERE email=?";
+        Connection con = DBConnectionHandler.getConnection();
+         
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setString(1, params[3]);
+            
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                
+                return rs.getString("user_id");
+            } else {
+                
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return "-1";
+    }
 }

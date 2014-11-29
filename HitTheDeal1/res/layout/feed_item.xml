@@ -51,7 +51,7 @@
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:text="Infacy"
-                    android:textColor="@color/bluelight"
+                    android:textColor="@color/blue"
                     android:textSize="@dimen/feed_item_timestamp" />
 
                 <LinearLayout

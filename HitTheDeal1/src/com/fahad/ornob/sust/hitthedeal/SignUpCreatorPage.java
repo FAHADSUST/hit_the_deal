@@ -12,9 +12,12 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Random;
 import java.util.regex.Pattern;
 
+import org.apache.commons.codec.binary.Base64;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -26,6 +29,7 @@ import com.android.volley.VolleyLog;
 import com.android.volley.Cache.Entry;
 import com.android.volley.Request.Method;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
 import com.fahad.ornob.sust.hitthedeal.app.AppController;
@@ -34,7 +38,6 @@ import com.fahad.ornob.sust.hitthedeal.connectiondetector.ConnectionDetector;
 import com.fahad.ornob.sust.hitthedeal.contants.CommonMethod;
 import com.fahad.ornob.sust.hitthedeal.contants.Constants;
 import com.fahad.ornob.sust.hitthedeal.contants.DataBaseKeys;
-import com.fahad.ornob.sust.hitthedeal.contants.FileUpload;
 import com.fahad.ornob.sust.hitthedeal.item.CreatorTypeItem;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
@@ -43,6 +46,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.GoogleMap.OnMapLongClickListener;
 import com.google.android.gms.maps.MapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -86,6 +90,7 @@ public class SignUpCreatorPage extends Activity {
 	private static final String TAG = SignUpCreatorPage.class.getSimpleName();
 	private static final int INITIAL_DELAY_MILLIS = 300;
 	ConnectionDetector cd;
+	ProgressDialog pDialog;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -159,7 +164,9 @@ public class SignUpCreatorPage extends Activity {
 												.playOn(findViewById(R.id.map_fragment_layout_id));
 
 										// show(Constants.MapViewGone);
-										//Toast.makeText(SignUpCreatorPage.this, donor_latitude+":"+donor_longitude, Toast.LENGTH_SHORT).show();
+										// Toast.makeText(SignUpCreatorPage.this,
+										// donor_latitude+":"+donor_longitude,
+										// Toast.LENGTH_SHORT).show();
 
 									}
 								})
@@ -175,13 +182,12 @@ public class SignUpCreatorPage extends Activity {
 			}
 		});
 		closeMapB.setOnClickListener(new View.OnClickListener() {
-			
+
 			@Override
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
-				YoYo.with(Techniques.SlideOutRight)
-				.duration(700)
-				.playOn(findViewById(R.id.map_fragment_layout_id));
+				YoYo.with(Techniques.SlideOutRight).duration(700)
+						.playOn(findViewById(R.id.map_fragment_layout_id));
 
 			}
 		});
@@ -199,8 +205,9 @@ public class SignUpCreatorPage extends Activity {
 		double latitude = myLocation.getLatitude();
 		double longitude = myLocation.getLongitude();
 		LatLng latLng = new LatLng(latitude, longitude);
-		MarkerOptions marker = new MarkerOptions().position(latLng).title(
-				"My Location!");
+		MarkerOptions marker = new MarkerOptions().position(latLng).icon(
+				BitmapDescriptorFactory
+						.fromResource(R.drawable.icon_my_location));
 		myMap.addMarker(marker);
 
 		myMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15.0f));
@@ -264,13 +271,18 @@ public class SignUpCreatorPage extends Activity {
 				.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		creatorTypeSpin.setAdapter(adapter_state);
 
+		
+		pDialog = new ProgressDialog(this);
+		pDialog.setMessage("Progressing...");
+		pDialog.setCancelable(false);
+		
 		// jsonUniAsync(Constants.urlCreatorType, Constants.CreatorTypeItem);
 
 	}
 
-	File image;	
-	Uri ImageUri;		
-	public static String imageFileName=null;
+	File image;
+	Uri ImageUri;
+	String renameStr = null;
 
 	private void listenerCreatorSignUp() {
 		// TODO Auto-generated method stub
@@ -281,7 +293,7 @@ public class SignUpCreatorPage extends Activity {
 				// TODO Auto-generated method stub
 				Intent cameraIntent = new Intent(
 						android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-				image = FileUpload.getFileForCaptureCreatorSignUp(Constants.CreatorTypeID);
+				image = CommonMethod.getFileForCapture();
 				cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT,
 						Uri.fromFile(image));
 				startActivityForResult(cameraIntent, CAMERA_REQUEST);
@@ -291,13 +303,13 @@ public class SignUpCreatorPage extends Activity {
 
 			@Override
 			public void onClick(View arg0) {
-				Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-				intent.setType("*/*");
-				intent.addCategory(Intent.CATEGORY_OPENABLE);
-
+				Intent intent = new Intent();
+				intent.setType("image/*");
+				intent.setAction(Intent.ACTION_GET_CONTENT);
 				try {
-					startActivityForResult(Intent.createChooser(intent,
-							"Select a File to Upload"), FILE_SELECT_CODE);
+					startActivityForResult(
+							Intent.createChooser(intent, "Select Picture"),
+							PICK_IMAGE);
 				} catch (android.content.ActivityNotFoundException ex) {
 					// Potentially direct the user to the Market with a Dialog
 					Toast.makeText(getApplicationContext(),
@@ -310,24 +322,23 @@ public class SignUpCreatorPage extends Activity {
 		creatorSignUpB.setOnClickListener(new View.OnClickListener() {
 
 			@Override
-			public void onClick(View arg0) {				
-				String renameStr = null;
-				
-				if (imageFileName != null ) {
-					renameStr = creatorEmailEd.getText().toString()
-							+ ".jpg";															
-				}else{
-					renameStr=Constants.ImgEmtyTAG;
+			public void onClick(View arg0) {
+
+				if (image != null) {
+					renameStr = creatorEmailEd.getText().toString() + ".jpg";
+				} else {
+					renameStr = Constants.ImgEmtyTAG;
 				}
-				if(showWarningDialog()){
-					if(imageFileName != null ){
-						FileUpload.uploadFileGetInstance(SignUpCreatorPage.this,imageFileName,renameStr);
-					}
-					String urlCreatorSignUp=Constants.urlInsertSignUpData+"user_type_id=1&user_name="+creatorOrgNameEd.getText().toString()+"&address="+creatorAddressEd.getText().toString()+"&email="+creatorEmailEd.getText().toString()+"&phn_no="+"211"+"&date_of_creation="+CommonMethod.currentTimeFrom1970()+"&latitude="+donor_latitude+"&longitude="+donor_longitude+"&image_url="+renameStr+"&password="+creatorPassEd.getText().toString()+"&creator_type_id="+creatorTypeSpin.getSelectedItemPosition()+1;					
-					Log.e(TAG, "Response: " + urlCreatorSignUp);
-					jsonUniAsync(urlCreatorSignUp, Constants.CreatorSignUp);															
+				if (showWarningDialog()) {
+					/*if (image != null) {
+						CommonMethod cm = new CommonMethod();
+						cm.uploadImage(SignUpCreatorPage.this, renameStr, image);
+					}*/
+					pDialog.show();
+					jsonUniAsync(Constants.urlInsertSignUpData,
+							Constants.CreatorSignUp);
 				}
-				
+
 			}
 		});
 		creatorAddLocationB.setOnClickListener(new View.OnClickListener() {
@@ -369,61 +380,59 @@ public class SignUpCreatorPage extends Activity {
 
 	}
 
+	private static final int PICK_IMAGE = 1;
+
 	protected void onActivityResult(int requestCode, int resultCode,
 			Intent intent) {
 		if (requestCode == CAMERA_REQUEST && resultCode == RESULT_OK) {
-			try {  
-		          Bitmap captureBmp;
-		          captureBmp = Media.getBitmap(getContentResolver(), Uri.fromFile(image) );
-		          ImageUri = Uri.fromFile(image);
-		          orgImgView.setImageBitmap(captureBmp);
-		          
-		        } catch (FileNotFoundException e) {  
-		          e.printStackTrace();  
-		        } catch (IOException e) {  
-		          e.printStackTrace();  
-		        }
-
-		} else if (resultCode == RESULT_OK) {
-
-			Uri selectedImage = intent.getData();
-			String[] filePathColumn = { MediaStore.Images.Media.DATA };
-
-			Cursor cursor = getContentResolver().query(selectedImage,
-					filePathColumn, null, null, null);
-			cursor.moveToFirst();
-
-			int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
-			String picturePath = cursor.getString(columnIndex);
-			cursor.close();
-
-			Bitmap bitmap = BitmapFactory.decodeFile(picturePath);
-			orgImgView.setImageBitmap(bitmap);
-
-			File destinationFile = FileUpload.getFileForCaptureCreatorSignUp(Constants.CreatorTypeID);
 			try {
-				destinationFile = FileUpload.copyFile(new File(picturePath), destinationFile);
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
+				Bitmap captureBmp = Media.getBitmap(getContentResolver(),
+						Uri.fromFile(image));
+				Uri ImageUri = Uri.fromFile(image);
+				orgImgView.setImageBitmap(captureBmp);
+
+			} catch (FileNotFoundException e) {
 				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			} catch (Exception e) {
+				Log.e("Fahad", e.toString());
 			}
 
+		} else if (resultCode == RESULT_OK && requestCode == PICK_IMAGE
+				&& intent != null && intent.getData() != null) {
+			Uri _uri = intent.getData();
+			Cursor cursor = getContentResolver()
+					.query(_uri,
+							new String[] { android.provider.MediaStore.Images.ImageColumns.DATA },
+							null, null, null);
+			cursor.moveToFirst();
+
+			final String imageFilePath = cursor.getString(0);
+			cursor.close();
+
+			orgImgView.setImageBitmap(BitmapFactory.decodeFile(imageFilePath));
+
+			image = new File(imageFilePath);
 		}
+
 	}
 
 	private void jsonUniAsync(String url, final int itemType) {
 
 		cd = new ConnectionDetector(this);
 		if (!cd.isConnectingToInternet()) {
-			cd.showAlertDialogToNetworkConnection(this, "Connection loss", "No network connection.", false);
+			cd.showAlertDialogToNetworkConnection(this, "Connection loss",
+					"No network connection.", false);
 
 		} else {
-			JsonObjectRequest jsonReq = new JsonObjectRequest(Method.GET, url,
-					null, new Response.Listener<JSONObject>() {
+			StringRequest jsonReq = new StringRequest(Method.POST, url,
+					new Response.Listener<String>() {
 						@Override
-						public void onResponse(JSONObject response) {
+						public void onResponse(String response) {
 							VolleyLog.d(TAG, "Response: " + response.toString());
 							if (response != null) {
+								pDialog.dismiss();
 								parseJsonFeed(response, itemType);
 							}
 						}
@@ -432,17 +441,50 @@ public class SignUpCreatorPage extends Activity {
 						@Override
 						public void onErrorResponse(VolleyError error) {
 							VolleyLog.d(TAG, "Error: " + error.getMessage());
+							pDialog.dismiss();
 						}
-					});
 
-			// Adding request to volley request queue
+					}) {
+
+				@Override
+				protected Map<String, String> getParams() {
+					Map<String, String> params = new HashMap<String, String>();
+
+					params.put("user_type_id",String.valueOf(Constants.CreatorTypeID));
+					params.put("user_name", creatorOrgNameEd.getText().toString());
+					params.put("address", creatorAddressEd.getText().toString());
+					params.put("email", creatorEmailEd.getText().toString());
+					params.put("phn_no", "211");
+					params.put("date_of_creation",
+							String.valueOf(CommonMethod.currentTimeFrom1970()));
+					params.put("latitude", String.valueOf(donor_latitude));
+					params.put("longitude", String.valueOf(donor_longitude));
+					params.put("image_url", renameStr);
+					params.put("password", creatorPassEd.getText().toString());
+
+					int creatorTypeId = creatorTypeSpin
+							.getSelectedItemPosition() + 1;
+					params.put("creator_type_id", String.valueOf(creatorTypeId));
+					
+					params.put("image_name", renameStr);//convertFileToString
+					if(image!=null)
+						params.put("image", convertFileToString(image));
+					else params.put("image", "");
+
+					return params;
+				}
+			};
+
+			
 			AppController.getInstance().addToRequestQueue(jsonReq);
 		}
 
 	}
 
-	private void parseJsonFeed(JSONObject response, int itemType) {
+	public void parseJsonFeed(String responseString, int itemType) {
 		try {
+
+			JSONObject response = new JSONObject(responseString);
 
 			int success = response.getInt(DataBaseKeys.Success);
 			if (success == 1) {
@@ -470,12 +512,12 @@ public class SignUpCreatorPage extends Activity {
 					}
 
 				} else if (itemType == Constants.CreatorSignUp) {
-					
-						Toast.makeText(this, "Suucess", Toast.LENGTH_SHORT)
-								.show();
-						Intent intent = new Intent(SignUpCreatorPage.this,CreatorActivity.class);
-						startActivity(intent);
-						finish();
+
+					Toast.makeText(this, "Suucess", Toast.LENGTH_SHORT).show();
+					Intent intent = new Intent(SignUpCreatorPage.this,
+							CreatorActivity.class);
+					startActivity(intent);
+					finish();
 				}
 
 			} else {
@@ -505,9 +547,9 @@ public class SignUpCreatorPage extends Activity {
 		} else if (String.valueOf(donor_latitude).isEmpty()) {
 			AlertDialogForAnything.showAlertDialogWhenComplte(this,
 					Constants.warnTitle, Constants.warnLocation, false);
-		  
-		  }
-		 
+
+		}
+
 		else if (creatorPassEd.getText().toString().isEmpty()) {
 			AlertDialogForAnything.showAlertDialogWhenComplte(this,
 					Constants.warnTitle, Constants.warnPass, false);
@@ -526,5 +568,30 @@ public class SignUpCreatorPage extends Activity {
 		Pattern pattern = Patterns.EMAIL_ADDRESS;
 		return pattern.matcher(email).matches();
 	}
-	
+
+	public String convertFileToString(File file) {
+		FileInputStream imageInFile;
+		String imageDataString = null;
+		try {
+			imageInFile = new FileInputStream(file);
+			byte imageData[] = new byte[(int) file.length()];
+			imageInFile.read(imageData);
+			// Converting Image byte array into Base64 String
+			imageDataString = encodeImage(imageData);
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return imageDataString;
+	}
+
+	public String encodeImage(byte[] imageByteArray) {
+
+		return new String(Base64.encodeBase64(imageByteArray));
+	}
+
 }

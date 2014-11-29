@@ -42,19 +42,22 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
+
 import com.fahad.ornob.sust.hitthedeal.LoginPage;
 import com.fahad.ornob.sust.hitthedeal.R;
 import com.fahad.ornob.sust.hitthedeal.ViwerActivity;
+import com.fahad.ornob.sust.hitthedeal.adapter.MarkerInfoWindowAdapter;
 import com.fahad.ornob.sust.hitthedeal.app.AppController;
 import com.fahad.ornob.sust.hitthedeal.connectiondetector.ConnectionDetector;
 import com.fahad.ornob.sust.hitthedeal.contants.Constants;
 import com.fahad.ornob.sust.hitthedeal.contants.DataBaseKeys;
+import com.fahad.ornob.sust.hitthedeal.item.CombinedEventAndUser;
 import com.fahad.ornob.sust.hitthedeal.item.Event;
-import com.fahad.ornob.sust.hitthedeal.necessary_method.Methods;
-import com.fahad.ornob.sust.hitthedeal.service.EventNotifierService;
+import com.fahad.ornob.sust.hitthedeal.item.UserItem;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
@@ -74,6 +77,7 @@ public class GoogleMapFragment extends Fragment {
 	static TextView textView;
 	static GoogleMap googleMap;
 	public static ArrayList<Event> events;
+	public static ArrayList<UserItem> userItems;
 	public static ArrayList<Marker> markers;
 
 	Button button;
@@ -98,9 +102,11 @@ public class GoogleMapFragment extends Fragment {
 				R.layout.map_fragment_layout, null);
 		cd = new ConnectionDetector(getActivity());
 		context=getActivity();
+		
+		userItems = new ArrayList<UserItem>();
 
-		eventNotifierServiceIntent = new Intent(getActivity(),
-				EventNotifierService.class);
+//		eventNotifierServiceIntent = new Intent(getActivity(),
+//				EventNotifierService.class);
 		activity = getActivity();
 		googleMapFragment = new GoogleMapFragment();
 		sharedPreferences = getActivity().getSharedPreferences(
@@ -138,34 +144,51 @@ public class GoogleMapFragment extends Fragment {
 	}
 
 	private void initilizeMap() {
-		// mapFragment = ((SupportMapFragment) getActivity()
-		// .getSupportFragmentManager().findFragmentById(R.id.map));
-		googleMap = ((SupportMapFragment) getActivity()
-				.getSupportFragmentManager().findFragmentById(R.id.map))
-				.getMap();
-		googleMap.setMyLocationEnabled(true);
-		googleMap.getUiSettings().setMyLocationButtonEnabled(true);
-		googleMap
-				.setOnMyLocationChangeListener(new GoogleMap.OnMyLocationChangeListener() {
-
-					@Override
-					public void onMyLocationChange(Location location) {
-
-					}
-				});
-		googleMap
-				.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
-
-					@Override
-					public void onInfoWindowClick(Marker marker) {
-						Toast.makeText(
-								getActivity(),
-								events.get(markers.indexOf(marker))
-										.getEventDescription(),
-								Toast.LENGTH_SHORT).show();
-					}
-				});
-
+		/*if (googleMap != null)
+        {*/
+			// mapFragment = ((SupportMapFragment) getActivity()
+			// .getSupportFragmentManager().findFragmentById(R.id.map));
+			googleMap = ((SupportMapFragment) getActivity()
+					.getSupportFragmentManager().findFragmentById(R.id.map))
+					.getMap();
+			googleMap.setMyLocationEnabled(true);
+			googleMap.getUiSettings().setMyLocationButtonEnabled(true);
+			googleMap
+					.setOnMyLocationChangeListener(new GoogleMap.OnMyLocationChangeListener() {
+	
+						@Override
+						public void onMyLocationChange(Location location) {
+	
+						}
+					});
+			googleMap
+					.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
+	
+						@Override
+						public void onInfoWindowClick(Marker marker) {
+							Toast.makeText(
+									getActivity(),
+									events.get(markers.indexOf(marker))
+											.getEventDescription(),
+									Toast.LENGTH_SHORT).show();
+							
+						}
+					});
+			
+			
+				googleMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener()
+	            {
+	                @Override
+	                public boolean onMarkerClick(com.google.android.gms.maps.model.Marker marker)
+	                {
+	                    marker.showInfoWindow();
+	                    return true;
+	                }
+	            });
+				
+        /*}else
+            Toast.makeText(getActivity(), "Unable to create Maps", Toast.LENGTH_SHORT).show();
+*/
 		// check if map is created successfully or not
 		if (googleMap == null) {
 			Toast.makeText(getActivity(), "Sorry! unable to create maps",
@@ -254,6 +277,9 @@ public class GoogleMapFragment extends Fragment {
 								eventJsonObject
 								.getString(DataBaseKeys.EVENT_URL));
 						events.add(event);
+						
+						UserItem userItem = new UserItem(eventJsonObject.getInt(DataBaseKeys.CREATOR_ID), eventJsonObject.getString(DataBaseKeys.USER_NAME), eventJsonObject.getString(DataBaseKeys.USER_IMAGE_URL), eventJsonObject.getInt(DataBaseKeys.USER_CREATOR_TYPE_ID));
+						userItems.add(userItem);
 					}
 				 
 			 }else{
@@ -279,20 +305,50 @@ public class GoogleMapFragment extends Fragment {
 					(new LatLng(ViwerActivity.currentLocation.getLatitude(),
 							ViwerActivity.currentLocation.getLongitude())), 13));
 		} else {
-			Methods.makeToast(activity, "location null", Toast.LENGTH_LONG);
+			Toast.makeText(activity, "location null", Toast.LENGTH_LONG).show();
 		}
 	}
 
+	
+	
+	private static HashMap<Marker , CombinedEventAndUser> mMarkersHashMap;
 	static void markTheEventsOnMAp() {
 		googleMap.clear();
 		markers.clear();
 		createCirleOnMap();
+		int i=0;
+		mMarkersHashMap = new HashMap<Marker, CombinedEventAndUser>();
 		for (Event event : events) {
+			int type = userItems.get(i).getCreator_type_id()-1;
+			/*
 			Marker marker = googleMap.addMarker(new MarkerOptions().position(
 					new LatLng(event.getLatitude(), event.getLongitude()))
-					.title(event.getEventDescription()));
-			markers.add(marker);
+					.title(event.getEventDescription()).icon(BitmapDescriptorFactory.fromResource(Constants.iconMarkerType[type])));//userItems.get(i).getUser_type_id()
+			markers.add(marker);				
+			*/
+			////new jinish///
+			
+			MarkerOptions markerOption = new MarkerOptions().position(new LatLng(event.getLatitude(), event.getLongitude()))
+					.icon(BitmapDescriptorFactory.fromResource(Constants.iconMarkerType[type]));
+            
+            Marker marker = googleMap.addMarker(markerOption);
+            CombinedEventAndUser combinedEventAndUser = new CombinedEventAndUser(userItems.get(i), event);
+            mMarkersHashMap.put(marker, combinedEventAndUser);
+            
+            markers.add(marker);
+            
+            googleMap.setInfoWindowAdapter(new MarkerInfoWindowAdapter(context,mMarkersHashMap));
+            //markers.add(marker);
+            
+            ////
+            
+            i++;
 		}
+		
+		
+
 	}
+	
+	
 
 }

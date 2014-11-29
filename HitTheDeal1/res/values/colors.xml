@@ -15,18 +15,21 @@
   ~  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
   ~  See the License for the specific language governing permissions and
   ~  limitations under the License.
-  -->
+-->
 
 <resources>
+
     <!-- Commons -->
+    <color name="background_tab_pressed">#6633B5E5</color>
+    <color name="blue">#5856D6</color>
     <color name="feed_bg">#d3d6db</color>
     <color name="feed_item_bg">#ffffff</color>
     <color name="feed_item_border">#c2c3c8</color>
     <color name="link">#0a80d1</color>
-    <color name="timestamp">#a0a3a7</color>  
-    
+    <color name="timestamp">#a0a3a7</color>
+    <color name="green">#3cb879</color>
     <color name="offwhite">#c8cbce</color>
-    <color name="offlightwhite">#eeeeee</color>    
+    <color name="offlightwhite">#eeeeee</color>
     <color name="actionbar">#3cb879</color>
     <color name="body_background">#e8e8e8</color>
     <color name="body_background_green">#82e783</color>
@@ -42,31 +45,23 @@
     <color name="bg_msg_input">#e8e888</color>
     <color name="text_msg_input">#626262</color>
     <color name="lblFromName">#777777</color>
-    
     <color name="splashgreen">#8FC249</color>
-    
     <color name="actionbar_textcolor">#ffffff</color>
-	<color name="actionbar_backg">#2c4258</color>
-    
+    <color name="actionbar_backg">#2c4258</color>
     <color name="background_app">#dedede</color>
-	
     <color name="back_list_item1">#949599</color>
     <color name="back_list_item2">#ADADAD</color>
     <color name="back_list_item3">#25B56D</color>
-    
     <color name="background_list_back">#e3e3e3</color>
     <color name="background_list_front">#ffffff</color>
     <color name="text_title">#444444</color>
     <color name="text_description">#7e7e7e</color>
-
     <color name="line">#ffbcbcbc</color>
-
     <color name="background_new_tag">#ff0000</color>
     <color name="text_new_tag">#ffffff</color>
-    
-    <color name ="temp_back">#96DEFF</color>
-    <color name ="blue_hard_dark">#000080</color>
-    <color name ="kmngreen">#5B9C64</color>
+    <color name="temp_back">#96DEFF</color>
+    <color name="blue_hard_dark">#000080</color>
+    <color name="kmngreen">#5B9C64</color>
     <color name="white">#FFFFFF</color>
     <color name="grey">#7A7A7A</color>
     <color name="background">#0044AA</color>
@@ -91,9 +86,9 @@
     <color name="flamingopink">#FC8EAC</color>
     <color name="cherryblossompink">#ffb7c6</color>
     <color name="darkpink">#E75480</color>
-    <color name = "byzantinepink">#BD33A4</color>
-    <color name = "glowypink">#FF66FF</color>
-    <color name = "glowypink2">#FF3399</color>
-    <color name = "bottlegreen">#324F17</color>
+    <color name="byzantinepink">#BD33A4</color>
+    <color name="glowypink">#FF66FF</color>
+    <color name="glowypink2">#FF3399</color>
+    <color name="bottlegreen">#324F17</color>
 
 </resources>

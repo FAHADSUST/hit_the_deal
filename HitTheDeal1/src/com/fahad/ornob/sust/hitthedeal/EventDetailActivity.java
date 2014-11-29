@@ -4,6 +4,8 @@ import java.io.UnsupportedEncodingException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -46,6 +48,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.FragmentManager;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Point;
 import android.location.Criteria;
 import android.location.Location;
@@ -111,7 +114,7 @@ public class EventDetailActivity extends Activity {
 
 		Init();
 		loadData(selectedEventId);
-
+		startTimer();
 		listener();
 	}
 
@@ -141,6 +144,22 @@ public class EventDetailActivity extends Activity {
 		eventFeedImgView.setDefaultImageResId(R.drawable.fahad);
 		organizationEventProPic = (NetworkImageView) findViewById(R.id.organizationEventProPic);
 		organizationEventProPic.setDefaultImageResId(R.drawable.ic_launcher);
+		organizationEventProPic.setOnClickListener(new View.OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				Bundle bundle = new Bundle();
+				bundle.putInt("creatorId", userItem.getUser_id());
+				bundle.putInt("vId", Constants.userItem.getUser_id());
+				bundle.putString("vName", Constants.userItem.getUser_name());
+				bundle.putString("vImgUrl", Constants.urlgetImgServlet+Constants.userItem.getImage_url());
+
+				Intent intent = new Intent(EventDetailActivity.this,
+						FavouriteCreatorActivityOrnob.class);
+				intent.putExtras(bundle);
+				startActivity(intent);
+			}
+		});
 
 		eventNameEvDTxt = (TextView) findViewById(R.id.eventNameEvDTxt);
 		orgNameEvDTxt = (TextView) findViewById(R.id.orgNameEvDTxt);
@@ -176,7 +195,7 @@ public class EventDetailActivity extends Activity {
 		count = ratingResultItem.getCountNumber();
 
 		if (eventItem.getEvent_img() != null) {
-			eventFeedImgView.setImageUrl(eventItem.getEvent_img(), imageLoader);
+			eventFeedImgView.setImageUrl(Constants.urlgetImgServlet+eventItem.getEvent_img(), imageLoader);
 			eventFeedImgView.setVisibility(View.VISIBLE);
 			eventFeedImgView
 					.setResponseObserver(new FeedImageView.ResponseObserver() {
@@ -189,7 +208,7 @@ public class EventDetailActivity extends Activity {
 						}
 					});
 		}
-		organizationEventProPic.setImageUrl(userItem.getImage_url(),
+		organizationEventProPic.setImageUrl(Constants.urlgetImgServlet+userItem.getImage_url(),
 				imageLoader);
 
 		eventNameEvDTxt.setText(eventItem.getEvent_name());
@@ -204,7 +223,8 @@ public class EventDetailActivity extends Activity {
 		eventStartTimeEvDTxt.setText(timeSt);
 		eventEndTimeEvDTxt.setText(timeFn);
 
-		ratingStampEvDTxt.setText(String.valueOf(roundMyData(ratingResultItem.getRating(),1)));
+		ratingStampEvDTxt.setText(String.valueOf(roundMyData(
+				ratingResultItem.getRating(), 1)));
 		ratingPeopleNumberEvDTxt.setText(String.valueOf(ratingResultItem
 				.getCountNumber()));
 		eventDescEvDTxt.setText(eventItem.getEventDescription());
@@ -245,7 +265,7 @@ public class EventDetailActivity extends Activity {
 							+ eventItem.getEventId() + "&viewer_id="
 							+ Constants.userItem.getUser_id() + "&feedback="
 							+ feed + "&date="
-							+ CommonMethod.currentTimeFrom1970() + "";
+							+ CommonMethod.currentTimeFrom1970() + "&setFlag=1";
 					GetDataTask(url, DataBaseKeys.InserFeedBackType);
 				}
 			}
@@ -316,6 +336,9 @@ public class EventDetailActivity extends Activity {
 						@Override
 						public void onErrorResponse(VolleyError error) {
 							VolleyLog.d(TAG, "Error: " + error.getMessage());
+							Toast.makeText(EventDetailActivity.this,
+									error.toString(), Toast.LENGTH_SHORT)
+									.show();
 						}
 					});
 
@@ -437,8 +460,8 @@ public class EventDetailActivity extends Activity {
 									.getInt(DataBaseKeys.RatingCounNumberTag));
 					curRate = (float) ratingResultItem.getRating();
 					setRatingBar.setRating(curRate);
-					ratingStampEvDTxt.setText(String.valueOf(roundMyData(ratingResultItem
-							.getRating(),1)));
+					ratingStampEvDTxt.setText(String.valueOf(roundMyData(
+							ratingResultItem.getRating(), 1)));
 					ratingPeopleNumberEvDTxt.setText(String
 							.valueOf(ratingResultItem.getCountNumber()));
 
@@ -450,10 +473,11 @@ public class EventDetailActivity extends Activity {
 							.getJSONObject(DataBaseKeys.FeedBackJsonObjTag);
 					JSONArray feedbackJsonArray = feedbackJsonObject
 							.getJSONArray(DataBaseKeys.FeedBackJsonArrayTag);
+					feedbackItems.clear();
 					for (int i = 0; i < feedbackJsonArray.length(); i++) {
 						JSONObject feedbackObjectItem = (JSONObject) feedbackJsonArray
 								.get(i);
-						feedbackItems.clear();
+
 						FeedBackItem item = new FeedBackItem(
 								feedbackObjectItem
 										.getInt(DataBaseKeys.FeedBackTag[0]),
@@ -481,6 +505,7 @@ public class EventDetailActivity extends Activity {
 					giveFeedBackEvDEd.setText("");
 
 					addItemToFeedListView();
+					scrollMyListViewToBottom();
 				}
 
 			} else {
@@ -565,13 +590,72 @@ public class EventDetailActivity extends Activity {
 		}
 
 	}
-	
-	public static double roundMyData(double Rval, int numberOfDigitsAfterDecimal) {
-        double p = (float) Math.pow(10, numberOfDigitsAfterDecimal);
-        Rval = Rval * p;
-        double tmp = Math.floor(Rval);
 
-        return (double) tmp / p;
-    }
+	public static double roundMyData(double Rval, int numberOfDigitsAfterDecimal) {
+		double p = (float) Math.pow(10, numberOfDigitsAfterDecimal);
+		Rval = Rval * p;
+		double tmp = Math.floor(Rval);
+
+		return (double) tmp / p;
+	}
+
+	private void scrollMyListViewToBottom() {
+		feedEvDListView.post(new Runnable() {
+			@Override
+			public void run() {
+				// Select the last row so it will scroll into view...
+				if (listAdapter.getCount() != 0) {
+					feedEvDListView.smoothScrollToPosition(listAdapter
+							.getCount() - 1);
+				}
+				// Just add something to scroll to the top ;-)
+			}
+		});
+	}
+
+	Timer timer = null;
+	TimerTask timerTask;
+
+	void startTimer() {
+		timer = new Timer();
+		initializeTimerTask();
+		timer.scheduleAtFixedRate(timerTask, 30000, 30000);
+	}
+
+	void cancelTimer() {
+		if (timer != null && timerTask != null) {
+			timerTask.cancel();
+			timer.purge();
+			timer.cancel();
+		}
+	}
+
+	void initializeTimerTask() {
+		timerTask = new TimerTask() {
+
+			@Override
+			public void run() {
+				EventDetailActivity.this.runOnUiThread(new Runnable() {
+
+					@Override
+					public void run() {
+						String url = Constants.urlInsertFeedBack + "event_id="
+								+ eventItem.getEventId() + "&viewer_id="
+								+ Constants.userItem.getUser_id()
+								+ "&feedback=" + "" + "&date="
+								+ CommonMethod.currentTimeFrom1970()
+								+ "&setFlag=2";
+						GetDataTask(url, DataBaseKeys.InserFeedBackType);
+					}
+				});
+			}
+		};
+	}
+
+	@Override
+	protected void onDestroy() {
+		cancelTimer();
+		super.onDestroy();
+	}
 
 }

@@ -81,7 +81,7 @@ public class ViwerProfileActivity extends Activity {
 		myFavCreatB= (Button)findViewById(R.id.myfavCreatorsB);
 		
 		viwerNameProfileTxt.setText(Constants.userItem.getUser_name());
-		myProfileNetImgView.setImageUrl(Constants.userItem.getImage_url(), imageLoader);
+		myProfileNetImgView.setImageUrl(Constants.urlgetImgServlet+Constants.userItem.getImage_url(), imageLoader);
 		/*if (Constants.userItem.getImage_url() != null) {
 			myProImageView.setImageUrl(Constants.userItem.getImage_url(), imageLoader);
 			myProImageView.setVisibility(View.VISIBLE);

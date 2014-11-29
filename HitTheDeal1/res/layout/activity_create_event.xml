@@ -1,0 +1,327 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical" >
+
+        <FrameLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_weight="70" >
+
+            <com.fahad.ornob.sust.hitthedeal.customImageView.CustomNetworkImageView
+                android:id="@+id/profie_image_view"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:scaleType="fitXY" />
+
+            <Button
+                android:id="@+id/take_snap_button"
+                android:layout_width="55dp"
+                android:layout_height="55dp"
+                android:layout_gravity="bottom|left"
+                android:layout_margin="3dp"
+                android:background="@drawable/camera_icon" />
+
+            <Button
+                android:id="@+id/browse_snap_button"
+                android:layout_width="55dp"
+                android:layout_height="55dp"
+                android:layout_gravity="bottom|right"
+                android:layout_margin="3dp"
+                android:background="@drawable/browse_icon" />
+        </FrameLayout>
+
+        <customviews.ObservableScrollView
+            android:id="@+id/scrollview"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_weight="30"
+            android:background="@color/white" >
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:orientation="vertical" >
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="90dp"
+                    android:orientation="horizontal" >
+
+                    <EditText
+                        android:id="@+id/eventNameET"
+                        android:layout_width="fill_parent"
+                        android:layout_height="70dp"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginRight="4dp"
+                        android:background="@drawable/rectangle_edit_text"
+                        android:gravity="center"
+                        android:hint="Event Title"
+                        android:textColor="@color/black"
+                        android:textSize="20dp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="140dp"
+                    android:orientation="horizontal" >
+
+                    <EditText
+                        android:id="@+id/descriptionET"
+                        android:layout_width="fill_parent"
+                        android:layout_height="130dp"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginRight="4dp"
+                        android:layout_weight="20"
+                        android:background="@drawable/rectangle_edit_text"
+                        android:gravity="center"
+                        android:hint="Event Description"
+                        android:textColor="@color/black"
+                        android:textSize="20dp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="70dp"
+                    android:orientation="horizontal" >
+
+                    <EditText
+                        android:id="@+id/linkET"
+                        android:layout_width="fill_parent"
+                        android:layout_height="60dp"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginRight="4dp"
+                        android:layout_weight="20"
+                        android:background="@drawable/rectangle_edit_text"
+                        android:gravity="center"
+                        android:hint="Tap The Arrow To NAvigate To Event Link"
+                        android:textColor="@color/black"
+                        android:textSize="20dp" />
+
+                    <LinearLayout
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:layout_gravity="center"
+                        android:layout_weight="80" >
+
+                        <Button
+                            android:id="@+id/openBrowser"
+                            android:layout_width="60dp"
+                            android:layout_height="60dp"
+                            android:layout_gravity="center"
+                            android:background="@drawable/right_black"
+                            android:gravity="center" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="70dp"
+                    android:orientation="horizontal" >
+
+                    <EditText
+                        android:id="@+id/startDateET"
+                        android:layout_width="fill_parent"
+                        android:layout_height="60dp"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginRight="4dp"
+                        android:layout_weight="20"
+                        android:background="@drawable/rectangle_edit_text"
+                        android:editable="false"
+                        android:gravity="center"
+                        android:hint="Tap The Arrow To Choose Date"
+                        android:textColor="@color/black"
+                        android:textSize="20dp" />
+
+                    <LinearLayout
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:layout_gravity="center"
+                        android:layout_weight="80" >
+
+                        <Button
+                            android:id="@+id/startDatePicker"
+                            android:layout_width="60dp"
+                            android:layout_height="60dp"
+                            android:layout_gravity="center"
+                            android:background="@drawable/right_black"
+                            android:gravity="center" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="70dp"
+                    android:orientation="horizontal" >
+
+                    <EditText
+                        android:id="@+id/endDateET"
+                        android:layout_width="fill_parent"
+                        android:layout_height="60dp"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginRight="4dp"
+                        android:layout_weight="20"
+                        android:background="@drawable/rectangle_edit_text"
+                        android:editable="false"
+                        android:gravity="center"
+                        android:hint="Tap The Arrow To Choose Date"
+                        android:textColor="@color/black"
+                        android:textSize="20dp" />
+
+                    <LinearLayout
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:layout_gravity="center"
+                        android:layout_weight="80" >
+
+                        <Button
+                            android:id="@+id/endDatePicker"
+                            android:layout_width="60dp"
+                            android:layout_height="60dp"
+                            android:layout_gravity="center"
+                            android:background="@drawable/right_black"
+                            android:gravity="center" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="140dp"
+                    android:orientation="horizontal" >
+
+                    <LinearLayout
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:layout_weight="30"
+                        android:orientation="vertical" >
+
+                        <LinearLayout
+                            android:layout_width="fill_parent"
+                            android:layout_height="fill_parent"
+                            android:layout_weight="50"
+                            android:orientation="horizontal" >
+
+                            <EditText
+                                android:id="@+id/latitudeET"
+                                android:layout_width="fill_parent"
+                                android:layout_height="60dp"
+                                android:layout_gravity="center"
+                                android:layout_marginLeft="5dp"
+                                android:layout_marginRight="4dp"
+                                android:background="@drawable/rectangle_edit_text"
+                                android:editable="false"
+                                android:gravity="center"
+                                android:hint="Tap The Map Marker To Choose Location"
+                                android:textColor="@color/black"
+                                android:textSize="20dp" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="fill_parent"
+                            android:layout_height="fill_parent"
+                            android:layout_weight="50"
+                            android:orientation="horizontal" >
+
+                            <EditText
+                                android:id="@+id/longitudeET"
+                                android:layout_width="fill_parent"
+                                android:layout_height="60dp"
+                                android:layout_gravity="center"
+                                android:layout_marginLeft="5dp"
+                                android:layout_marginRight="4dp"
+                                android:background="@drawable/rectangle_edit_text"
+                                android:editable="false"
+                                android:gravity="center"
+                                android:hint="Tap The Map Marker To Choose Location"
+                                android:textColor="@color/black"
+                                android:textSize="20dp" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <RelativeLayout
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:layout_weight="70" >
+
+                        <Button
+                            android:id="@+id/openMapButton"
+                            android:layout_width="60dp"
+                            android:layout_height="100dp"
+                            android:layout_centerInParent="true"
+                            android:background="@drawable/marker_black"
+                            android:gravity="center" />
+                    </RelativeLayout>
+                </LinearLayout>
+            </LinearLayout>
+        </customviews.ObservableScrollView>
+    </LinearLayout>
+
+    <FrameLayout
+        android:id="@+id/map_layout"
+        android:layout_width="300dp"
+        android:layout_height="450dp"
+        android:layout_gravity="center"
+        android:visibility="invisible" >
+
+        <fragment
+            android:id="@+id/map"
+            android:name="com.google.android.gms.maps.MapFragment"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_gravity="center" />
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="20dp"
+            android:layout_gravity="top"
+            android:gravity="center"
+            android:text="Tap And Hold On Map To Select New Location"
+            android:textColor="@color/black" />
+
+        <Button
+            android:id="@+id/exit_map_button"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_gravity="bottom|left"
+            android:layout_margin="3dp"
+            android:background="@drawable/cross_icon" />
+    </FrameLayout>
+
+    <ProgressBar
+        android:id="@+id/progress_bar"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_gravity="center"
+        android:visibility="invisible" />
+
+    <LinearLayout
+            android:id="@+id/sliding_layout"
+            android:layout_width="fill_parent"
+            android:layout_height="60dp"
+            android:layout_gravity="bottom"
+            android:background="@color/green"
+            android:orientation="horizontal"
+            android:visibility="invisible" >
+
+            <Button
+                android:id="@+id/createButton"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:background="@color/green"
+                android:gravity="center"
+                android:text="Create Event"
+                android:textColor="@drawable/button_color_selector"
+                android:textSize="25dp" />  
+        </LinearLayout>
+</FrameLayout>

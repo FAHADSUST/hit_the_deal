@@ -25,7 +25,6 @@ import org.json.simple.JSONObject;
 @WebServlet(name = "InsertEventFeedBack", urlPatterns = {"/InsertEventFeedBack"})
 public class InsertEventFeedBack extends HttpServlet {
 
-    
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
@@ -36,54 +35,64 @@ public class InsertEventFeedBack extends HttpServlet {
              */
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet InsertEventFeedBack</title>");            
+            out.println("<title>Servlet InsertEventFeedBack</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet InsertEventFeedBack at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
-        } finally {            
+        } finally {
             out.close();
         }
     }
-
     String params[];
     Connection con;
-    
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
-        JSONObject json = new JSONObject();                  
-        response.setContentType("text/html");  
-        PrintWriter out = response.getWriter();  
-        String feedBackkey[] = {"event_id","viewer_id","feedback","date"};
+
+        JSONObject json = new JSONObject();
+        response.setContentType("text/html");
+        PrintWriter out = response.getWriter();
+        String typeFlag = "setFlag";
+        String typeGetOrSet = request.getParameter(typeFlag);
+
+        String feedBackkey[] = {"event_id", "viewer_id", "feedback", "date"};
         int length = feedBackkey.length;
-        params = new String[length]; 
-        for(int i=0;i<length;i++){
-            params[i]=request.getParameter(feedBackkey[i]);
-        }   
-                
-        String sql = "INSERT INTO `hit_the_deal`.`feedback` (`feedback_id`, `event_id`, `viewer_id`, `feedback`, `date`) VALUES (NULL, ?, ?, ?, ?)";
+        params = new String[length];
+        for (int i = 0; i < length; i++) {
+            params[i] = request.getParameter(feedBackkey[i]);
+        }
         con = DBConnectionHandler.getConnection();
-         
-        try {
-            System.out.println("dssdsfdf");
-            PreparedStatement ps = con.prepareStatement(sql);
-            for(int i=0;i<length;i++){
-                ps.setString(i+1, params[i]);
-            }          
-            int rsInt = ps.executeUpdate();
-            if (rsInt !=0) {
-                JSONObject jsonObj = getAllFeedForThisEvent();
-                
-                json.put("success", "1");
-                json.put("feedDetail",jsonObj);
-            } else {
-                json.put("success", "0");
+        
+        if (typeGetOrSet.equals("1")) {
+            
+            String sql = "INSERT INTO `hit_the_deal`.`feedback` (`feedback_id`, `event_id`, `viewer_id`, `feedback`, `date`) VALUES (NULL, ?, ?, ?, ?)";
+            
+
+            try {
+                System.out.println("dssdsfdf");
+                PreparedStatement ps = con.prepareStatement(sql);
+                for (int i = 0; i < length; i++) {
+                    ps.setString(i + 1, params[i]);
+                }
+                int rsInt = ps.executeUpdate();
+                if (rsInt != 0) {
+                    JSONObject jsonObj = getAllFeedForThisEvent();
+
+                    json.put("success", "1");
+                    json.put("feedDetail", jsonObj);
+                } else {
+                    json.put("success", "0");
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-        } catch (Exception e) {
-            e.printStackTrace();
+        } else if (typeGetOrSet.equals("2")) {
+            JSONObject jsonObj = getAllFeedForThisEvent();
+            json.put("success", "1");
+            json.put("feedDetail", jsonObj);
         }
         //System.out.println(json);
         response.setContentType("application/json");
@@ -91,32 +100,27 @@ public class InsertEventFeedBack extends HttpServlet {
         response.getWriter().write(json.toString());
     }
 
-    
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
-        
-        
     }
 
-    
     @Override
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
-    
+
     private JSONObject getAllFeedForThisEvent() {
-        String feedBackkey[] = {"feedback_id","event_id","viewer_id","feedback","date"};
+        String feedBackkey[] = {"feedback_id", "event_id", "viewer_id", "feedback", "date"};
         int length = feedBackkey.length;
-        String feedBackUserkey[] = {"user_name","image_url"};
-        int userLength=feedBackUserkey.length;
-        
-        
+        String feedBackUserkey[] = {"user_name", "image_url"};
+        int userLength = feedBackUserkey.length;
+
+
         String feedBack = "`feedback_id`, `event_id`, `viewer_id`, `feedback`, `date`";
         String userNedd = ", user_name, image_url";
 
-        String sql = "SELECT "+feedBack+" "+userNedd+" FROM `feedback`,user  WHERE viewer_id=user_id and event_id=?";
+        String sql = "SELECT " + feedBack + " " + userNedd + " FROM `feedback`,user  WHERE viewer_id=user_id and event_id=?";
 
         JSONObject json = new JSONObject();
 
@@ -142,11 +146,11 @@ public class InsertEventFeedBack extends HttpServlet {
 
                     jsonInner.put(feedBackUserkey[i], rs.getString(feedBackUserkey[i]));
                 }
-                
+
                 jsonArray.add(jsonInner);
 
             }
-            if (!checkNull) {              
+            if (!checkNull) {
                 json.put("allFeedBack", jsonArray);
             } else {
                 json.put("allFeedBack", "0");

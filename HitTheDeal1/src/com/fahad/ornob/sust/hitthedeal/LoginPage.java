@@ -10,6 +10,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import services.BootUpReceiver;
+
 import com.android.volley.Cache;
 import com.android.volley.Cache.Entry;
 import com.android.volley.Request.Method;
@@ -36,11 +38,14 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import databaseEntities.Creator1;
+
 import android.support.v7.app.ActionBarActivity;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.FragmentManager;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.location.Criteria;
@@ -75,12 +80,16 @@ public class LoginPage extends Activity {
 	private static final String TAG = LoginPage.class.getSimpleName();
 	private static final int INITIAL_DELAY_MILLIS = 300;
 	ConnectionDetector cd;
+	ProgressDialog pDialog;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.login_page);
 		getActionBar().hide();
+//		 Intent intent = new Intent(getApplicationContext(),
+//		 BootUpReceiver.class);
+//		 sendBroadcast(getIntent());
 		initLogin();
 		listenerLogin();
 		new animationLoginAsync().execute();
@@ -130,6 +139,8 @@ public class LoginPage extends Activity {
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
 				if (showWarningDialog()) {
+					pDialog.show();
+					
 					String url = Constants.urlLogin + "email="
 							+ emailEd.getText().toString() + "&password="
 							+ passEd.getText().toString();
@@ -153,9 +164,13 @@ public class LoginPage extends Activity {
 			@Override
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
-				mTarget3.setVisibility(View.VISIBLE);
-				YoYo.with(Techniques.SlideInDown).duration(700)
-						.playOn(mTarget3);
+				if (mTarget3.getVisibility() == View.VISIBLE) {					
+					mTarget3.setVisibility(View.INVISIBLE);
+				}else{
+					mTarget3.setVisibility(View.VISIBLE);
+					YoYo.with(Techniques.SlideInDown).duration(600)
+							.playOn(mTarget3);
+				}
 			}
 		});
 		signUpCreatorB.setOnClickListener(new View.OnClickListener() {
@@ -208,13 +223,43 @@ public class LoginPage extends Activity {
 		mTarget4 = this.findViewById(R.id.logoAnimImg);
 
 		mTarget3.setVisibility(View.INVISIBLE);
+		
+		pDialog = new ProgressDialog(this);
+		pDialog.setMessage("Progressing...");
+		pDialog.setCancelable(false);
+		
 
 	}
 
 	private void jsonUniAsync(String url, final int itemType) {
 
 		cd = new ConnectionDetector(this);
-		if (!cd.isConnectingToInternet()) {
+		if (cd.isConnectingToInternet()) {
+			JsonObjectRequest jsonReq = new JsonObjectRequest(Method.GET, url,
+					null, new Response.Listener<JSONObject>() {
+						@Override
+						public void onResponse(JSONObject response) {
+							VolleyLog.d(TAG, "Response: " + response.toString());
+							if (response != null) {
+								if(pDialog.isShowing()) pDialog.dismiss();
+								parseJsonFeed(response, itemType);
+							}
+						}
+					}, new Response.ErrorListener() {
+
+						@Override
+						public void onErrorResponse(VolleyError error) {
+							VolleyLog.d(TAG, "Error: " + error.getMessage());
+							if(pDialog.isShowing()) pDialog.dismiss();
+						}
+					});
+
+			// Adding request to volley request queue
+			AppController.getInstance().addToRequestQueue(jsonReq);
+
+		} else {
+			
+			
 			Cache cache = AppController.getInstance().getRequestQueue()
 					.getCache();
 			Entry entry = cache.get(url);
@@ -231,27 +276,6 @@ public class LoginPage extends Activity {
 					e.printStackTrace();
 				}
 			}
-
-		} else {
-			JsonObjectRequest jsonReq = new JsonObjectRequest(Method.GET, url,
-					null, new Response.Listener<JSONObject>() {
-						@Override
-						public void onResponse(JSONObject response) {
-							VolleyLog.d(TAG, "Response: " + response.toString());
-							if (response != null) {
-								parseJsonFeed(response, itemType);
-							}
-						}
-					}, new Response.ErrorListener() {
-
-						@Override
-						public void onErrorResponse(VolleyError error) {
-							VolleyLog.d(TAG, "Error: " + error.getMessage());
-						}
-					});
-
-			// Adding request to volley request queue
-			AppController.getInstance().addToRequestQueue(jsonReq);
 		}
 
 	}
@@ -306,7 +330,12 @@ public class LoginPage extends Activity {
 	private void gotoNextPage(int typeid) {
 		// TODO Auto-generated method stub
 		if (typeid == Constants.CreatorActivityPage) {
-			Intent intent = new Intent(LoginPage.this, CreatorActivity.class);
+			Intent intent = new Intent(LoginPage.this, CreatorActivityOrnob.class);
+			Bundle bundle = new Bundle();
+			Creator1 creator = new Creator1(Constants.userItem.getUser_id(), Constants.userItem.getUser_name(), Constants.userItem.getAddress(), Constants.userItem.getEmail(), Constants.userItem.getPhn_no(), Constants.userItem.getDate_of_creation(), Constants.userItem.getLatitude(), Constants.userItem.getLongitude(), Constants.userItem.getImage_url(), Constants.userItem.getCreator_type_id());
+			bundle.putParcelable("creator", creator);
+			intent.putExtras(bundle);
+			
 			startActivity(intent);
 		} else if (typeid == Constants.ViwerActivityPage) {
 			Intent intent = new Intent(LoginPage.this, ViwerActivity.class);

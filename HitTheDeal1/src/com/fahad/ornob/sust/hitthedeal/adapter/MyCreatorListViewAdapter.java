@@ -20,6 +20,7 @@ import com.android.volley.toolbox.NetworkImageView;
 import com.fahad.ornob.sust.hitthedeal.FeedImageView;
 import com.fahad.ornob.sust.hitthedeal.R;
 import com.fahad.ornob.sust.hitthedeal.app.AppController;
+import com.fahad.ornob.sust.hitthedeal.contants.Constants;
 import com.fahad.ornob.sust.hitthedeal.item.Event;
 import com.fahad.ornob.sust.hitthedeal.item.FeedBackItem;
 import com.fahad.ornob.sust.hitthedeal.item.UserItem;
@@ -73,7 +74,7 @@ public class MyCreatorListViewAdapter  extends BaseAdapter {
 		
 		name.setText(userItem.getUser_name());
 				
-		profilePic.setImageUrl(userItem.getImage_url(), imageLoader);
+		profilePic.setImageUrl(Constants.urlgetImgServlet+userItem.getImage_url(), imageLoader);
 
 				
 		return convertView;
