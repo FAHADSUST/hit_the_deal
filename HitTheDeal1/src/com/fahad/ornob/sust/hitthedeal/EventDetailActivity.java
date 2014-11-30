@@ -3,7 +3,9 @@ package com.fahad.ornob.sust.hitthedeal;
 import java.io.UnsupportedEncodingException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -20,6 +22,7 @@ import com.android.volley.Request.Method;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.NetworkImageView;
+import com.android.volley.toolbox.StringRequest;
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
 import com.fahad.ornob.sust.hitthedeal.adapter.EventFeedBackAdapter;
@@ -42,7 +45,6 @@ import com.google.android.gms.maps.GoogleMap.OnMapLongClickListener;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.markupartist.android.widget.PullToRefreshListView;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -232,6 +234,7 @@ public class EventDetailActivity extends Activity {
 		getRatingBar.setRating((float) myViwerRating);
 	}
 
+	String feed="";
 	private void listener() {
 		// TODO Auto-generated method stub
 		getRatingBar
@@ -257,16 +260,16 @@ public class EventDetailActivity extends Activity {
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
 
-				String feed = giveFeedBackEvDEd.getText().toString();
+				feed = giveFeedBackEvDEd.getText().toString();
 				if (!feed.isEmpty()) {
 					Toast.makeText(EventDetailActivity.this, "start:" + feed,
 							Toast.LENGTH_SHORT).show();
-					String url = Constants.urlInsertFeedBack + "event_id="
+					String url = Constants.urlInsertFeedBack; /*+ "event_id="
 							+ eventItem.getEventId() + "&viewer_id="
 							+ Constants.userItem.getUser_id() + "&feedback="
 							+ feed + "&date="
-							+ CommonMethod.currentTimeFrom1970() + "&setFlag=1";
-					GetDataTask(url, DataBaseKeys.InserFeedBackType);
+							+ CommonMethod.currentTimeFrom1970() + "&setFlag=1";*/
+					GetDataTaskForFeedBack(url, DataBaseKeys.InserFeedBackType);
 				}
 			}
 		});
@@ -357,6 +360,64 @@ public class EventDetailActivity extends Activity {
 				e.printStackTrace();
 			}
 
+		}
+	}
+	
+	private void GetDataTaskForFeedBack(String url, final int typeItem) {
+		// TODO Auto-generated method stub
+		Cache cache = AppController.getInstance().getRequestQueue().getCache();
+		Entry entry = cache.get(url);
+
+		if (cd.isConnectingToInternet()) {
+			StringRequest jsonReq = new StringRequest(Method.POST, url
+					, new Response.Listener<String>() {
+
+						@Override
+						public void onResponse(String response) {
+							VolleyLog.d(TAG, "Response: " + response.toString());
+							if (response != null) {
+
+								JSONObject json;
+								try {
+									json = new JSONObject(response);
+									parseJsonFeed(json, typeItem);
+								} catch (JSONException e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								}
+								
+							}
+						}
+					}, new Response.ErrorListener() {
+
+						@Override
+						public void onErrorResponse(VolleyError error) {
+							VolleyLog.d(TAG, "Error: " + error.getMessage());
+							Toast.makeText(EventDetailActivity.this,
+									error.toString(), Toast.LENGTH_SHORT)
+									.show();
+						}
+					}){
+
+				@Override
+				protected Map<String, String> getParams() {
+					if(typeItem== DataBaseKeys.InserFeedBackType){
+						Map<String, String> params = new HashMap<String, String>();
+						params.put("event_id",String.valueOf(eventItem.getEventId()));
+						params.put("viewer_id", String.valueOf(Constants.userItem.getUser_id()));
+						params.put("feedback", feed);
+						params.put("date", String.valueOf(CommonMethod.currentTimeFrom1970()));
+						params.put("setFlag", "1");
+	
+						return params;
+					}
+					return null;
+				}
+			};
+
+			
+			// Adding request to volley request queue
+			AppController.getInstance().addToRequestQueue(jsonReq);
 		}
 	}
 
@@ -465,7 +526,49 @@ public class EventDetailActivity extends Activity {
 					ratingPeopleNumberEvDTxt.setText(String
 							.valueOf(ratingResultItem.getCountNumber()));
 
-				} else if (itemType == DataBaseKeys.InserFeedBackType) {
+				}else if (itemType == DataBaseKeys.GetFeedBackType) {
+
+					Toast.makeText(this, "Success", Toast.LENGTH_SHORT).show();
+
+					/*JSONObject feedbackJsonObject = response
+							.getJSONObject(DataBaseKeys.FeedBackJsonObjTag);*/
+					JSONArray feedbackJsonArray = response
+							.getJSONArray("all");
+					feedbackItems.clear();
+					for (int i = 0; i < feedbackJsonArray.length(); i++) {
+						JSONObject feedbackObjectItem = (JSONObject) feedbackJsonArray
+								.get(i);
+
+						FeedBackItem item = new FeedBackItem(
+								feedbackObjectItem
+										.getInt(DataBaseKeys.FeedBackTag[0]),
+								feedbackObjectItem
+										.getInt(DataBaseKeys.FeedBackTag[1]),
+								feedbackObjectItem
+										.getInt(DataBaseKeys.FeedBackTag[2]),
+								feedbackObjectItem
+										.getString(DataBaseKeys.FeedBackTag[3]),
+								feedbackObjectItem
+										.getLong(DataBaseKeys.FeedBackTag[4]));
+						feedbackItems.add(item);
+
+						UserItem userItem = new UserItem(
+								feedbackObjectItem
+										.getInt(DataBaseKeys.FeedBackTag[2]),
+								feedbackObjectItem
+										.getString(DataBaseKeys.USER_NAME),
+								feedbackObjectItem
+										.getString(DataBaseKeys.USER_IMAGE_URL),
+								1);
+						userItems.add(userItem);
+					}
+
+					giveFeedBackEvDEd.setText("");
+
+					addItemToFeedListView();
+					scrollMyListViewToBottom();
+					
+				}else if (itemType == DataBaseKeys.InserFeedBackType) {
 
 					Toast.makeText(this, "Success", Toast.LENGTH_SHORT).show();
 
@@ -639,13 +742,9 @@ public class EventDetailActivity extends Activity {
 
 					@Override
 					public void run() {
-						String url = Constants.urlInsertFeedBack + "event_id="
-								+ eventItem.getEventId() + "&viewer_id="
-								+ Constants.userItem.getUser_id()
-								+ "&feedback=" + "" + "&date="
-								+ CommonMethod.currentTimeFrom1970()
-								+ "&setFlag=2";
-						GetDataTask(url, DataBaseKeys.InserFeedBackType);
+						String url = Constants.urlGetEventFeedBack + "event_id="
+								+ eventItem.getEventId();
+						GetDataTask(url, DataBaseKeys.GetFeedBackType);
 					}
 				});
 			}

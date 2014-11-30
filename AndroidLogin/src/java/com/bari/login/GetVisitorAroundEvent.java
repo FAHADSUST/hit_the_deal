@@ -81,7 +81,7 @@ public class GetVisitorAroundEvent extends HttpServlet {
         //`event_id`, `creator_id`, `event_description`, `start_date`, `end_date`, `events.longitude`, `events.latitude`, `user_name`, `image_url`
         String selectedEventItem="`event_id`, `creator_id`, event_name,`event_description`, `start_date`, `end_date`, events.longitude, events.latitude, event_img, event_url";
         String selectedCreatorItem=", `user_name`, `image_url`, `creator_type_id`";
-        String sql = "SELECT "+selectedEventItem+" "+selectedCreatorItem+" FROM `events`,`user` WHERE creator_id=user_id";
+        String sql = "SELECT "+selectedEventItem+" "+selectedCreatorItem+" FROM `events`,`user` WHERE creator_id=user_id and end_date >= (UNIX_TIMESTAMP(NOW()) * 1000)";
         Connection con = DBConnectionHandler.getConnection();
 
         JSONObject json = new JSONObject();
@@ -97,8 +97,8 @@ public class GetVisitorAroundEvent extends HttpServlet {
             boolean checkNull = true;
             while (rs.next()) {              
                 
-                double lon2 = Double.parseDouble(rs.getString(eventkey[5]));
-                double lat2 = Double.parseDouble(rs.getString(eventkey[6]));
+                double lon2 = Double.parseDouble(rs.getString(eventkey[6]));
+                double lat2 = Double.parseDouble(rs.getString(eventkey[7]));
                 if(distance(lat1,  lon1,  lat2,  lon2)<=dist){
                     JSONObject jsonInner = new JSONObject();
                     JSONObject jsonObjRating;
@@ -146,21 +146,28 @@ public class GetVisitorAroundEvent extends HttpServlet {
     }
 
     private double distance(double lat1, double lon1, double lat2, double lon2) {
-        double theta = lon1 - lon2;
-        double dist = Math.sin(deg2rad(lat1)) * Math.sin(deg2rad(lat2)) + Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) * Math.cos(deg2rad(theta));
-        dist = Math.acos(dist);
-        dist = rad2deg(dist);
-        dist = dist * 60 * 1.1515;
-        return (dist);
+       
+
+      //System.out.print("Enter latitude and longitude for the first location: ");
+      double x1 = Math.toRadians(lat1);
+      double y1 = Math.toRadians(lon1);
+      //System.out.print("Enter latitude and longitude for the second location: ");
+      double x2 = Math.toRadians(lat2);
+      double y2 = Math.toRadians(lon2);
+
+      double sec1 = Math.sin(x1)*Math.sin(x2);
+      double dl=Math.abs(y1-y2);
+      double sec2 = Math.cos(x1)* Math.cos(x2);
+      //sec1,sec2,dl are in degree, need to convert to radians
+      double centralAngle = Math.acos(sec1+sec2*Math.cos(dl));
+      //Radius of Earth: 6378.1 kilometers
+      double distance =  centralAngle * 6378.1;
+      System.out.println("The distance is " + distance+" kilometers.");
+      
+      return distance;
     }
 
-    private double deg2rad(double deg) {
-        return (deg * Math.PI / 180.0);
-    }
-
-    private double rad2deg(double rad) {
-        return (rad * 180.0 / Math.PI);
-    }
+    
     
     private JSONObject getEventRatingDetail(String params) {
         String ratingkey[] = {"rating_id", "event_id", "viewer_id", "rating"};

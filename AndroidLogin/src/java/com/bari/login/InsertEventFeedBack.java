@@ -103,6 +103,53 @@ public class InsertEventFeedBack extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        
+        JSONObject json = new JSONObject();
+        response.setContentType("text/html");
+        PrintWriter out = response.getWriter();
+        String typeFlag = "setFlag";
+        String typeGetOrSet = request.getParameter(typeFlag);
+
+        String feedBackkey[] = {"event_id", "viewer_id", "feedback", "date"};
+        int length = feedBackkey.length;
+        params = new String[length];
+        for (int i = 0; i < length; i++) {
+            params[i] = request.getParameter(feedBackkey[i]);
+        }
+        con = DBConnectionHandler.getConnection();
+        
+        if (typeGetOrSet.equals("1")) {
+            
+            String sql = "INSERT INTO `hit_the_deal`.`feedback` (`feedback_id`, `event_id`, `viewer_id`, `feedback`, `date`) VALUES (NULL, ?, ?, ?, ?)";
+            
+
+            try {
+                System.out.println("dssdsfdf");
+                PreparedStatement ps = con.prepareStatement(sql);
+                for (int i = 0; i < length; i++) {
+                    ps.setString(i + 1, params[i]);
+                }
+                int rsInt = ps.executeUpdate();
+                if (rsInt != 0) {
+                    JSONObject jsonObj = getAllFeedForThisEvent();
+
+                    json.put("success", "1");
+                    json.put("feedDetail", jsonObj);
+                } else {
+                    json.put("success", "0");
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } else if (typeGetOrSet.equals("2")) {
+            JSONObject jsonObj = getAllFeedForThisEvent();
+            json.put("success", "1");
+            json.put("feedDetail", jsonObj);
+        }
+        //System.out.println(json);
+        response.setContentType("application/json");
+        response.setCharacterEncoding("UTF-8");
+        response.getWriter().write(json.toString());
     }
 
     @Override

@@ -4,7 +4,7 @@ package com.fahad.ornob.sust.hitthedeal.adapter;
 import com.fahad.ornob.sust.hitthedeal.R;
 import com.fahad.ornob.sust.hitthedeal.fragment.AroundMeFragment;
 import com.fahad.ornob.sust.hitthedeal.fragment.GoogleMapFragment;
-import com.fahad.ornob.sust.hitthedeal.fragment.MoviesFragment;
+import com.fahad.ornob.sust.hitthedeal.fragment.AllEventsFragment;
 import com.fahad.ornob.sust.hitthedeal.fragment.MyFavCreatorFragment;
 import com.fahad.ornob.sust.hitthedeal.fragment.ViwerProfileFragment;
 
@@ -31,10 +31,10 @@ public class TabsPagerAdapter extends FragmentPagerAdapter {
 			return new AroundMeFragment();
 		case 2:
 			// Movies fragment activity
-			return new MyFavCreatorFragment();
+			return new AllEventsFragment();
 		case 3:
 			// Movies fragment activity
-			return new ViwerProfileFragment();
+			return new AllEventsFragment();
 			
 		}
 

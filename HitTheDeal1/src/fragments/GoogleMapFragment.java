@@ -108,16 +108,14 @@ public class GoogleMapFragment extends Fragment {
 				.getMap();
 		googleMap.setMyLocationEnabled(true);
 		googleMap.getUiSettings().setMyLocationButtonEnabled(true);
-		googleMap
-				.setOnMyLocationChangeListener(new GoogleMap.OnMyLocationChangeListener() {
+		googleMap.setOnMyLocationChangeListener(new GoogleMap.OnMyLocationChangeListener() {
 
 					@Override
 					public void onMyLocationChange(Location location) {
 
 					}
 				});
-		googleMap
-				.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
+		googleMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
 
 					@Override
 					public void onInfoWindowClick(Marker marker) {

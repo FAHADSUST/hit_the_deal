@@ -68,14 +68,24 @@ public class GetAllEvent extends HttpServlet {
         String creatorNeededKey[] = {"user_name", "image_url", "creator_type_id"};
         int length = eventkey.length;
         int creatorLength = creatorNeededKey.length;
+        
+        String startIndex =request.getParameter("index");
 //        String params[] = new String[length]; 
 //        for(int i=0;i<length;i++){
 //            params[i]=request.getParameter(signUpkey[i]);
-//        }   
-
+//        }  
+        
+        //SELECT `event_id`, `creator_id`, event_name,`event_description`, `start_date`, `end_date`, events.longitude, events.latitude, event_img, event_url , `user_name`, `image_url`, `creator_type_id` FROM `events`,`user` WHERE creator_id=user_id and event_id<8 order by event_id desc  Limit 3 
+        //and event_id<8 order by event_id desc  Limit 3 
+        
         String selectedEventItem = "`event_id`, `creator_id`, event_name,`event_description`, `start_date`, `end_date`, events.longitude, events.latitude, event_img, event_url";
         String selectedCreatorItem = ", `user_name`, `image_url`, `creator_type_id`";
-        String sql = "SELECT " + selectedEventItem + " " + selectedCreatorItem + " FROM `events`,`user` WHERE creator_id=user_id";
+        String sql;
+        if(startIndex.equals("0")){
+            sql = "SELECT " + selectedEventItem + " " + selectedCreatorItem + " FROM `events`,`user` WHERE creator_id=user_id order by event_id desc  Limit 3";
+        }else{
+            sql = "SELECT " + selectedEventItem + " " + selectedCreatorItem + " FROM `events`,`user` WHERE creator_id=user_id and event_id < "+startIndex+" order by event_id desc  Limit 3 ";
+        }
         Connection con = DBConnectionHandler.getConnection();
 
         try {
@@ -134,6 +144,7 @@ public class GetAllEvent extends HttpServlet {
         return "Short description";
     }// </editor-fold>
 
+    //SELECT `event_id`, `creator_id`, event_name,`event_description`, `start_date`, `end_date`, events.longitude, events.latitude, event_img, event_url , `user_name`, `image_url`, `creator_type_id` FROM `events`,`user` WHERE creator_id=user_id and event_id<8 order by event_id desc  Limit 3 
     private JSONObject getEventRatingDetail(String params) {
         String ratingkey[] = {"rating_id", "event_id", "viewer_id", "rating"};
         int length = ratingkey.length;
@@ -178,3 +189,5 @@ public class GetAllEvent extends HttpServlet {
         return (double) tmp / p;
     }
 }
+
+//SELECT * FROM `events` WHERE end_date >= (UNIX_TIMESTAMP(NOW()) * 1000);

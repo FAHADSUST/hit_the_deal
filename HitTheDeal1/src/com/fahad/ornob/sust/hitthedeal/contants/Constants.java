@@ -38,9 +38,9 @@ public class Constants {
 	public final static String urlGetAllEvent = urlCommon+"GetAllEvent";
 	public final static String urlInserRating =urlCommon+"InsertEventRating?";
 	public final static String urlGetSelectedEventDetail =urlCommon+"GetSelectedEventDetail?";
-	public final static String urlInsertFeedBack=urlCommon+"InsertEventFeedBack?";
+	public final static String urlInsertFeedBack=urlCommon+"InsertEventFeedBack";
 	public final static String urlGetMyFavCreator=urlCommon+"GetMyFavCreators?";
-	
+	public final static String urlGetEventFeedBack=urlCommon+"GetEventFeedback?";
 	
 	
 	public final static String urlFileUploadServlet=urlCommon+"ImageUploader";
@@ -84,10 +84,14 @@ public class Constants {
 	public static final int ViwerSignUpPage=3;
 	public static final int CreatorSignUpPage=4;
 
-	public static final double Distance = 150000000;
+	public static final double Distance = 3;
 	
 	
 	public static int iconMarkerType[]={R.drawable.icon_pin_local_buseness,R.drawable.icon_pin_restaurent,R.drawable.icon_pin_culter,R.drawable.icon_pin_cause,R.drawable.icon_pin_others,R.drawable.icon_pin_others};
+	public static int iconMarkerShowInfoType[]={R.drawable.business_icon,R.drawable.restaurent_icon,R.drawable.culter_icon,R.drawable.cause_icon,R.drawable.other_icon,R.drawable.icon_pin_others};
+	
 	
 	public static int iconMyLocationMarker = R.drawable.icon_my_location;
+
+	
 }

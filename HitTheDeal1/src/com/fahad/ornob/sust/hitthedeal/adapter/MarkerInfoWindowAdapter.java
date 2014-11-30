@@ -20,6 +20,7 @@ import com.fahad.ornob.sust.hitthedeal.item.CombinedEventAndUser;
 import com.fahad.ornob.sust.hitthedeal.item.Event;
 import com.fahad.ornob.sust.hitthedeal.item.UserItem;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.Marker;
 
 public class MarkerInfoWindowAdapter implements GoogleMap.InfoWindowAdapter
@@ -63,8 +64,7 @@ public class MarkerInfoWindowAdapter implements GoogleMap.InfoWindowAdapter
         UserItem userItem = combinedEventAndUser.getUserItem();
         Event event = combinedEventAndUser.getEvent();
 
-        NetworkImageView markerIcon = (NetworkImageView) convertView.findViewById(R.id.marker_icon);
-        markerIcon.setDefaultImageResId(R.drawable.ic_launcher);
+        ImageView markerIcon = (ImageView) convertView.findViewById(R.id.marker_icon);
         
         TextView markerLabel = (TextView)convertView.findViewById(R.id.marker_label);
 
@@ -74,7 +74,7 @@ public class MarkerInfoWindowAdapter implements GoogleMap.InfoWindowAdapter
 
         markerLabel.setText(event.getEvent_name());
         anotherLabel.setText(userItem.getUser_name());
-        markerIcon.setImageUrl(Constants.urlgetImgServlet+userItem.getImage_url(), imageLoader);
+        markerIcon.setImageResource(Constants.iconMarkerShowInfoType[userItem.getCreator_type_id()-1]);
 
         return convertView;
     }

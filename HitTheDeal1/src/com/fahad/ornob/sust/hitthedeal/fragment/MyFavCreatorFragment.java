@@ -38,8 +38,6 @@ import com.fahad.ornob.sust.hitthedeal.contants.DataBaseKeys;
 import com.fahad.ornob.sust.hitthedeal.item.Event;
 import com.fahad.ornob.sust.hitthedeal.item.RatingResultItem;
 import com.fahad.ornob.sust.hitthedeal.item.UserItem;
-import com.markupartist.android.widget.PullToRefreshListView;
-import com.markupartist.android.widget.PullToRefreshListView.OnRefreshListener;
 
 public class MyFavCreatorFragment  extends Fragment {
 	

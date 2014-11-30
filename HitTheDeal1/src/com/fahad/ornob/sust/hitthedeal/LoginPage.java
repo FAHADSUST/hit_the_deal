@@ -241,7 +241,7 @@ public class LoginPage extends Activity {
 						public void onResponse(JSONObject response) {
 							VolleyLog.d(TAG, "Response: " + response.toString());
 							if (response != null) {
-								if(pDialog.isShowing()) pDialog.dismiss();
+								
 								parseJsonFeed(response, itemType);
 							}
 						}
@@ -306,6 +306,7 @@ public class LoginPage extends Activity {
 					int userTypeID = userItem.getUser_type_id();
 					Constants.userItem = userItem;
 
+					
 					if (userTypeID == Constants.Creator) {
 						Toast.makeText(this, "Creator", Toast.LENGTH_SHORT)
 								.show();
@@ -322,6 +323,7 @@ public class LoginPage extends Activity {
 
 		} catch (JSONException e) {
 
+			if(pDialog.isShowing()) pDialog.dismiss();
 			e.printStackTrace();
 			Toast.makeText(this, "Fail: "+e.toString(), Toast.LENGTH_SHORT).show();
 		}
@@ -330,6 +332,8 @@ public class LoginPage extends Activity {
 	private void gotoNextPage(int typeid) {
 		// TODO Auto-generated method stub
 		if (typeid == Constants.CreatorActivityPage) {
+			if(pDialog.isShowing()) pDialog.dismiss();
+			
 			Intent intent = new Intent(LoginPage.this, CreatorActivityOrnob.class);
 			Bundle bundle = new Bundle();
 			Creator1 creator = new Creator1(Constants.userItem.getUser_id(), Constants.userItem.getUser_name(), Constants.userItem.getAddress(), Constants.userItem.getEmail(), Constants.userItem.getPhn_no(), Constants.userItem.getDate_of_creation(), Constants.userItem.getLatitude(), Constants.userItem.getLongitude(), Constants.userItem.getImage_url(), Constants.userItem.getCreator_type_id());
@@ -338,6 +342,7 @@ public class LoginPage extends Activity {
 			
 			startActivity(intent);
 		} else if (typeid == Constants.ViwerActivityPage) {
+			if(pDialog.isShowing()) pDialog.dismiss();
 			Intent intent = new Intent(LoginPage.this, ViwerActivity.class);
 			startActivity(intent);
 		} else if (typeid == Constants.ViwerSignUpPage) {
