@@ -67,7 +67,7 @@ public class MyCreatorListViewAdapter  extends BaseAdapter {
 		
 		NetworkImageView profilePic = (NetworkImageView) convertView
 				.findViewById(R.id.creatorProPicMyProFrag);
-		//profilePic.setDefaultImageResId(R.drawable.ic_launcher);
+		profilePic.setDefaultImageResId(R.drawable.default_profic);
 		
 
 		UserItem userItem = userItems.get(position);

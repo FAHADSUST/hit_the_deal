@@ -21,9 +21,12 @@ import android.widget.Toast;
 import com.android.volley.Request.Method;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.NetworkImageView;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.fahad.ornob.sust.hitthedeal.app.AppController;
+import com.fahad.ornob.sust.hitthedeal.contants.Constants;
 
 import constants.DBKeys;
 import customviews.PagerSlidingTabStrip;
@@ -34,7 +37,7 @@ import fragments.FragmentFavouriteCreatorEvents;
 @SuppressLint({ "NewApi", "ResourceAsColor", "ClickableViewAccessibility" })
 public class FavouriteCreatorActivityOrnob extends FragmentActivity {
 
-	NetworkImageView profileImageView;
+	NetworkImageView profileImageView = null;
 	FrameLayout anchorLayout;
 	public static Creator1 creator;
 	public static int vId;
@@ -45,7 +48,8 @@ public class FavouriteCreatorActivityOrnob extends FragmentActivity {
 	FavouriteCreatorTabAdapter tabAdapter;
 	PagerSlidingTabStrip tabs;
 	int creatorId;
-
+	ImageLoader imageLoader = AppController.getInstance().getImageLoader();
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -60,14 +64,17 @@ public class FavouriteCreatorActivityOrnob extends FragmentActivity {
 		// vName = "Fahad";
 		// vImgUrl = "http://api.androidhive.info/feed/img/life.jpg";
 
+		if(imageLoader==null) imageLoader = AppController.getInstance().getImageLoader();
+		
 		creatorId = getIntent().getExtras().getInt("creatorId");
 		vId = getIntent().getExtras().getInt("vId");
 		vName = getIntent().getExtras().getString("vName");
 		vImgUrl = getIntent().getExtras().getString("vImgUrl");
 
 		getActionBar().hide();
-		profileImageView = (NetworkImageView) findViewById(R.id.profie_image_view);
-		//profileImageView.setDefaultImageResId(R.drawable.default_profile_image);
+		profileImageView = (NetworkImageView) findViewById(R.id.profie_image_view3);
+		profileImageView.setDefaultImageResId(R.drawable.event_default);
+		profileImageView.setImageUrl(Constants.urlgetImgServlet+vImgUrl, imageLoader);
 		fetchCreatorData();
 		createFragments();
 	}

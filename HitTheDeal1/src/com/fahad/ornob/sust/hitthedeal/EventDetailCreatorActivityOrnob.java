@@ -17,13 +17,18 @@ import org.json.JSONObject;
 
 import com.fahad.ornob.sust.hitthedeal.app.AppController;
 import com.fahad.ornob.sust.hitthedeal.contants.Constants;
+import com.fahad.ornob.sust.hitthedeal.customImageView.ScrollViewX;
+import com.fahad.ornob.sust.hitthedeal.customImageView.ScrollViewX.OnScrollViewListener;
 import com.fahad.ornob.sust.hitthedeal.fragment.GoogleMapFragment;
 
 import adapter.EventFeedBackAdapter;
+import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.text.Html;
 import android.text.format.DateUtils;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
@@ -71,7 +76,7 @@ public class EventDetailCreatorActivityOrnob extends Activity implements
 	float newrating;
 	GoogleMap googleMap;
 	FrameLayout mapLayout;
-	FeedImageView eventFeedImgView;
+	NetworkImageView eventFeedImgView;
 	NetworkImageView organizationEventProPic;
 	TextView eventNameEvDTxt, orgNameEvDTxt, eventStartTimeEvDTxt,
 			eventEndTimeEvDTxt, ratingStampEvDTxt, ratingPeopleNumberEvDTxt,
@@ -94,12 +99,47 @@ public class EventDetailCreatorActivityOrnob extends Activity implements
 	int vId;
 	String vName, vImgUrl;
 	boolean isCreator, fromNotification;
+	private ActionBar mActionBar;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_event_detail);
-		getActionBar().hide();
+		final ColorDrawable cd = new ColorDrawable(Color.rgb(60, 184, 121 ));
+		mActionBar = getActionBar();
+		mActionBar.setBackgroundDrawable(cd);		
+		cd.setAlpha(0);
+		mActionBar.setDisplayHomeAsUpEnabled(true); //to activate back pressed on home button press
+		mActionBar.setDisplayShowHomeEnabled(false); //
+		mActionBar.setTitle(Html.fromHtml("<b><font color='#ffffff'>Event Detail</font></b>"));
+		ScrollViewX scrollView = (ScrollViewX) findViewById(R.id.event_detail_ornob_scroll);
+		scrollView.setOnScrollViewListener(new OnScrollViewListener() {
+			
+			@Override
+			public void onScrollChanged(ScrollViewX v, int l, int t, int oldl, int oldt) {
+				
+				cd.setAlpha(getAlphaforActionBar(v.getScrollY()));
+			}
+
+			private int getAlphaforActionBar(int scrollY) {
+				int minDist = 0,maxDist = 650;
+				if(scrollY>maxDist){ 
+					return 255;
+					}
+				else if(scrollY<minDist){
+					return 0;
+					}
+				else {
+					int alpha = 0;
+					alpha = (int)  ((255.0/maxDist)*scrollY);
+					return alpha;
+				}
+			}
+		});
+		
+		
+		
+		
 		event = getIntent().getExtras().getParcelable("event");
 		rating = getIntent().getExtras().getParcelable("rating");
 		creator = getIntent().getExtras().getParcelable("creator");
@@ -175,10 +215,10 @@ public class EventDetailCreatorActivityOrnob extends Activity implements
 	private void Init() {
 		// TODO Auto-generated method stub
 
-		eventFeedImgView = (FeedImageView) findViewById(R.id.eventFeedImgView);
-		eventFeedImgView.setDefaultImageResId(R.drawable.default_profile_image);
+		eventFeedImgView = (NetworkImageView) findViewById(R.id.eventFeedImgView);
+		eventFeedImgView.setDefaultImageResId(R.drawable.event_default);
 		organizationEventProPic = (NetworkImageView) findViewById(R.id.organizationEventProPic);
-		organizationEventProPic.setDefaultImageResId(R.drawable.ic_launcher);
+		organizationEventProPic.setDefaultImageResId(R.drawable.default_profic);
 
 		eventNameEvDTxt = (TextView) findViewById(R.id.eventNameEvDTxt);
 		orgNameEvDTxt = (TextView) findViewById(R.id.orgNameEvDTxt);
@@ -256,20 +296,9 @@ public class EventDetailCreatorActivityOrnob extends Activity implements
 		curRate = (float) rating.getRating();
 		count = rating.getCountNumber();
 
-		if (event.getEventImg() != null) {
-			eventFeedImgView.setImageUrl(Constants.urlgetImgServlet+event.getEventImg(), imageLoader);
-			eventFeedImgView.setVisibility(View.VISIBLE);
-			eventFeedImgView
-					.setResponseObserver(new FeedImageView.ResponseObserver() {
-						@Override
-						public void onError() {
-						}
-
-						@Override
-						public void onSuccess() {
-						}
-					});
-		}
+		
+		eventFeedImgView.setImageUrl(Constants.urlgetImgServlet+event.getEventImg(), imageLoader);
+			
 		organizationEventProPic.setImageUrl(Constants.urlgetImgServlet+creator.getImageUrl(), imageLoader);
 
 		eventNameEvDTxt.setText(event.getEventName());

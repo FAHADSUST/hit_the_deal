@@ -74,7 +74,7 @@ public class EventFeedBackAdapter extends BaseAdapter {
 
 		NetworkImageView profilePic = (NetworkImageView) convertView
 				.findViewById(R.id.visitorProPic);
-		// profilePic.setDefaultImageResId(R.drawable.ic_launcher);
+		profilePic.setDefaultImageResId(R.drawable.default_profic);
 
 		FeedBackItem feedBackItem = feedBackItems.get(position);
 		FeedbackMaker feedbackMaker = feedbackMakers.get(position);

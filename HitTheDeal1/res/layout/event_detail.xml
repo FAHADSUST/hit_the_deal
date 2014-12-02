@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<com.fahad.ornob.sust.hitthedeal.customImageView.ScrollViewX  
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/event_detail_fahad_scroll"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/bg_parent_rounded_corner"
@@ -12,13 +15,13 @@
         android:orientation="vertical"
          >
 
-        <com.fahad.ornob.sust.hitthedeal.FeedImageView
+        <com.android.volley.toolbox.NetworkImageView
             android:id="@+id/eventFeedImgView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="230dp"
             android:background="#E8E8E8"
             android:scaleType="fitXY"
-            android:src="@drawable/abc_ab_bottom_solid_dark_holo"
+            android:src="@drawable/event_default"
             android:visibility="visible" />
 
         <LinearLayout
@@ -49,6 +52,7 @@
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:text="marakha"
+                    android:textColor="@color/black"
                     android:textSize="@dimen/feed_item_profile_name"
                     android:textStyle="bold" />
 
@@ -57,7 +61,7 @@
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:text="company Name"
-                    android:textColor="@color/timestamp"
+                    android:textColor="@color/bluelight"
                     android:textSize="@dimen/feed_item_timestamp" />
 
                 <LinearLayout
@@ -189,6 +193,7 @@
                 android:paddingLeft="10dp"
                 android:paddingTop="10dp"
                 android:text="Description"
+                android:textColor="@color/black"
                 android:textSize="17dp"
                 android:textStyle="bold" />
 
@@ -221,7 +226,8 @@
                 android:paddingTop="10dp"
                 android:text="Show Map"
                 android:textSize="17dp"
-                android:textStyle="bold" />
+                android:textStyle="bold" 
+                android:textColor="@color/black" />
 
             <include 
 		        android:id="@+id/map_fragment_eventDetailId"
@@ -269,7 +275,8 @@
                 android:hint="Give a Feedback"
                 android:paddingLeft="6dp"
                 android:paddingRight="6dp"
-                android:textColor="@color/text_msg_input" />
+                android:textColor="@color/text_msg_input" 
+                />
 
             <Button
                 android:id="@+id/giveFeedBackEvDB"
@@ -282,4 +289,4 @@
         </LinearLayout>
     </LinearLayout>
 
-</ScrollView>
+</com.fahad.ornob.sust.hitthedeal.customImageView.ScrollViewX>

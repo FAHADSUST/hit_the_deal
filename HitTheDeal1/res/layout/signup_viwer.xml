@@ -40,6 +40,7 @@
 	            android:ems="10"
 	            android:hint="Username"
 	            android:inputType="text"
+	            android:textColor="@color/black"
 	            android:paddingLeft="10dp"
 	            android:scaleY=".9" />
 	
@@ -55,6 +56,7 @@
 	            android:hint="Email"
 	            android:inputType="textEmailAddress"
 	            android:paddingLeft="10dp"
+	            android:textColor="@color/black"
 	            android:scaleY=".9" >
 	           
 	        </EditText>
@@ -71,6 +73,7 @@
 	            android:ems="10"
 	            android:hint="Password"
 	            android:inputType="textPassword"
+	            android:textColor="@color/black"
 	            android:paddingLeft="10dp"
 	            android:scaleY=".9" />
 	
@@ -86,7 +89,7 @@
 
 	        <RelativeLayout
 	            android:layout_width="fill_parent"
-	            android:layout_height="150dp"
+	            android:layout_height="230dp"
 	            android:layout_alignParentLeft="true"
 	            android:layout_alignParentRight="true"
 	            android:layout_alignParentTop="true"
@@ -95,13 +98,13 @@
 	            <ImageView
 	                android:id="@+id/viwerProPicImg"
 	                android:layout_width="wrap_content"
-	                android:layout_height="wrap_content"
+	                android:layout_height="230dp"
 	                android:layout_alignParentLeft="true"
 	                android:layout_alignParentRight="true"
 	                android:layout_alignParentTop="true"
 	                android:background="@drawable/img"
 	                android:scaleType="centerCrop"
-	                android:src="@drawable/fahad" />
+	                android:src="@drawable/default_profic" />
 
 	            <Button
 	                android:id="@+id/captureViwerImgB"

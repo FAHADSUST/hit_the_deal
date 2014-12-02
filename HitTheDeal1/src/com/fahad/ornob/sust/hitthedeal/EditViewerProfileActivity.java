@@ -15,6 +15,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.NetworkImageView;
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
 import com.fahad.ornob.sust.hitthedeal.app.AppController;
@@ -23,6 +24,7 @@ import com.fahad.ornob.sust.hitthedeal.connectiondetector.ConnectionDetector;
 import com.fahad.ornob.sust.hitthedeal.contants.CommonMethod;
 import com.fahad.ornob.sust.hitthedeal.contants.Constants;
 import com.fahad.ornob.sust.hitthedeal.contants.DataBaseKeys;
+import com.fahad.ornob.sust.hitthedeal.customImageView.CustomNetworkImageView;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -62,7 +64,7 @@ public class EditViewerProfileActivity extends Activity {
 			.getSimpleName();
 
 	Button editViwerProB;
-	FeedImageView editViwerProImgView;
+	CustomNetworkImageView editViwerProImgView;
 	Button editViwerProCaptureImgView, editViwerProBrowsImgView;
 	EditText editViwerEmailEd, editViwerPhoneEd, editViwerAddressEd,
 			editViwerPassEd;
@@ -90,7 +92,10 @@ public class EditViewerProfileActivity extends Activity {
 			imageLoader = AppController.getInstance().getImageLoader();
 
 		editViwerProB = (Button) findViewById(R.id.editViwerProB);
-		editViwerProImgView = (FeedImageView) findViewById(R.id.editViwerProImgView);
+		
+		editViwerProImgView = (CustomNetworkImageView) findViewById(R.id.editViwerProImgView);
+		editViwerProImgView.setDefaultImageResId(R.drawable.default_profic);
+		
 		editViwerProCaptureImgView = (Button) findViewById(R.id.editViwerProCaptureImgView);
 		editViwerProBrowsImgView = (Button) findViewById(R.id.editViwerProBrowsImgView);
 		editViwerEmailEd = (EditText) findViewById(R.id.editViwerEmailEd);
@@ -115,21 +120,10 @@ public class EditViewerProfileActivity extends Activity {
 			editViwerAddressEd.setHint("Please add your address");
 		editViwerPassEd.setText(Constants.userItem.getPassword());
 
-		if (Constants.userItem.getImage_url() != null) {
-			editViwerProImgView.setImageUrl(Constants.urlgetImgServlet+Constants.userItem.getImage_url(),
+		
+		editViwerProImgView.setImageUrl(Constants.urlgetImgServlet+Constants.userItem.getImage_url(),
 					imageLoader);
-			editViwerProImgView.setVisibility(View.VISIBLE);
-			editViwerProImgView
-					.setResponseObserver(new FeedImageView.ResponseObserver() {
-						@Override
-						public void onError() {
-						}
-
-						@Override
-						public void onSuccess() {
-						}
-					});
-		}
+			
 
 	}
 
@@ -277,7 +271,8 @@ public class EditViewerProfileActivity extends Activity {
 				Bitmap captureBmp = Media.getBitmap(getContentResolver(),
 						Uri.fromFile(image));
 				Uri ImageUri = Uri.fromFile(image);
-				editViwerProImgView.setImageBitmap(captureBmp);
+				
+				editViwerProImgView.setLocalImageBitmap(captureBmp);
 
 			} catch (FileNotFoundException e) {
 				e.printStackTrace();
@@ -296,7 +291,7 @@ public class EditViewerProfileActivity extends Activity {
 	        cursor.close();
 	        
 	        
-	        editViwerProImgView.setImageBitmap(BitmapFactory.decodeFile(imageFilePath));
+	        editViwerProImgView.setLocalImageBitmap(BitmapFactory.decodeFile(imageFilePath));
 	        
 	        image = new File(imageFilePath);
 	    }

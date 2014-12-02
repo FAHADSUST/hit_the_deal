@@ -17,7 +17,7 @@
             <com.fahad.ornob.sust.hitthedeal.customImageView.CustomNetworkImageView
                 android:id="@+id/profie_image_view"
                 android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
+                android:layout_height="210dp"
                 android:scaleType="fitXY" />
 
             <Button

@@ -25,7 +25,7 @@
         <RelativeLayout
             android:id="@+id/relativeLayout1"
             android:layout_width="fill_parent"
-            android:layout_height="130dp"
+            android:layout_height="220dp"
             android:layout_alignParentLeft="true"
             android:layout_alignParentRight="true"
             android:layout_alignParentTop="true"
@@ -34,18 +34,17 @@
             <LinearLayout 
                 android:id="@+id/lin2"
 	            android:layout_width="fill_parent"
-	            android:layout_height="wrap_content"
+	            android:layout_height="220dp"
 	            android:background="@drawable/bg_parent_rounded_corner"
 	            >
 
-	            <com.fahad.ornob.sust.hitthedeal.FeedImageView
+	            <com.fahad.ornob.sust.hitthedeal.customImageView.CustomNetworkImageView
 	                android:id="@+id/editViwerProImgView"
 	                android:layout_width="match_parent"
-	                android:layout_height="wrap_content"
+	                android:layout_height="210dp"
 	                android:adjustViewBounds="true"
-	                android:background="@drawable/img"
-	                android:scaleType="centerCrop"
-	                android:src="@drawable/fahad" />
+	                android:scaleType="fitXY"
+	                android:src="@drawable/default_profic" />
 
             </LinearLayout>
 
@@ -79,6 +78,7 @@
             android:ems="10"
             android:hint="Email"
             android:inputType="textEmailAddress"
+            android:textColor="@color/black"
             android:paddingLeft="10dp"
             android:scaleY=".9" />
         
@@ -91,6 +91,7 @@
             android:layout_below="@+id/editViwerEmailEd"
             android:layout_centerHorizontal="true"
             android:background="@drawable/user_name_ed"
+            android:textColor="@color/black"
             android:ems="10"
             android:hint="Address"
             android:inputType="text"
@@ -105,6 +106,7 @@
             android:layout_below="@+id/editViwerPhoneEd"
             android:layout_centerHorizontal="true"
             android:background="@drawable/user_name_ed"
+            android:textColor="@color/black"
             android:ems="10"
             android:hint="Address"
             android:inputType="text"
@@ -118,6 +120,7 @@
             android:layout_below="@+id/editViwerAddressEd"
             android:layout_centerHorizontal="true"
             android:background="@drawable/user_name_ed"
+            android:textColor="@color/black"
             android:ems="10"
             android:hint="Password"
             android:inputType="textPassword"
@@ -132,6 +135,7 @@
             android:layout_below="@+id/relativeLayout1"
             android:layout_marginTop="27dp"
             android:background="@drawable/user_name_ed"
+            android:textColor="@color/black"
             android:ems="10"
             android:hint="Organization name"
             android:inputType="text"

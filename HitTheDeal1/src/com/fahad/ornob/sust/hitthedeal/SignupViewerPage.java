@@ -327,6 +327,7 @@ public class SignupViewerPage extends EasyFacebookFragmentActivity {
 							userItem = new UserItem(user_id, Constants.ViwerTypeID, userNameVEd.getText().toString(), "Empty", emailViwerEd.getText().toString(), "0", dateOfCreation, 0, 0, renameStr, passViwerEd.getText().toString(), 1);
 							
 						}
+						Constants.userItem=null;
 						Constants.userItem=userItem;
 						Intent intent = new Intent(SignupViewerPage.this,ViwerActivity.class);
 						startActivity(intent);
@@ -336,6 +337,7 @@ public class SignupViewerPage extends EasyFacebookFragmentActivity {
 
 			} else {
 				Toast.makeText(this, "Fail", Toast.LENGTH_SHORT).show();
+				if(pDialog.isShowing()) pDialog.dismiss();
 			}
 
 		} catch (JSONException e) {

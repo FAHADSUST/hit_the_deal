@@ -94,7 +94,7 @@ public class FeedListAdapter extends BaseAdapter {
 		TextView url = (TextView) convertView.findViewById(R.id.txtUrl);
 		NetworkImageView profilePic = (NetworkImageView) convertView
 				.findViewById(R.id.profilePic);
-		profilePic.setDefaultImageResId(R.drawable.ic_launcher);
+		profilePic.setDefaultImageResId(R.drawable.default_profic);
 		FeedImageView feedImageView = (FeedImageView) convertView
 				.findViewById(R.id.feedImage1);
 

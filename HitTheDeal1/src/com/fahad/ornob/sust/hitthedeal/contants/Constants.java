@@ -30,7 +30,7 @@ public class Constants {
 	public static final int Creator=1;
 	public static final int Visitor=2;
 	
-	public final static String urlCommon="http://192.168.2.103:8084/AndroidLogin/";
+	public final static String urlCommon="http://192.168.2.104:8084/AndroidLogin/";
 	public final static String urlLogin = urlCommon+"LoginHitTheDeal?";//localhost
 	public final static String urlCreatorType = urlCommon+"GetCreatorType";	
 	public final static String urlInsertSignUpData=urlCommon+"SignUp";

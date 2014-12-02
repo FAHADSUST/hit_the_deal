@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.NetworkImageView;
@@ -48,14 +49,15 @@ public class CreatorActivityOrnob extends FragmentActivity {
 //		creator = new Creator1(4, "Abu Shahriar Ratul", "sylhet",
 //				"ratul@gmail.com", "1234567", 1234, 24.8997635, 91.8619037,
 //				"http://api.androidhive.info/feed/img/life.jpg", 2);
-		if(creator ==null)
-			creator = getIntent().getExtras().getParcelable("creator");
-
+		
+		creator = getIntent().getExtras().getParcelable("creator");
+		
+		
 		if(imageLoader == null){
 			imageLoader = AppController.getInstance().getImageLoader();
 		}
 		
-		getActionBar().hide();
+		//getActionBar().hide();
 
 		tabAdapter = new CreatorTabAdapter(getSupportFragmentManager());
 
@@ -66,7 +68,7 @@ public class CreatorActivityOrnob extends FragmentActivity {
 		tabs.setViewPager(viewPager);
 
 		profileImageView = (NetworkImageView) findViewById(R.id.profie_image_view3);
-		//profileImageView.setDefaultImageResId(R.drawable.default_profile_image);
+		profileImageView.setDefaultImageResId(R.drawable.default_profic);
 		profileImageView.setImageUrl(Constants.urlgetImgServlet+creator.getImageUrl(), imageLoader);
 	}
 }

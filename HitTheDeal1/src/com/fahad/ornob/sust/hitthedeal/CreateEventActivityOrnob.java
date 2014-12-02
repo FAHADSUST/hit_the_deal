@@ -92,8 +92,6 @@ public class CreateEventActivityOrnob extends Activity implements
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_create_event);
 
-		getActionBar().hide();
-
 		// startDate = Calendar.getInstance();
 		// endDate = Calendar.getInstance();
 
@@ -131,7 +129,7 @@ public class CreateEventActivityOrnob extends Activity implements
 
 		mapLayout = (FrameLayout) findViewById(R.id.map_layout);
 		profileImageView = (CustomNetworkImageView) findViewById(R.id.profie_image_view);
-		profileImageView.setDefaultImageResId(R.drawable.default_profile_image);
+		profileImageView.setDefaultImageResId(R.drawable.event_default);
 
 		nameET = (EditText) findViewById(R.id.eventNameET);
 		descriptionET = (EditText) findViewById(R.id.descriptionET);

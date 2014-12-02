@@ -13,5 +13,11 @@
         android:orderInCategory="100"
         android:title="editprofiile"
         app:showAsAction="never"/>
+    <item
+        android:id="@+id/myprofilemenu"
+        android:title="My Profile"
+        android:icon="@drawable/pro_icon"
+        android:orderInCategory="1"
+        app:showAsAction="ifRoom"/>
 
 </menu>

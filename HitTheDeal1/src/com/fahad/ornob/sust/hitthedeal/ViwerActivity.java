@@ -244,6 +244,9 @@ public class ViwerActivity extends FragmentActivity implements
 		} else if (id == R.id.editprofilemenu) {
 			startActivity(new Intent(this, EditViewerProfileActivity.class));
 			return true;
+		}else if (id == R.id.myprofilemenu) {
+			startActivity(new Intent(this, ViwerProfileActivity.class));
+			return true;
 		}
 		return super.onOptionsItemSelected(item);
 	}

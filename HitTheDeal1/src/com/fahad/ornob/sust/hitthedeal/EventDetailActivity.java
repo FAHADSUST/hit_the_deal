@@ -32,6 +32,8 @@ import com.fahad.ornob.sust.hitthedeal.connectiondetector.ConnectionDetector;
 import com.fahad.ornob.sust.hitthedeal.contants.CommonMethod;
 import com.fahad.ornob.sust.hitthedeal.contants.Constants;
 import com.fahad.ornob.sust.hitthedeal.contants.DataBaseKeys;
+import com.fahad.ornob.sust.hitthedeal.customImageView.ScrollViewX;
+import com.fahad.ornob.sust.hitthedeal.customImageView.ScrollViewX.OnScrollViewListener;
 import com.fahad.ornob.sust.hitthedeal.item.Event;
 import com.fahad.ornob.sust.hitthedeal.item.FeedBackItem;
 import com.fahad.ornob.sust.hitthedeal.item.RatingResultItem;
@@ -46,17 +48,21 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.FragmentManager;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.Point;
+import android.graphics.drawable.ColorDrawable;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.provider.ContactsContract.Contacts.Data;
+import android.text.Html;
 import android.text.format.DateUtils;
 import android.util.Log;
 import android.view.View;
@@ -84,7 +90,7 @@ public class EventDetailActivity extends Activity {
 	float newrating;
 	int myViwerRating;
 
-	FeedImageView eventFeedImgView;
+	NetworkImageView eventFeedImgView;
 	NetworkImageView organizationEventProPic;
 	TextView eventNameEvDTxt, orgNameEvDTxt, eventStartTimeEvDTxt,
 			eventEndTimeEvDTxt, ratingStampEvDTxt, ratingPeopleNumberEvDTxt,
@@ -105,6 +111,7 @@ public class EventDetailActivity extends Activity {
 	UserItem userItem;
 	RatingResultItem ratingResultItem;
 	ConnectionDetector cd;
+	private ActionBar mActionBar;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -113,6 +120,41 @@ public class EventDetailActivity extends Activity {
 		setContentView(R.layout.event_detail);
 
 		int selectedEventId = getIntent().getIntExtra("selectedEventId", 1);
+		
+		
+		final ColorDrawable cd = new ColorDrawable(Color.rgb(60, 184, 121 ));
+		mActionBar = getActionBar();
+		mActionBar.setBackgroundDrawable(cd);		
+		cd.setAlpha(0);
+		mActionBar.setDisplayHomeAsUpEnabled(true); //to activate back pressed on home button press
+		mActionBar.setDisplayShowHomeEnabled(false); //
+		mActionBar.setTitle(Html.fromHtml("<b><font color='#ffffff'>Event Detail</font></b>"));
+		ScrollViewX scrollView = (ScrollViewX) findViewById(R.id.event_detail_fahad_scroll);
+		scrollView.setOnScrollViewListener(new OnScrollViewListener() {
+			
+			@Override
+			public void onScrollChanged(ScrollViewX v, int l, int t, int oldl, int oldt) {
+				
+				cd.setAlpha(getAlphaforActionBar(v.getScrollY()));
+			}
+
+			private int getAlphaforActionBar(int scrollY) {
+				int minDist = 0,maxDist = 650;
+				if(scrollY>maxDist){ 
+					return 255;
+					}
+				else if(scrollY<minDist){
+					return 0;
+					}
+				else {
+					int alpha = 0;
+					alpha = (int)  ((255.0/maxDist)*scrollY);
+					return alpha;
+				}
+			}
+		});
+		
+		
 
 		Init();
 		loadData(selectedEventId);
@@ -142,26 +184,11 @@ public class EventDetailActivity extends Activity {
 		getRatingBar = (RatingBar) findViewById(R.id.getRating);
 		setRatingBar = (RatingBar) findViewById(R.id.setRating);
 
-		eventFeedImgView = (FeedImageView) findViewById(R.id.eventFeedImgView);
-		eventFeedImgView.setDefaultImageResId(R.drawable.fahad);
+		eventFeedImgView = (NetworkImageView) findViewById(R.id.eventFeedImgView);
+		eventFeedImgView.setDefaultImageResId(R.drawable.event_default);
 		organizationEventProPic = (NetworkImageView) findViewById(R.id.organizationEventProPic);
-		organizationEventProPic.setDefaultImageResId(R.drawable.ic_launcher);
-		organizationEventProPic.setOnClickListener(new View.OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				Bundle bundle = new Bundle();
-				bundle.putInt("creatorId", userItem.getUser_id());
-				bundle.putInt("vId", Constants.userItem.getUser_id());
-				bundle.putString("vName", Constants.userItem.getUser_name());
-				bundle.putString("vImgUrl", Constants.urlgetImgServlet+Constants.userItem.getImage_url());
-
-				Intent intent = new Intent(EventDetailActivity.this,
-						FavouriteCreatorActivityOrnob.class);
-				intent.putExtras(bundle);
-				startActivity(intent);
-			}
-		});
+		organizationEventProPic.setDefaultImageResId(R.drawable.default_profic);
+		
 
 		eventNameEvDTxt = (TextView) findViewById(R.id.eventNameEvDTxt);
 		orgNameEvDTxt = (TextView) findViewById(R.id.orgNameEvDTxt);
@@ -196,20 +223,8 @@ public class EventDetailActivity extends Activity {
 		curRate = (float) ratingResultItem.getRating();
 		count = ratingResultItem.getCountNumber();
 
-		if (eventItem.getEvent_img() != null) {
-			eventFeedImgView.setImageUrl(Constants.urlgetImgServlet+eventItem.getEvent_img(), imageLoader);
-			eventFeedImgView.setVisibility(View.VISIBLE);
-			eventFeedImgView
-					.setResponseObserver(new FeedImageView.ResponseObserver() {
-						@Override
-						public void onError() {
-						}
-
-						@Override
-						public void onSuccess() {
-						}
-					});
-		}
+		eventFeedImgView.setImageUrl(Constants.urlgetImgServlet+eventItem.getEvent_img(), imageLoader);
+		
 		organizationEventProPic.setImageUrl(Constants.urlgetImgServlet+userItem.getImage_url(),
 				imageLoader);
 
@@ -312,6 +327,23 @@ public class EventDetailActivity extends Activity {
 							"close");
 					showMapTxt.setText("Show Map");
 				}
+			}
+		});
+		
+		organizationEventProPic.setOnClickListener(new View.OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				Bundle bundle = new Bundle();
+				bundle.putInt("creatorId", userItem.getUser_id());
+				bundle.putInt("vId", Constants.userItem.getUser_id());
+				bundle.putString("vName", Constants.userItem.getUser_name());
+				bundle.putString("vImgUrl", Constants.userItem.getImage_url());
+
+				Intent intent = new Intent(EventDetailActivity.this,
+						FavouriteCreatorActivityOrnob.class);
+				intent.putExtras(bundle);
+				startActivity(intent);
 			}
 		});
 

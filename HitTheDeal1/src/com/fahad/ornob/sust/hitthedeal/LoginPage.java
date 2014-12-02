@@ -260,22 +260,7 @@ public class LoginPage extends Activity {
 		} else {
 			
 			
-			Cache cache = AppController.getInstance().getRequestQueue()
-					.getCache();
-			Entry entry = cache.get(url);
-			if (entry != null) {
-				// fetch the data from cache
-				try {
-					String data = new String(entry.data, "UTF-8");
-					try {
-						parseJsonFeed(new JSONObject(data), itemType);
-					} catch (JSONException e) {
-						e.printStackTrace();
-					}
-				} catch (UnsupportedEncodingException e) {
-					e.printStackTrace();
-				}
-			}
+			Toast.makeText(this, "No internet Connection", Toast.LENGTH_SHORT).show();
 		}
 
 	}
@@ -304,6 +289,7 @@ public class LoginPage extends Activity {
 							jsonObject.getInt(DataBaseKeys.userKey[11]));
 					
 					int userTypeID = userItem.getUser_type_id();
+					Constants.userItem=null;
 					Constants.userItem = userItem;
 
 					
@@ -319,6 +305,7 @@ public class LoginPage extends Activity {
 				}
 			} else {
 				Toast.makeText(this, "Fail", Toast.LENGTH_SHORT).show();
+				if(pDialog.isShowing()) pDialog.dismiss();
 			}
 
 		} catch (JSONException e) {
@@ -332,7 +319,7 @@ public class LoginPage extends Activity {
 	private void gotoNextPage(int typeid) {
 		// TODO Auto-generated method stub
 		if (typeid == Constants.CreatorActivityPage) {
-			if(pDialog.isShowing()) pDialog.dismiss();
+			
 			
 			Intent intent = new Intent(LoginPage.this, CreatorActivityOrnob.class);
 			Bundle bundle = new Bundle();
@@ -341,10 +328,12 @@ public class LoginPage extends Activity {
 			intent.putExtras(bundle);
 			
 			startActivity(intent);
-		} else if (typeid == Constants.ViwerActivityPage) {
 			if(pDialog.isShowing()) pDialog.dismiss();
+		} else if (typeid == Constants.ViwerActivityPage) {
+			
 			Intent intent = new Intent(LoginPage.this, ViwerActivity.class);
 			startActivity(intent);
+			if(pDialog.isShowing()) pDialog.dismiss();
 		} else if (typeid == Constants.ViwerSignUpPage) {
 			Intent intent = new Intent(LoginPage.this, SignupViewerPage.class);
 			startActivity(intent);
@@ -354,7 +343,7 @@ public class LoginPage extends Activity {
 			startActivity(intent);
 		}
 
-		finish();
+		//finish();
 	}
 
 	public boolean showWarningDialog() {

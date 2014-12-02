@@ -25,7 +25,7 @@
         <RelativeLayout
             android:id="@+id/relativeLayout1"
             android:layout_width="fill_parent"
-            android:layout_height="130dp"
+            android:layout_height="210dp"
             android:layout_alignParentLeft="true"
             android:layout_alignParentRight="true"
             android:layout_alignParentTop="true"
@@ -34,7 +34,7 @@
             <ImageView
                 android:id="@+id/organizationImgView"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="210dp"
                 android:layout_alignBottom="@+id/browseCreatImgB"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentRight="true"
@@ -42,7 +42,7 @@
                 android:adjustViewBounds="true"
                 android:background="@drawable/img"
                 android:scaleType="centerCrop"
-                android:src="@drawable/fahad" />
+                android:src="@drawable/default_profic" />
 
             <Button
                 android:id="@+id/captureCreateImgB"
@@ -74,6 +74,7 @@
             android:ems="10"
             android:hint="Email"
             android:inputType="textEmailAddress"
+            android:textColor="@color/black"
             android:paddingLeft="10dp"
             android:scaleY=".9" />
 
@@ -89,6 +90,7 @@
             android:ems="10"
             android:hint="Address"
             android:inputType="text"
+            android:textColor="@color/black"
             android:paddingLeft="10dp" />
 
         <EditText
@@ -102,6 +104,7 @@
             android:ems="10"
             android:hint="Password"
             android:inputType="textPassword"
+            android:textColor="@color/black"
             android:paddingLeft="10dp"
             android:scaleY=".9" />
 
@@ -111,10 +114,11 @@
             android:layout_height="wrap_content"
             android:layout_alignLeft="@+id/emailCreatSignEd"
             android:layout_below="@+id/relativeLayout1"
-            android:layout_marginTop="45dp"
+            android:layout_marginTop="15dp"
             android:background="@drawable/user_name_ed"
             android:ems="10"
             android:hint="Organization name"
+            android:textColor="@color/black"
             android:inputType="text"
             android:paddingLeft="10dp"
             android:scaleY=".9" />

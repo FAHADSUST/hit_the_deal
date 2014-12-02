@@ -128,7 +128,7 @@ public class EditEventActivityOrnob extends Activity implements View.OnClickList
 
 		mapLayout = (FrameLayout) findViewById(R.id.map_layout2);
 		profileImageView = (CustomNetworkImageView) findViewById(R.id.profie_image_view5);
-		profileImageView.setDefaultImageResId(R.drawable.default_profile_image);
+		profileImageView.setDefaultImageResId(R.drawable.event_default);
 
 		nameET = (EditText) findViewById(R.id.eventNameET1);
 		descriptionET = (EditText) findViewById(R.id.descriptionET1);

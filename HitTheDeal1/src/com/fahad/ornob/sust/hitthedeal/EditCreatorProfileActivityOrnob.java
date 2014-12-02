@@ -123,7 +123,7 @@ public class EditCreatorProfileActivityOrnob extends Activity {
 		});
 
 		profileImageView = (CustomNetworkImageView) findViewById(R.id.profie_image_view4);
-		profileImageView.setDefaultImageResId(R.drawable.default_profile_image);
+		profileImageView.setDefaultImageResId(R.drawable.default_profic);
 
 		spinnerAdapter = new ArrayAdapter<String>(getApplicationContext(),
 				R.layout.spinner_item, creatorTypes);

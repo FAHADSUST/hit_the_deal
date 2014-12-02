@@ -14,6 +14,8 @@ import android.app.ActionBar;
 import android.app.Activity;
 import android.app.FragmentTransaction;
 import android.app.ActionBar.Tab;
+import android.content.Intent;
+import android.graphics.Color;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -49,6 +51,7 @@ import com.fahad.ornob.sust.hitthedeal.contants.DataBaseKeys;
 import com.fahad.ornob.sust.hitthedeal.fragment.GoogleMapFragment;
 import com.fahad.ornob.sust.hitthedeal.item.Event;
 import com.fahad.ornob.sust.hitthedeal.item.UserItem;
+import com.faizmalkani.floatingactionbutton.FloatingActionButton;
 import com.google.android.gms.maps.model.Marker;
 
 public class ViwerProfileActivity extends Activity {
@@ -57,10 +60,11 @@ public class ViwerProfileActivity extends Activity {
 	TextView viwerNameProfileTxt;
 	NetworkImageView myProfileNetImgView;
 	Button myProfileB,myFavCreatB;
-	// Tab titles
+	// Tab titles//floating_button_viwer_class
 	
-
 	ImageLoader imageLoader = AppController.getInstance().getImageLoader();
+	
+	FloatingActionButton floatingActionButton;
 	
 	@SuppressLint("NewApi")
 	@Override
@@ -72,30 +76,18 @@ public class ViwerProfileActivity extends Activity {
 		
 		if (imageLoader == null)
 			imageLoader = AppController.getInstance().getImageLoader();
-		// Initilization
-		//myProImageView = (FeedImageView)findViewById(R.id.myProImageView);
+
+		
 		viwerNameProfileTxt = (TextView)findViewById(R.id.viwerNameProfileTxt);
 		myProfileNetImgView = (NetworkImageView)findViewById(R.id.myProImageView);
+		myProfileNetImgView.setDefaultImageResId(R.drawable.default_profic);
 		
 		myProfileB= (Button)findViewById(R.id.profileInfoB);
 		myFavCreatB= (Button)findViewById(R.id.myfavCreatorsB);
 		
 		viwerNameProfileTxt.setText(Constants.userItem.getUser_name());
+		
 		myProfileNetImgView.setImageUrl(Constants.urlgetImgServlet+Constants.userItem.getImage_url(), imageLoader);
-		/*if (Constants.userItem.getImage_url() != null) {
-			myProImageView.setImageUrl(Constants.userItem.getImage_url(), imageLoader);
-			myProImageView.setVisibility(View.VISIBLE);
-			myProImageView
-					.setResponseObserver(new FeedImageView.ResponseObserver() {
-						@Override
-						public void onError() {
-						}
-
-						@Override
-						public void onSuccess() {
-						}
-					});
-		} */
 		
 		myProfileB.setOnClickListener(new View.OnClickListener() {
 			
@@ -107,8 +99,11 @@ public class ViwerProfileActivity extends Activity {
 				findViewById(R.id.my_fav_creat_inc_id).setVisibility(View.INVISIBLE);
 				myProfileB.setBackgroundColor(getResources().getColor(R.color.offwhite));
 				myFavCreatB.setBackgroundColor(getResources().getColor(R.color.offlightwhite));
-				 YoYo.with(Techniques.BounceIn) .duration(700)
+				
+				YoYo.with(Techniques.BounceIn) .duration(700)
 				 .playOn(findViewById(R.id.my_profile_info_inc_id));
+				YoYo.with(Techniques.FadeIn) .duration(800)
+				 .playOn(findViewById(R.id.floating_button_viwer_class)); 
 				 
 			}
 		});
@@ -123,8 +118,25 @@ public class ViwerProfileActivity extends Activity {
 				
 				findViewById(R.id.my_profile_info_inc_id).setVisibility(View.INVISIBLE);
 				findViewById(R.id.my_fav_creat_inc_id).setVisibility(View.VISIBLE);
-				 YoYo.with(Techniques.BounceIn) .duration(700)
+				 
+				YoYo.with(Techniques.BounceIn) .duration(700)
 				 .playOn(findViewById(R.id.my_fav_creat_inc_id));
+				 YoYo.with(Techniques.FadeOut) .duration(800)
+				 .playOn(findViewById(R.id.floating_button_viwer_class)); 
+			}
+		});
+		
+		floatingActionButton = (FloatingActionButton)findViewById(R.id.floating_button_viwer_class);
+		floatingActionButton.setColor(Color.parseColor("#FF9500"));
+		floatingActionButton.setDrawable(getResources().getDrawable(
+				R.drawable.floating_button_icon));
+		floatingActionButton.setOnClickListener(new View.OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				Intent intent = new Intent(ViwerProfileActivity.this,
+						EditViewerProfileActivity.class);
+				startActivity(intent);
 			}
 		});
 	}

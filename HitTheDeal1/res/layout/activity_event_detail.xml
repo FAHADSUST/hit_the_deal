@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/bg_parent_rounded_corner" >
 
-    <ScrollView
+    <com.fahad.ornob.sust.hitthedeal.customImageView.ScrollViewX  
+        android:id="@+id/event_detail_ornob_scroll"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/bg_parent_rounded_corner"
@@ -16,13 +18,13 @@
             android:background="@drawable/bg_parent_rounded_corner"
             android:orientation="vertical" >
 
-            <customviews.FeedImageView
+            <com.android.volley.toolbox.NetworkImageView
                 android:id="@+id/eventFeedImgView"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="230dp"
                 android:background="#E8E8E8"
                 android:scaleType="fitXY"
-                android:src="@drawable/default_profile_image"
+                android:src="@drawable/event_default"
                 android:visibility="visible" />
 
             <LinearLayout
@@ -54,14 +56,15 @@
                         android:layout_height="wrap_content"
                         android:text="marakha"
                         android:textSize="@dimen/feed_item_profile_name"
+                        android:textColor="@color/black"
                         android:textStyle="bold" />
 
                     <TextView
                         android:id="@+id/orgNameEvDTxt"
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
-                        android:text="company Name"
-                        android:textColor="@color/timestamp"
+                        android:text="company Name"                     
+                        android:textColor="@color/bluelight"
                         android:textSize="@dimen/feed_item_timestamp" />
 
                     <LinearLayout
@@ -73,7 +76,7 @@
                             android:id="@+id/eventStartTimeEvDTxt"
                             android:layout_width="fill_parent"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1"
+                            android:layout_weight="1.5"
                             android:text="khamuna"
                             android:textColor="@color/timestamp"
                             android:textSize="@dimen/feed_item_timestamp" />
@@ -82,7 +85,7 @@
                             android:id="@+id/eventEndTimeEvDTxt"
                             android:layout_width="fill_parent"
                             android:layout_height="wrap_content"
-                            android:layout_weight="2.5"
+                            android:layout_weight="2"
                             android:text="khamuna"
                             android:textColor="@color/timestamp"
                             android:textSize="@dimen/feed_item_timestamp" />
@@ -165,7 +168,8 @@
                     android:paddingTop="10dp"
                     android:text="Description"
                     android:textSize="17dp"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    android:textColor="@color/black" />
 
                 <TextView
                     android:id="@+id/eventDescEvDTxt"
@@ -232,7 +236,7 @@
                     android:textColor="@color/white" />
             </LinearLayout>
         </LinearLayout>
-    </ScrollView>
+    </com.fahad.ornob.sust.hitthedeal.customImageView.ScrollViewX>  
 
      <com.faizmalkani.floatingactionbutton.FloatingActionButton
         android:id="@+id/floating_button1"

@@ -39,6 +39,7 @@ import com.fahad.ornob.sust.hitthedeal.contants.CommonMethod;
 import com.fahad.ornob.sust.hitthedeal.contants.Constants;
 import com.fahad.ornob.sust.hitthedeal.contants.DataBaseKeys;
 import com.fahad.ornob.sust.hitthedeal.item.CreatorTypeItem;
+import com.fahad.ornob.sust.hitthedeal.item.UserItem;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.internal.dp;
@@ -50,6 +51,8 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+
+import databaseEntities.Creator1;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -432,7 +435,7 @@ public class SignUpCreatorPage extends Activity {
 						public void onResponse(String response) {
 							VolleyLog.d(TAG, "Response: " + response.toString());
 							if (response != null) {
-								pDialog.dismiss();
+								
 								parseJsonFeed(response, itemType);
 							}
 						}
@@ -513,15 +516,34 @@ public class SignUpCreatorPage extends Activity {
 
 				} else if (itemType == Constants.CreatorSignUp) {
 
-					Toast.makeText(this, "Suucess", Toast.LENGTH_SHORT).show();
-					Intent intent = new Intent(SignUpCreatorPage.this,
-							CreatorActivity.class);
+					Toast.makeText(this, "Suucess", Toast.LENGTH_SHORT)
+					.show();
+					int user_id = response.getInt("user_id");
+					
+					int creatorTypeId = creatorTypeSpin
+							.getSelectedItemPosition() + 1;
+					UserItem userItem = new UserItem(user_id, Constants.CreatorTypeID, creatorOrgNameEd.getText().toString(), 
+							creatorAddressEd.getText().toString(), creatorEmailEd.getText().toString(),
+							"01675902585", CommonMethod.currentTimeFrom1970(), donor_latitude, donor_longitude, renameStr,
+							creatorPassEd.getText().toString(), creatorTypeId);
+						
+					Constants.userItem=null;
+					Constants.userItem=userItem;
+					
+					Intent intent = new Intent(SignUpCreatorPage.this, CreatorActivityOrnob.class);
+					Bundle bundle = new Bundle();
+					Creator1 creator = new Creator1(Constants.userItem.getUser_id(), Constants.userItem.getUser_name(), Constants.userItem.getAddress(), Constants.userItem.getEmail(), Constants.userItem.getPhn_no(), Constants.userItem.getDate_of_creation(), Constants.userItem.getLatitude(), Constants.userItem.getLongitude(), Constants.userItem.getImage_url(), Constants.userItem.getCreator_type_id());
+					bundle.putParcelable("creator", creator);
+					intent.putExtras(bundle);
+					
 					startActivity(intent);
-					finish();
+					if(pDialog.isShowing()) pDialog.dismiss();
 				}
+				
 
 			} else {
 				Toast.makeText(this, "Fail", Toast.LENGTH_SHORT).show();
+				if(pDialog.isShowing()) pDialog.dismiss();
 			}
 
 		} catch (JSONException e) {
