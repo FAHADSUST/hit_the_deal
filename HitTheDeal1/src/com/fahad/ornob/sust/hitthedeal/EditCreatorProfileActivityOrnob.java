@@ -37,6 +37,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -71,7 +72,7 @@ public class EditCreatorProfileActivityOrnob extends Activity {
 	Animation  slideIn, slideOut;
 	Button saveButton, cancelButton;
 	FrameLayout  mapLayout;
-	EditText nameEditText, addressEditText, phnEditText, emailEditText;
+	EditText nameEditText, addressEditText, phnEditText;
 	Spinner typeSpinner;
 	ArrayAdapter<String> spinnerAdapter;
 	CustomNetworkImageView profileImageView;
@@ -85,7 +86,7 @@ public class EditCreatorProfileActivityOrnob extends Activity {
 	AlertDialog confirmationDialog;
 	Button exitMapButton;
 	
-	Button captureImgView, browsImgView;
+	ImageButton captureImgView, browsImgView;
 	File image=null;
 	private static final int CAMERA_REQUEST = 1888;
 	private static final int PICK_IMAGE = 1;
@@ -133,8 +134,7 @@ public class EditCreatorProfileActivityOrnob extends Activity {
 		nameEditText = (EditText) findViewById(R.id.nameEt);
 		addressEditText = (EditText) findViewById(R.id.addressEt);
 		phnEditText = (EditText) findViewById(R.id.phnEt);
-		emailEditText = (EditText) findViewById(R.id.emailEt);
-
+		
 
 		slideIn = AnimationUtils.loadAnimation(getApplicationContext(),
 				R.anim.slide_in);
@@ -155,8 +155,6 @@ public class EditCreatorProfileActivityOrnob extends Activity {
 						String renameStr = CreatorActivityOrnob.creator.getEmail()+".jpg";							
 						CommonMethod cm = new CommonMethod();
 						cm.uploadImage(EditCreatorProfileActivityOrnob.this, renameStr, image);
-					}else{
-						
 					}
 					
 					makeVolleyRequest();
@@ -191,8 +189,8 @@ public class EditCreatorProfileActivityOrnob extends Activity {
 			}
 		});
 
-		captureImgView = (Button) findViewById(R.id.take_snap_button);
-		browsImgView = (Button) findViewById(R.id.browse_snap_button);
+		captureImgView = (ImageButton) findViewById(R.id.take_snap_button);
+		browsImgView = (ImageButton) findViewById(R.id.browse_snap_button);
 		
 		captureImgView.setOnClickListener(new View.OnClickListener() {
 
@@ -271,15 +269,7 @@ public class EditCreatorProfileActivityOrnob extends Activity {
 			Methods.makeToast(EditCreatorProfileActivityOrnob.this,
 					"Address Field Cannot Be Empty", Toast.LENGTH_LONG);
 			return false;
-		} else if (emailEditText.getText().toString().equals("")) {
-			Methods.makeToast(EditCreatorProfileActivityOrnob.this,
-					"Date Fields Cannot Be Empty", Toast.LENGTH_LONG);
-			return false;
-		} else if (!isEmailValid(emailEditText.getText().toString())) {
-			Methods.makeToast(EditCreatorProfileActivityOrnob.this,
-					"Given Email Id Is Not A Valid One", Toast.LENGTH_LONG);
-			return false;
-		} else if (phnEditText.getText().toString().equals("")) {
+		}  else if (phnEditText.getText().toString().equals("")) {
 			Methods.makeToast(EditCreatorProfileActivityOrnob.this,
 					"Phone no. Date Cannot Be After End Date",
 					Toast.LENGTH_LONG);
@@ -330,7 +320,7 @@ public class EditCreatorProfileActivityOrnob extends Activity {
 		nameEditText.setText(creator.getUserName());
 		addressEditText.setText(creator.getAddress());
 		phnEditText.setText(creator.getPhnNo());
-		emailEditText.setText(creator.getEmail());
+		
 		typeSpinner.setSelection(Arrays.asList(creatorTypes).indexOf(
 				creator.getCreatorType()));
 		profileImageView.setImageUrl(Constants.urlgetImgServlet+CreatorActivityOrnob.creator.getImageUrl(), imageLoader);
@@ -391,8 +381,7 @@ public class EditCreatorProfileActivityOrnob extends Activity {
 											.toString());
 									creator.setAddress(addressEditText
 											.getText().toString());
-									creator.setEmail(emailEditText.getText()
-											.toString());
+									creator.setEmail(CreatorActivityOrnob.creator.getEmail());
 									creator.setPhnNo(phnEditText.getText()
 											.toString());
 									creator.setCreatorTypeId(typeSpinner
@@ -431,7 +420,7 @@ public class EditCreatorProfileActivityOrnob extends Activity {
 				params.put("user_id", Integer.toString(creator.getUserId()));
 				params.put("user_name", nameEditText.getText().toString());
 				params.put("address", addressEditText.getText().toString());
-				params.put("email", emailEditText.getText().toString());
+				params.put("email", CreatorActivityOrnob.creator.getEmail());
 				params.put("phn_no", phnEditText.getText().toString());
 				params.put("latitude", Double.toString(currentLatLng.latitude));
 				params.put("longitude",

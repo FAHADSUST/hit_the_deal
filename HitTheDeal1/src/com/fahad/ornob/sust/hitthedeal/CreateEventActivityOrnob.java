@@ -36,6 +36,7 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.FrameLayout;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -84,7 +85,7 @@ public class CreateEventActivityOrnob extends Activity implements
 	AlertDialog alertDialog;
 	AlertDialog fromDatePickerDialog, toDatePickerDialog;
 	
-	Button captureImgView, browsImgView;
+	ImageButton captureImgView, browsImgView;
 	
 
 	@Override
@@ -146,8 +147,8 @@ public class CreateEventActivityOrnob extends Activity implements
 		openMapButton = (Button) findViewById(R.id.openMapButton);
 		exitMap = (Button) findViewById(R.id.exit_map_button);
 		
-		captureImgView = (Button) findViewById(R.id.take_snap_button);
-		browsImgView = (Button) findViewById(R.id.browse_snap_button);
+		captureImgView = (ImageButton) findViewById(R.id.take_snap_button);
+		browsImgView = (ImageButton) findViewById(R.id.browse_snap_button);
 		
 
 		createButton.setOnClickListener(this);

@@ -65,8 +65,8 @@ public final class R {
 		public static final int vpi__bright_foreground_holo_light = 0x7f080008;
 		public static final int vpi__bright_foreground_inverse_holo_dark = 0x7f08000b;
 		public static final int vpi__bright_foreground_inverse_holo_light = 0x7f08000c;
-		public static final int vpi__dark_theme = 0x7f08006c;
-		public static final int vpi__light_theme = 0x7f08006d;
+		public static final int vpi__dark_theme = 0x7f08006d;
+		public static final int vpi__light_theme = 0x7f08006e;
 	}
 	public static final class dimen {
 		public static final int default_circle_indicator_radius = 0x7f060011;

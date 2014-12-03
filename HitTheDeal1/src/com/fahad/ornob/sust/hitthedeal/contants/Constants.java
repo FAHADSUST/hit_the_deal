@@ -30,7 +30,8 @@ public class Constants {
 	public static final int Creator=1;
 	public static final int Visitor=2;
 	
-	public final static String urlCommon="http://192.168.2.104:8084/AndroidLogin/";
+	//public final static String urlCommon="http://hitthedeal-fahadsust.rhcloud.com/hitthedeal/";
+	public final static String urlCommon="http://192.168.2.104:8084/AndroidLogin/";//"http://hitthedeal-fahadsust.rhcloud.com/hitthedeal/";////
 	public final static String urlLogin = urlCommon+"LoginHitTheDeal?";//localhost
 	public final static String urlCreatorType = urlCommon+"GetCreatorType";	
 	public final static String urlInsertSignUpData=urlCommon+"SignUp";
@@ -41,11 +42,12 @@ public class Constants {
 	public final static String urlInsertFeedBack=urlCommon+"InsertEventFeedBack";
 	public final static String urlGetMyFavCreator=urlCommon+"GetMyFavCreators?";
 	public final static String urlGetEventFeedBack=urlCommon+"GetEventFeedback?";
-	
+	public final static String urlUpdateBiwerProfileInfo=urlCommon+"UpdateViwerProfile?";
 	
 	public final static String urlFileUploadServlet=urlCommon+"ImageUploader";
-	public final static String urlgetImgServlet=urlCommon+"profile_images/";
-	
+	//public final static String urlFileUploadServlet=urlCommon+"uploads";
+	public final static String urlgetImgServlet=urlCommon+"images/";//profile_images
+	//public final static String urlgetImgServlet= "http://hitthedeal-fahadsust.rhcloud.com/hitthedeal/uploads/";
 	
 	public static String warnUserName;
 	public static String warnTitle="Error!";
@@ -84,7 +86,7 @@ public class Constants {
 	public static final int ViwerSignUpPage=3;
 	public static final int CreatorSignUpPage=4;
 
-	public static final double Distance = 3;
+	public static double Distance = 3;
 	
 	
 	public static int iconMarkerType[]={R.drawable.icon_pin_local_buseness,R.drawable.icon_pin_restaurent,R.drawable.icon_pin_culter,R.drawable.icon_pin_cause,R.drawable.icon_pin_others,R.drawable.icon_pin_others};
@@ -92,6 +94,8 @@ public class Constants {
 	
 	
 	public static int iconMyLocationMarker = R.drawable.icon_my_location;
+
+	
 
 	
 }

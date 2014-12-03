@@ -59,6 +59,7 @@ import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -66,7 +67,8 @@ public class SignupViewerPage extends EasyFacebookFragmentActivity {
 
 	private static final String TAG = SignupViewerPage.class.getSimpleName();
 
-	Button captureImgViewrB, browImgB, signUpViwerB, fbSignUpB;
+	ImageButton captureImgViewrB, browImgB;
+	Button  signUpViwerB, fbSignUpB;
 	EditText userNameVEd, emailViwerEd, passViwerEd;
 	ImageView viwerImg;
 
@@ -169,8 +171,8 @@ public class SignupViewerPage extends EasyFacebookFragmentActivity {
 
 	private void inti() {
 		// TODO Auto-generated method stub
-		captureImgViewrB = (Button) findViewById(R.id.captureViwerImgB);
-		browImgB = (Button) findViewById(R.id.browseViwerImgB);
+		captureImgViewrB = (ImageButton) findViewById(R.id.captureViwerImgB);
+		browImgB = (ImageButton) findViewById(R.id.browseViwerImgB);
 		signUpViwerB = (Button) findViewById(R.id.signupViwerB);
 		fbSignUpB = (Button) findViewById(R.id.fbSignupViwerB);
 

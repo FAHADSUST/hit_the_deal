@@ -239,7 +239,7 @@ public class ViwerActivity extends FragmentActivity implements
 	public boolean onOptionsItemSelected(MenuItem item) {
 		int id = item.getItemId();
 		if (id == R.id.action_settings) {
-			startActivity(new Intent(this, ViwerProfileActivity.class));
+			startActivity(new Intent(this, SettingActivity.class));
 			return true;
 		} else if (id == R.id.editprofilemenu) {
 			startActivity(new Intent(this, EditViewerProfileActivity.class));

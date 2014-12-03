@@ -111,6 +111,12 @@
             android:screenOrientation="portrait" >
             
         </activity>
+        <activity
+            android:name="com.fahad.ornob.sust.hitthedeal.SettingActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" >
+            
+        </activity>
         
         
         <receiver android:name="services.BootUpReceiver" >

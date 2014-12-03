@@ -3,7 +3,7 @@
     android:id="@+id/sdosdos"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/splashgreen" >
+    android:background="@color/offlightwhite" >
 
     <RelativeLayout
         android:id="@+id/creatorSignUpInnerRA1"
@@ -44,23 +44,26 @@
                 android:scaleType="centerCrop"
                 android:src="@drawable/default_profic" />
 
-            <Button
+            <ImageButton
                 android:id="@+id/captureCreateImgB"
-                style="?android:attr/buttonStyleSmall"
+                
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignLeft="@+id/organizationImgView"
                 android:layout_alignParentBottom="true"
-                android:text="Capture" />
+                android:src="@drawable/camera_icon"
+                
+                />
 
-            <Button
+            <ImageButton
                 android:id="@+id/browseCreatImgB"
-                android:layout_width="wrap_content"
+                android:layout_width="65dp"
                 android:layout_height="wrap_content"
-                android:layout_alignBaseline="@+id/captureCreateImgB"
                 android:layout_alignBottom="@+id/captureCreateImgB"
                 android:layout_alignRight="@+id/organizationImgView"
-                android:text="Brow" />
+                android:layout_alignTop="@+id/captureCreateImgB"
+                android:src="@drawable/browse_icon" />
+
         </RelativeLayout>
 
         <EditText
@@ -137,7 +140,9 @@
             android:layout_height="wrap_content"
             android:layout_alignLeft="@+id/passCreatSignEd"
             android:layout_alignTop="@+id/addLocationCreatorB"
-            android:layout_toLeftOf="@+id/addLocationCreatorB" />
+            android:layout_toLeftOf="@+id/addLocationCreatorB" 
+            
+            />
     </RelativeLayout>
 
 </RelativeLayout>

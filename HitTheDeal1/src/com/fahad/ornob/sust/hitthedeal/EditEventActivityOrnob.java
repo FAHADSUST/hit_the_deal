@@ -37,6 +37,7 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.FrameLayout;
+import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.TimePicker;
@@ -85,7 +86,7 @@ public class EditEventActivityOrnob extends Activity implements View.OnClickList
 	Event event;
 	ImageLoader imageLoader = AppController.getInstance().getImageLoader();
 	
-	Button captureImgView, browsImgView;
+	ImageButton captureImgView, browsImgView;
 	
 
 	@Override
@@ -145,8 +146,8 @@ public class EditEventActivityOrnob extends Activity implements View.OnClickList
 		openMapButton = (Button) findViewById(R.id.openMapButton2);
 		exitMap = (Button) findViewById(R.id.exit_map_button2);
 		
-		captureImgView = (Button) findViewById(R.id.take_snap_button1);
-		browsImgView = (Button) findViewById(R.id.browse_snap_button1);
+		captureImgView = (ImageButton) findViewById(R.id.take_snap_button1);
+		browsImgView = (ImageButton) findViewById(R.id.browse_snap_button1);
 		
 
 		updateButton.setOnClickListener(this);

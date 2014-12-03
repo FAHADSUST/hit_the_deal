@@ -20,18 +20,18 @@
                 android:layout_height="fill_parent"
                 android:scaleType="fitXY" />
 
-            <Button
+            <ImageButton
                 android:id="@+id/take_snap_button"
-                android:layout_width="55dp"
-                android:layout_height="55dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_gravity="bottom|left"
                 android:layout_margin="3dp"
                 android:background="@drawable/camera_icon" />
 
-            <Button
+            <ImageButton
                 android:id="@+id/browse_snap_button"
                 android:layout_width="55dp"
-                android:layout_height="55dp"
+                android:layout_height="wrap_content"
                 android:layout_gravity="bottom|right"
                 android:layout_margin="3dp"
                 android:background="@drawable/browse_icon" />
@@ -131,34 +131,7 @@
                     android:textSize="20dp" />
             </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:layout_weight="80"
-                android:orientation="horizontal" >
-
-                <TextView
-                    android:layout_width="fill_parent"
-                    android:layout_height="fill_parent"
-                    android:layout_weight="70"
-                    android:gravity="center_vertical"
-                    android:text="  Email"
-                    android:textColor="@color/green"
-                    android:textSize="20dp" />
-
-                <EditText
-                    android:id="@+id/emailEt"
-                    android:layout_width="fill_parent"
-                    android:layout_height="55dp"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginRight="4dp"
-                    android:layout_weight="30"
-                    android:background="@drawable/rectangle_edit_text"
-                    android:gravity="center"
-                    android:textColor="@color/black"
-                    android:textSize="20dp" />
-            </LinearLayout>
+            
 
             <LinearLayout
                 android:layout_width="fill_parent"

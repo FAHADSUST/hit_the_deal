@@ -3,6 +3,8 @@ package com.fahad.ornob.sust.hitthedeal;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Random;
 import java.util.regex.Pattern;
 
@@ -16,6 +18,7 @@ import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.NetworkImageView;
+import com.android.volley.toolbox.StringRequest;
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
 import com.fahad.ornob.sust.hitthedeal.app.AppController;
@@ -38,6 +41,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.FragmentManager;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
@@ -65,10 +69,11 @@ public class EditViewerProfileActivity extends Activity {
 
 	Button editViwerProB;
 	CustomNetworkImageView editViwerProImgView;
-	Button editViwerProCaptureImgView, editViwerProBrowsImgView;
-	EditText editViwerEmailEd, editViwerPhoneEd, editViwerAddressEd,
-			editViwerPassEd;
-	EditText editViwerOrgNameEd;
+	 
+	ImageButton editViwerProCaptureImgView, editViwerProBrowsImgView;
+	EditText  editViwerPhoneEd, editViwerAddressEd;
+			
+	EditText editViwerNameEd;
 
 	ImageLoader imageLoader = AppController.getInstance().getImageLoader();
 
@@ -96,20 +101,24 @@ public class EditViewerProfileActivity extends Activity {
 		editViwerProImgView = (CustomNetworkImageView) findViewById(R.id.editViwerProImgView);
 		editViwerProImgView.setDefaultImageResId(R.drawable.default_profic);
 		
-		editViwerProCaptureImgView = (Button) findViewById(R.id.editViwerProCaptureImgView);
-		editViwerProBrowsImgView = (Button) findViewById(R.id.editViwerProBrowsImgView);
-		editViwerEmailEd = (EditText) findViewById(R.id.editViwerEmailEd);
+		editViwerProCaptureImgView = (ImageButton) findViewById(R.id.editViwerProCaptureImgView);
+		editViwerProBrowsImgView = (ImageButton) findViewById(R.id.editViwerProBrowsImgView);
+		
 		editViwerPhoneEd = (EditText) findViewById(R.id.editViwerPhoneEd);
 		editViwerAddressEd = (EditText) findViewById(R.id.editViwerAddressEd);
-		editViwerPassEd = (EditText) findViewById(R.id.editViwerPassEd);
-		editViwerOrgNameEd = (EditText) findViewById(R.id.editViwerOrgNameEd);
+		
+		editViwerNameEd = (EditText) findViewById(R.id.editViwerOrgNameEd);
+		
+		pDialog = new ProgressDialog(this);
+		pDialog.setMessage("Progressing...");
+		pDialog.setCancelable(false);
 
 	}
 
 	private void setValue() {
 		// TODO Auto-generated method stub
-		editViwerOrgNameEd.setText(Constants.userItem.getUser_name());
-		editViwerEmailEd.setText(Constants.userItem.getEmail());
+		editViwerNameEd.setText(Constants.userItem.getUser_name());
+		
 		if (!Constants.userItem.getPhn_no().isEmpty())
 			editViwerPhoneEd.setText(Constants.userItem.getPhn_no());
 		else
@@ -118,8 +127,7 @@ public class EditViewerProfileActivity extends Activity {
 			editViwerAddressEd.setText(Constants.userItem.getAddress());
 		else
 			editViwerAddressEd.setHint("Please add your address");
-		editViwerPassEd.setText(Constants.userItem.getPassword());
-
+		
 		
 		editViwerProImgView.setImageUrl(Constants.urlgetImgServlet+Constants.userItem.getImage_url(),
 					imageLoader);
@@ -130,25 +138,13 @@ public class EditViewerProfileActivity extends Activity {
 	// editViwerPhoneEd//editViwerAddressEd//
 	public boolean showWarningDialog() {
 
-		if (editViwerOrgNameEd.getText().toString().isEmpty()) {
+		if (editViwerNameEd.getText().toString().isEmpty()) {
 			AlertDialogForAnything.showAlertDialogWhenComplte(this,
 					Constants.warnTitle, Constants.warnOrgName, false);
 
-		} else if (editViwerEmailEd.getText().toString().isEmpty()) {
-			AlertDialogForAnything.showAlertDialogWhenComplte(this,
-					Constants.warnTitle, Constants.warnEmail, false);
-
-		} else if (editViwerAddressEd.getText().toString().isEmpty()) {
+		}  else if (editViwerAddressEd.getText().toString().isEmpty()) {
 			AlertDialogForAnything.showAlertDialogWhenComplte(this,
 					Constants.warnTitle, Constants.warnAddess, false);
-
-		} else if (editViwerPassEd.getText().toString().isEmpty()) {
-			AlertDialogForAnything.showAlertDialogWhenComplte(this,
-					Constants.warnTitle, Constants.warnPass, false);
-
-		} else if (!validEmail(editViwerEmailEd.getText().toString())) {
-			AlertDialogForAnything.showAlertDialogWhenComplte(this,
-					Constants.warnTitle, Constants.warnEmailPatern, false);
 
 		} else {
 			return true;
@@ -169,13 +165,15 @@ public class EditViewerProfileActivity extends Activity {
 					"No network connection.", false);
 
 		} else {
-			JsonObjectRequest jsonReq = new JsonObjectRequest(Method.GET, url,
-					null, new Response.Listener<JSONObject>() {
+			StringRequest jsonReq = new StringRequest(Method.POST, url,
+					 new Response.Listener<String>() {
 						@Override
-						public void onResponse(JSONObject response) {
+						public void onResponse(String response) {
 							VolleyLog.d(TAG, "Response: " + response.toString());
 							if (response != null) {
 								parseJsonFeed(response, itemType);
+							}else {
+								if(pDialog.isShowing()) pDialog.dismiss();
 							}
 						}
 					}, new Response.ErrorListener() {
@@ -183,8 +181,23 @@ public class EditViewerProfileActivity extends Activity {
 						@Override
 						public void onErrorResponse(VolleyError error) {
 							VolleyLog.d(TAG, "Error: " + error.getMessage());
+							Toast.makeText(EditViewerProfileActivity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
+							if(pDialog.isShowing()) pDialog.dismiss();
 						}
-					});
+					}) {
+
+				@Override
+				protected Map<String, String> getParams() {
+					Map<String, String> params = new HashMap<String, String>();
+
+					params.put("user_id", String.valueOf(Constants.userItem.getUser_id()));
+					params.put("user_name", editViwerNameEd.getText().toString());
+					params.put("address", editViwerAddressEd.getText().toString());					
+					params.put("phn_no", editViwerPhoneEd.getText().toString());
+														
+					return params;
+				}
+			};
 
 			// Adding request to volley request queue
 			AppController.getInstance().addToRequestQueue(jsonReq);
@@ -192,14 +205,17 @@ public class EditViewerProfileActivity extends Activity {
 
 	}
 
-	private void parseJsonFeed(JSONObject response, int itemType) {
+	private void parseJsonFeed(String responseString, int itemType) {
 		try {
-
+			JSONObject response = new JSONObject(responseString);
 			int success = response.getInt(DataBaseKeys.Success);
 			if (success == 1) {
-
+				Toast.makeText(this, "Successfully updated.", Toast.LENGTH_SHORT).show();
+				if(pDialog.isShowing()) pDialog.dismiss();
+				finish();
 			} else {
 				Toast.makeText(this, "Fail", Toast.LENGTH_SHORT).show();
+				if(pDialog.isShowing()) pDialog.dismiss();
 			}
 
 		} catch (JSONException e) {
@@ -208,8 +224,13 @@ public class EditViewerProfileActivity extends Activity {
 		}
 	}
 
+	
+	//////////////////////**********barti///////////////////////
 	File image=null;
-
+	String renameStr = null;
+	Uri ImageUri;
+	ProgressDialog pDialog=null;
+	
 	public static String imageFileName = null;
 
 	private void listener() {
@@ -251,9 +272,21 @@ public class EditViewerProfileActivity extends Activity {
 
 			@Override
 			public void onClick(View arg0) {
-				String renameStr = editViwerEmailEd.getText().toString()+".jpg";
-				CommonMethod cm = new CommonMethod();
-				cm.uploadImage(EditViewerProfileActivity.this, renameStr, image);
+				
+				
+				if (showWarningDialog()) {
+					pDialog.show();
+					if (image != null) {
+						renameStr = Constants.userItem.getImage_url();
+						CommonMethod cm = new CommonMethod();
+						cm.uploadImage(EditViewerProfileActivity.this, renameStr, image);
+					} else {
+						
+					}
+					String url=Constants.urlUpdateBiwerProfileInfo;
+					jsonUniAsync(url,  1);
+					
+				}
 
 
 			}

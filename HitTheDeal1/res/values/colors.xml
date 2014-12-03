@@ -20,6 +20,8 @@
 <resources>
 
     <!-- Commons -->
+    
+    <color name="light_ash">#e3e8e4</color>
     <color name="background_tab_pressed">#6633B5E5</color>
     <color name="blue">#5856D6</color>
     <color name="feed_bg">#d3d6db</color>

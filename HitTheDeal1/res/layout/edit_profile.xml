@@ -1,150 +1,113 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/sdosdos"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/splashgreen" >
+    android:background="@color/white" >
 
-    <RelativeLayout
+    <LinearLayout
         android:id="@+id/creatorSignUpInnerRA1"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" >
+        android:layout_height="match_parent"
+        android:orientation="vertical" >
+
+        <RelativeLayout
+            android:id="@+id/relativeLayout1"
+            android:layout_width="fill_parent"
+            android:layout_height="210dp"
+            android:layout_gravity="top"
+            android:background="@color/darkpink" >
+
+            <LinearLayout
+                android:id="@+id/lin2"
+                android:layout_width="fill_parent"
+                android:layout_height="210dp"
+                android:background="@drawable/bg_parent_rounded_corner" >
+
+                <com.fahad.ornob.sust.hitthedeal.customImageView.CustomNetworkImageView
+                    android:id="@+id/editViwerProImgView"
+                    android:layout_width="match_parent"
+                    android:layout_height="210dp"
+                    android:adjustViewBounds="true"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/default_profic" />
+            </LinearLayout>
+
+            <ImageButton
+                android:id="@+id/editViwerProCaptureImgView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@+id/lin2"
+                android:layout_alignParentBottom="true"
+                android:src="@drawable/camera_icon" />
+
+            <ImageButton
+                android:id="@+id/editViwerProBrowsImgView"
+                android:layout_width="65dp"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@+id/editViwerProCaptureImgView"
+                android:layout_alignBottom="@+id/editViwerProCaptureImgView"
+                android:layout_alignRight="@+id/lin2"
+                android:src="@drawable/browse_icon" />
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="25dp"
+            android:gravity="center_vertical"
+            android:orientation="vertical" >
+
+            <EditText
+                android:id="@+id/editViwerPhoneEd"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="@drawable/user_name_ed"
+                android:ems="10"
+                android:hint="Phone Number"
+                android:inputType="text"
+                android:paddingLeft="10dp"
+                android:textColor="@color/black" />
+
+            <EditText
+                android:id="@+id/editViwerAddressEd"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="@drawable/user_name_ed"
+                android:ems="10"
+                android:hint="Address"
+                android:inputType="text"
+                android:paddingLeft="10dp"
+                android:textColor="@color/black" />
+
+            <EditText
+                android:id="@+id/editViwerOrgNameEd"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="@drawable/user_name_ed"
+                android:ems="10"
+                android:hint="Organization name"
+                android:inputType="text"
+                android:paddingLeft="10dp"
+                android:scaleY=".9"
+                android:textColor="@color/black" >
+
+                <requestFocus />
+            </EditText>
+        </LinearLayout>
 
         <Button
             android:id="@+id/editViwerProB"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="15dp"
             android:layout_marginBottom="16dp"
-            android:background="@drawable/signup_button"
+            android:background="@drawable/send_button"
             android:scaleY=".9" />
+    </LinearLayout>
 
-        
-
-        <RelativeLayout
-            android:id="@+id/relativeLayout1"
-            android:layout_width="fill_parent"
-            android:layout_height="220dp"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentTop="true"
-            android:background="@color/darkpink" >
-
-            <LinearLayout 
-                android:id="@+id/lin2"
-	            android:layout_width="fill_parent"
-	            android:layout_height="220dp"
-	            android:background="@drawable/bg_parent_rounded_corner"
-	            >
-
-	            <com.fahad.ornob.sust.hitthedeal.customImageView.CustomNetworkImageView
-	                android:id="@+id/editViwerProImgView"
-	                android:layout_width="match_parent"
-	                android:layout_height="210dp"
-	                android:adjustViewBounds="true"
-	                android:scaleType="fitXY"
-	                android:src="@drawable/default_profic" />
-
-            </LinearLayout>
-
-            <Button
-                android:id="@+id/editViwerProCaptureImgView"
-                style="?android:attr/buttonStyleSmall"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignLeft="@+id/lin2"
-                android:layout_alignParentBottom="true"
-                android:text="Capture" />
-
-            <Button
-                android:id="@+id/editViwerProBrowsImgView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignBaseline="@+id/editViwerProCaptureImgView"
-                android:layout_alignBottom="@+id/editViwerProCaptureImgView"
-                android:layout_alignRight="@+id/lin2"
-                android:text="Brow" />
-        </RelativeLayout>
-
-        <EditText
-            android:id="@+id/editViwerEmailEd"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/editViwerProB"
-            android:layout_below="@+id/editViwerOrgNameEd"
-            android:layout_centerHorizontal="true"
-            android:background="@drawable/user_name_ed"
-            android:ems="10"
-            android:hint="Email"
-            android:inputType="textEmailAddress"
-            android:textColor="@color/black"
-            android:paddingLeft="10dp"
-            android:scaleY=".9" />
-        
-        <EditText
-            android:id="@+id/editViwerPhoneEd"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/editViwerPassEd"
-            android:layout_alignRight="@+id/editViwerEmailEd"
-            android:layout_below="@+id/editViwerEmailEd"
-            android:layout_centerHorizontal="true"
-            android:background="@drawable/user_name_ed"
-            android:textColor="@color/black"
-            android:ems="10"
-            android:hint="Address"
-            android:inputType="text"
-            android:paddingLeft="10dp" />
-
-        <EditText
-            android:id="@+id/editViwerAddressEd"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/editViwerPassEd"
-            android:layout_alignRight="@+id/editViwerEmailEd"
-            android:layout_below="@+id/editViwerPhoneEd"
-            android:layout_centerHorizontal="true"
-            android:background="@drawable/user_name_ed"
-            android:textColor="@color/black"
-            android:ems="10"
-            android:hint="Address"
-            android:inputType="text"
-            android:paddingLeft="10dp" />
-
-        <EditText
-            android:id="@+id/editViwerPassEd"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignRight="@+id/editViwerEmailEd"
-            android:layout_below="@+id/editViwerAddressEd"
-            android:layout_centerHorizontal="true"
-            android:background="@drawable/user_name_ed"
-            android:textColor="@color/black"
-            android:ems="10"
-            android:hint="Password"
-            android:inputType="textPassword"
-            android:paddingLeft="10dp"
-            android:scaleY=".9" />
-
-        <EditText
-            android:id="@+id/editViwerOrgNameEd"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/editViwerEmailEd"
-            android:layout_below="@+id/relativeLayout1"
-            android:layout_marginTop="27dp"
-            android:background="@drawable/user_name_ed"
-            android:textColor="@color/black"
-            android:ems="10"
-            android:hint="Organization name"
-            android:inputType="text"
-            android:paddingLeft="10dp"
-            android:scaleY=".9" >
-
-            <requestFocus />
-        </EditText>
-
-    </RelativeLayout>
-
-</RelativeLayout>
+</LinearLayout>

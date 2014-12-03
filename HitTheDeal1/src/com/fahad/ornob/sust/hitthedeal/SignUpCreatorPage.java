@@ -243,7 +243,9 @@ public class SignUpCreatorPage extends Activity {
 	private static final int FILE_SELECT_CODE = 0;
 	ImageView orgImgView;
 	EditText creatorOrgNameEd, creatorEmailEd, creatorAddressEd, creatorPassEd;
-	Button captureCretImgB, browseCreateImgB, creatorSignUpB;
+	
+	ImageButton captureCretImgB, browseCreateImgB;
+	Button  creatorSignUpB;
 	ImageButton creatorAddLocationB;
 	Spinner creatorTypeSpin;
 	private String[] state = { "local_business", "reataurant", "cause",
@@ -259,8 +261,8 @@ public class SignUpCreatorPage extends Activity {
 		creatorAddressEd = (EditText) findViewById(R.id.addressCreatSignCEd);
 		creatorPassEd = (EditText) findViewById(R.id.passCreatSignEd);
 
-		captureCretImgB = (Button) findViewById(R.id.captureCreateImgB);
-		browseCreateImgB = (Button) findViewById(R.id.browseCreatImgB);
+		captureCretImgB = (ImageButton) findViewById(R.id.captureCreateImgB);
+		browseCreateImgB = (ImageButton) findViewById(R.id.browseCreatImgB);
 		creatorSignUpB = (Button) findViewById(R.id.signupCreatorB);
 		creatorAddLocationB = (ImageButton) findViewById(R.id.addLocationCreatorB);
 
