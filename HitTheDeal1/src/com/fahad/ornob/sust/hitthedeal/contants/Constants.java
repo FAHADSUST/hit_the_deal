@@ -3,8 +3,10 @@ package com.fahad.ornob.sust.hitthedeal.contants;
 import java.io.File;
 
 import com.fahad.ornob.sust.hitthedeal.R;
+import com.fahad.ornob.sust.hitthedeal.SettingActivity;
 import com.fahad.ornob.sust.hitthedeal.item.UserItem;
 
+import android.content.SharedPreferences;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Environment;
@@ -86,7 +88,6 @@ public class Constants {
 	public static final int ViwerSignUpPage=3;
 	public static final int CreatorSignUpPage=4;
 
-	public static double Distance = 3;
 	
 	
 	public static int iconMarkerType[]={R.drawable.icon_pin_local_buseness,R.drawable.icon_pin_restaurent,R.drawable.icon_pin_culter,R.drawable.icon_pin_cause,R.drawable.icon_pin_others,R.drawable.icon_pin_others};
@@ -95,7 +96,10 @@ public class Constants {
 	
 	public static int iconMyLocationMarker = R.drawable.icon_my_location;
 
+	public static String distKey="dist";
 	
-
+	public static double Distance = 2;//sa.getValueSharedPref(distKey);
+	
+	
 	
 }

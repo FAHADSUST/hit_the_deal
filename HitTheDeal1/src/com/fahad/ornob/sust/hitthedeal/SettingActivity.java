@@ -5,9 +5,11 @@ import com.fahad.ornob.sust.hitthedeal.contants.Constants;
 import android.app.Activity;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.ToggleButton;
 
 public class SettingActivity extends Activity {
@@ -20,6 +22,8 @@ public class SettingActivity extends Activity {
 	int low = 0;
 	String distanceSt[] = { "1", "1.5", "2", "2.5", "3", "3.5", "4" };
 	int progress = 1;
+	public SettingActivity(){		
+	}
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -35,21 +39,32 @@ public class SettingActivity extends Activity {
 		
 
 	}
-
+	boolean click=false;
 	private void listenerToggle() {
 		// TODO Auto-generated method stub
-		//serviceOnOff.setOnCheckedChangeListener(new View.)
+		serviceOnOff.setOnClickListener(new View.OnClickListener() {                       //toggle button for date and time picker
+		
+		@Override
+		public void onClick(View view) {
+			if (serviceOnOff.isChecked()) {
+				click=true;
+									
+				Toast.makeText(SettingActivity.this, "ON", Toast.LENGTH_SHORT).show();
+			}
+			 else{
+									                                      //if toggle is not checked cancel the pending intent and alarm
+				Toast.makeText(SettingActivity.this, "Off", Toast.LENGTH_SHORT).show();
+			}
+				
+		}
+	});
 	}
 
 	private void listenerSeekBar() {
 		// TODO Auto-generated method stub
-		for (int i = 0; i < distanceSt.length; i++) {
-			if (distanceSt[i].endsWith(String.valueOf(Constants.Distance))) {
-				progress = Integer.parseInt(distanceSt[i]);
-			}
-		}
 		
-		distTxt.setText(String.valueOf(progress));
+		progress=(int)(getValueSharedPref(Constants.distKey)*2) - 2;
+		distTxt.setText(distanceSt[progress]);
 		distSeekBar.setMax(high - low);
 		distSeekBar.setProgress(progress);
 
@@ -68,6 +83,7 @@ public class SettingActivity extends Activity {
 				int progModValue = progress + low;
 				distTxt.setText(distanceSt[progModValue]);
 				Constants.Distance=Double.parseDouble(distanceSt[progModValue]);
+				setdataIntoShaeredPref(Constants.distKey,Double.parseDouble(distanceSt[progModValue]));
 
 			}
 
@@ -85,18 +101,15 @@ public class SettingActivity extends Activity {
 
 	public   void setdataIntoShaeredPref(String key,double value){
 		SharedPreferences.Editor editor = getSharedPreferences("my_fref", MODE_PRIVATE).edit();
-		editor.putString("name", "Elena");
-		editor.putInt("idName", 12);
+		
+		editor.putFloat(key, (float)value);
 		editor.commit();
 	}
 	
 	public  float getValueSharedPref(String key){
 		SharedPreferences prefs = getSharedPreferences("my_fref", MODE_PRIVATE); 
 		Float restoredText = prefs.getFloat(key, 2);
-		if (restoredText != null) {
-		  String name = prefs.getString("name", "No name defined");//"No name defined" is the default value.
-		  int idName = prefs.getInt("idName", 0); //0 is the default value.
-		}
+		
 		return restoredText;
 	}
 }

@@ -48,6 +48,7 @@ import android.app.FragmentManager;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationManager;
@@ -90,6 +91,8 @@ public class LoginPage extends Activity {
 //		 Intent intent = new Intent(getApplicationContext(),
 //		 BootUpReceiver.class);
 //		 sendBroadcast(getIntent());
+		Constants.Distance= getValueSharedPref(Constants.distKey);
+		
 		initLogin();
 		listenerLogin();
 		new animationLoginAsync().execute();
@@ -377,5 +380,12 @@ public class LoginPage extends Activity {
 		Pattern pattern = Patterns.EMAIL_ADDRESS;
 		return pattern.matcher(email).matches();
 	}
-
+	
+	
+	public  float getValueSharedPref(String key){
+		SharedPreferences prefs = getSharedPreferences("my_fref", MODE_PRIVATE); 
+		Float restoredText = prefs.getFloat(key, 2);
+		
+		return restoredText;
+	}
 }

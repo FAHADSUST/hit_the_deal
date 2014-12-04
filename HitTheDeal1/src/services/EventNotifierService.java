@@ -1,5 +1,6 @@
 package services;
 
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -31,13 +32,21 @@ import android.os.Bundle;
 import android.os.IBinder;
 import android.widget.Toast;
 
+import com.android.volley.Cache.Entry;
 import com.android.volley.Request.Method;
+import com.android.volley.Cache;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.VolleyLog;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.fahad.ornob.sust.hitthedeal.EventFromNotificationActivityOrnob;
 import com.fahad.ornob.sust.hitthedeal.R;
+import com.fahad.ornob.sust.hitthedeal.ViwerActivity;
+import com.fahad.ornob.sust.hitthedeal.app.AppController;
+import com.fahad.ornob.sust.hitthedeal.connectiondetector.ConnectionDetector;
+import com.fahad.ornob.sust.hitthedeal.contants.DataBaseKeys;
 
 import constants.Constants;
 import constants.DBKeys;
@@ -45,6 +54,8 @@ import databaseEntities.Event;
 
 @SuppressLint("NewApi")
 public class EventNotifierService extends Service implements LocationListener {
+	
+	private static final String TAG = EventNotifierService.class.getSimpleName();
 
 	LocationManager locationManager;
 	Location currentLocation;
@@ -136,7 +147,7 @@ public class EventNotifierService extends Service implements LocationListener {
 
 	void makeVolleyRequest() {
 
-		final StringRequest strReq = new StringRequest(Method.POST,
+		/*final StringRequest strReq = new StringRequest(Method.POST,
 				constants.Constants.URL + "AndroidConnector",
 				new Response.Listener<String>() {
 
@@ -187,7 +198,48 @@ public class EventNotifierService extends Service implements LocationListener {
 
 		};
 
-		Volley.newRequestQueue(getApplicationContext()).add(strReq);
+		Volley.newRequestQueue(getApplicationContext()).add(strReq);*/
+		
+		String url = com.fahad.ornob.sust.hitthedeal.contants.Constants.urlGetEventAround + "longitude=" + currentLocation.getLongitude()
+				+ "&latitude=" + currentLocation.getLatitude() + "&distance=" + com.fahad.ornob.sust.hitthedeal.contants.Constants.Distance;
+
+		Cache cache = AppController.getInstance().getRequestQueue().getCache();
+		Entry entry = cache.get(url);
+		
+			JsonObjectRequest jsonReq = new JsonObjectRequest(Method.GET, url,
+					null, new Response.Listener<JSONObject>() {
+
+						@Override
+						public void onResponse(JSONObject response) {
+							VolleyLog.d(TAG, "Response: " + response.toString());
+							if (response != null) {
+																
+								try {
+									int success = response.getInt(DataBaseKeys.Success);
+									if (success == 1) {
+										
+										JSONArray eventsJsonArray = response.getJSONArray("all");
+										jsonToArrayLiast(eventsJsonArray);
+									}
+								} catch (JSONException e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								}
+								
+
+							}
+						}
+					}, new Response.ErrorListener() {
+
+						@Override
+						public void onErrorResponse(VolleyError error) {
+							VolleyLog.d(TAG, "Error: " + error.getMessage());
+						}
+					});
+
+			// Adding request to volley request queue
+			AppController.getInstance().addToRequestQueue(jsonReq);
+		
 	}
 
 	void jsonToArrayLiast(JSONArray eventsJsonArray) {
