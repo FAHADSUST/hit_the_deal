@@ -142,7 +142,7 @@ public class LoginPage extends Activity {
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
 				if (showWarningDialog()) {
-					pDialog.show();
+					
 					
 					String url = Constants.urlLogin + "email="
 							+ emailEd.getText().toString() + "&password="
@@ -238,6 +238,7 @@ public class LoginPage extends Activity {
 
 		cd = new ConnectionDetector(this);
 		if (cd.isConnectingToInternet()) {
+			pDialog.show();
 			JsonObjectRequest jsonReq = new JsonObjectRequest(Method.GET, url,
 					null, new Response.Listener<JSONObject>() {
 						@Override

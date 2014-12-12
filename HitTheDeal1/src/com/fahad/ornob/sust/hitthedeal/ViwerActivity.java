@@ -51,7 +51,7 @@ public class ViwerActivity extends FragmentActivity implements
 	private TabsPagerAdapter mAdapter;
 	private ActionBar actionBar;
 	// Tab titles
-	private String[] tabs = { "Map", "Around", "All", "Fav", "Profile" };
+	private String[] tabs = { "Events in Map", "Events Around Me", "All Events" };
 
 	SharedPreferences sharedPreferences;
 	Editor editor;

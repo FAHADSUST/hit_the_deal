@@ -32,9 +32,7 @@ public class TabsPagerAdapter extends FragmentPagerAdapter {
 		case 2:
 			// Movies fragment activity
 			return new AllEventsFragment();
-		case 3:
-			// Movies fragment activity
-			return new AllEventsFragment();
+		
 			
 		}
 
