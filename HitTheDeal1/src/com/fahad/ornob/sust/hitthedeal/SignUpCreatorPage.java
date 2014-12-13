@@ -330,9 +330,9 @@ public class SignUpCreatorPage extends Activity {
 			public void onClick(View arg0) {
 
 				if (image != null) {
-					renameStr = creatorEmailEd.getText().toString() + ".jpg";
+					renameStr = creatorEmailEd.getText().toString() +Constants.PROFIC+CommonMethod.currentTimeFrom1970()+ ".jpg";
 				} else {
-					renameStr = Constants.ImgEmtyTAG;
+					renameStr = "";
 				}
 				if (showWarningDialog()) {
 					/*if (image != null) {
@@ -526,7 +526,7 @@ public class SignUpCreatorPage extends Activity {
 							.getSelectedItemPosition() + 1;
 					UserItem userItem = new UserItem(user_id, Constants.CreatorTypeID, creatorOrgNameEd.getText().toString(), 
 							creatorAddressEd.getText().toString(), creatorEmailEd.getText().toString(),
-							"01675902585", CommonMethod.currentTimeFrom1970(), donor_latitude, donor_longitude, renameStr,
+							"0", CommonMethod.currentTimeFrom1970(), donor_latitude, donor_longitude, renameStr,
 							creatorPassEd.getText().toString(), creatorTypeId);
 						
 					Constants.userItem=null;

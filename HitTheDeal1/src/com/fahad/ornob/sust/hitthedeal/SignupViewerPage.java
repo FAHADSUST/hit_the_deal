@@ -143,9 +143,9 @@ public class SignupViewerPage extends EasyFacebookFragmentActivity {
 				// TODO Auto-generated method stub
 				isFB=false;
 				if (image != null) {
-					renameStr = emailViwerEd.getText().toString() + ".jpg";
+					renameStr = emailViwerEd.getText().toString()  +Constants.PROFIC+CommonMethod.currentTimeFrom1970()+ ".jpg";
 				} else {
-					renameStr = Constants.ImgEmtyTAG;
+					renameStr = "";
 				}
 				if (showWarningDialog()) {
 					
@@ -287,7 +287,7 @@ public class SignupViewerPage extends EasyFacebookFragmentActivity {
 
 					params.put("image_name", renameStr);// convertFileToString
 					if (image != null)
-						params.put("image", convertFileToString(image));
+						params.put("image", CommonMethod.convertFileToString(image));
 					else
 						params.put("image", "");
 
@@ -377,53 +377,29 @@ public class SignupViewerPage extends EasyFacebookFragmentActivity {
 		return pattern.matcher(email).matches();
 	}
 
-	public String convertFileToString(File file) {
-		FileInputStream imageInFile;
-		String imageDataString = null;
-		try {
-			imageInFile = new FileInputStream(file);
-			byte imageData[] = new byte[(int) file.length()];
-			imageInFile.read(imageData);
-			// Converting Image byte array into Base64 String
-			imageDataString = encodeImage(imageData);
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-		return imageDataString;
-	}
-
-	public String encodeImage(byte[] imageByteArray) {
-
-		return new String(Base64.encodeBase64(imageByteArray));
-	}
 	
 	////////////////////////new////////////////////////////
 
 	@Override
-	protected void onResume() {
-		super.onResume();
-		checkStatus();
-	}
-
+    protected void onResume() {
+        super.onResume();
+        checkStatus();
+    }
+	
 	private void checkStatus() {
-		if (isConnected()) {
-			updateLoginUi();
-		} else {
-			udateLogoutUi();
-		}
-	}
+        if (isConnected()) {
+            updateLoginUi();
+        } else {
+            udateLogoutUi();
+        }
+    }
 
-	private void updateLoginUi() {
-	}
+    private void updateLoginUi() {
+    }
 
-	private void udateLogoutUi() {
-
-	}
+    private void udateLogoutUi() {
+        
+    }
 
 	private void connect() {
 		if (isConnected()) {
@@ -533,9 +509,9 @@ public class SignupViewerPage extends EasyFacebookFragmentActivity {
 				saveImageToSD();
 			}
 			if (image != null) {
-				renameStr = fbEmail + ".jpg";
+				renameStr = fbEmail +Constants.PROFIC+CommonMethod.currentTimeFrom1970()+ ".jpg";
 			} else {
-				renameStr = Constants.ImgEmtyTAG;
+				renameStr = "";
 			}
 			if (showWarningDialog()) {				
 				dateOfCreation = CommonMethod.currentTimeFrom1970();

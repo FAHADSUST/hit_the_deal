@@ -98,8 +98,7 @@ public class AllEventsFragment extends Fragment {
 		userItemsLink = new LinkedList<UserItem>();
 		ratingResultItemsList = new LinkedList<RatingResultItem>();
 
-		Toast.makeText(getActivity(), "Halum halum", Toast.LENGTH_SHORT).show();
-
+		
 		listView = (PullToRefreshListView) rootView
 				.findViewById(R.id.list_all_events);
 
@@ -143,11 +142,7 @@ public class AllEventsFragment extends Fragment {
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
 				Event eventItem = eventItems.get(position - 1);
-				Toast.makeText(
-						getActivity(),
-						"position:" + position + " , id: "
-								+ eventItem.getEventId(), Toast.LENGTH_SHORT)
-						.show();
+				
 
 				Intent intent = new Intent(getActivity(),
 						EventDetailActivity.class);
@@ -168,7 +163,6 @@ public class AllEventsFragment extends Fragment {
 	}
 	
 	private void GetDataTask(int start_index,final int typeUpOrFoter) {
-		Toast.makeText(getActivity(), "Lkoadind: start: "+start_index+" : "+typeUpOrFoter , Toast.LENGTH_SHORT).show();
 		// TODO Auto-generated method stub
 		String url=Constants.urlGetAllEvent+"?"+"index="+start_index;
 		Cache cache = AppController.getInstance().getRequestQueue().getCache();
@@ -284,7 +278,7 @@ public class AllEventsFragment extends Fragment {
 				//start_index=eventItems.get(eventItems.size()-1).getEventId();
 
 			} else {
-				Toast.makeText(getActivity(), "Fail", Toast.LENGTH_SHORT)
+				Toast.makeText(getActivity(), "Nothing to Load.", Toast.LENGTH_SHORT)
 						.show();
 			}
 
@@ -381,7 +375,7 @@ public class AllEventsFragment extends Fragment {
 				//start_index=eventItems.get(eventItems.size()-1).getEventId();
 
 			} else {
-				Toast.makeText(getActivity(), "Fail", Toast.LENGTH_SHORT)
+				Toast.makeText(getActivity(), "Nothing to Load.", Toast.LENGTH_SHORT)
 						.show();
 				
 			}

@@ -33,7 +33,7 @@ public class Constants {
 	public static final int Visitor=2;
 	
 	//public final static String urlCommon="http://hitthedeal-fahadsust.rhcloud.com/hitthedeal/";
-	public final static String urlCommon="http://192.168.173.1:8084/AndroidLogin/";//"http://hitthedeal-fahadsust.rhcloud.com/hitthedeal/";////
+	public final static String urlCommon="http://192.168.137.1:8084/AndroidLogin/";//"http://hitthedeal-fahadsust.rhcloud.com/hitthedeal/";////
 	public final static String urlLogin = urlCommon+"LoginHitTheDeal?";//localhost
 	public final static String urlCreatorType = urlCommon+"GetCreatorType";	
 	public final static String urlInsertSignUpData=urlCommon+"SignUp";
@@ -87,6 +87,8 @@ public class Constants {
 	public static final int CreatorActivityPage=1;
 	public static final int ViwerSignUpPage=3;
 	public static final int CreatorSignUpPage=4;
+
+	public static final String PROFIC = "_profic_";
 
 	
 	

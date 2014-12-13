@@ -190,4 +190,10 @@ public class FragmentCreatorEvents extends Fragment {
 		ratingList = ratings;
 		return ratings;
 	}
+	
+	@Override
+	public void onResume() {
+		makeVolleyRequest(listView, progressBar);
+		super.onResume();
+	}
 }

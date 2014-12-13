@@ -86,8 +86,10 @@ public class EditCreatorProfileActivityOrnob extends Activity {
 	AlertDialog confirmationDialog;
 	Button exitMapButton;
 	
+	
 	ImageButton captureImgView, browsImgView;
 	File image=null;
+	String renameStr=null;
 	private static final int CAMERA_REQUEST = 1888;
 	private static final int PICK_IMAGE = 1;
 	ImageLoader imageLoader = AppController.getInstance().getImageLoader();
@@ -152,9 +154,11 @@ public class EditCreatorProfileActivityOrnob extends Activity {
 					progressBar.setVisibility(View.VISIBLE);
 					
 					if(image!=null){
-						String renameStr = CreatorActivityOrnob.creator.getEmail()+".jpg";							
-						CommonMethod cm = new CommonMethod();
-						cm.uploadImage(EditCreatorProfileActivityOrnob.this, renameStr, image);
+						renameStr = CreatorActivityOrnob.creator.getEmail() +Constants.PROFIC+CommonMethod.currentTimeFrom1970()+ ".jpg";			
+						//CommonMethod cm = new CommonMethod();
+						//cm.uploadImage(EditCreatorProfileActivityOrnob.this, renameStr, image);
+					}else{
+						renameStr = CreatorActivityOrnob.creator.getImageUrl();		
 					}
 					
 					makeVolleyRequest();
@@ -388,6 +392,9 @@ public class EditCreatorProfileActivityOrnob extends Activity {
 											.getSelectedItemPosition() + 1);
 									creator.setLatitude(currentLatLng.latitude);
 									creator.setLongitude(currentLatLng.longitude);
+									
+									creator.setImageUrl(renameStr);
+									
 									finish();
 								} else {
 									progressBar.setVisibility(View.INVISIBLE);
@@ -427,6 +434,13 @@ public class EditCreatorProfileActivityOrnob extends Activity {
 						Double.toString(currentLatLng.longitude));
 				params.put("creator_type_id", Integer.toString(typeSpinner
 						.getSelectedItemPosition() + 1));
+				
+				params.put("image_url", renameStr);
+				params.put("image_name", renameStr);// convertFileToString
+				if (image != null)
+					params.put("image", CommonMethod.convertFileToString(image));
+				else
+					params.put("image", "");
 
 
 				//image_url

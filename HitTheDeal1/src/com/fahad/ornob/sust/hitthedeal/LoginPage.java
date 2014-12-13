@@ -1,6 +1,8 @@
 package com.fahad.ornob.sust.hitthedeal;
 
 import java.io.UnsupportedEncodingException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -49,12 +51,18 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.Signature;
+import android.content.pm.PackageManager.NameNotFoundException;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Base64;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -88,9 +96,13 @@ public class LoginPage extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.login_page);
 		getActionBar().hide();
-//		 Intent intent = new Intent(getApplicationContext(),
-//		 BootUpReceiver.class);
-//		 sendBroadcast(getIntent());
+		
+		///////////////////////////////////notificationer////////////////
+		 Intent intent = new Intent(getApplicationContext(),
+		 BootUpReceiver.class);
+		 sendBroadcast(getIntent());
+		 
+		 ///////////////////////////notificationer////////////////
 		Constants.Distance= getValueSharedPref(Constants.distKey);
 		
 		initLogin();
@@ -231,6 +243,7 @@ public class LoginPage extends Activity {
 		pDialog.setMessage("Progressing...");
 		pDialog.setCancelable(false);
 		
+		printKeyHash(this);
 
 	}
 
@@ -389,4 +402,40 @@ public class LoginPage extends Activity {
 		
 		return restoredText;
 	}
+	
+	 public static String printKeyHash(Activity context) {
+			PackageInfo packageInfo;
+			String key = null;
+			try {
+
+				//getting application package name, as defined in manifest
+				String packageName = context.getApplicationContext().getPackageName();
+
+				//Retriving package info
+				packageInfo = context.getPackageManager().getPackageInfo(packageName,
+						PackageManager.GET_SIGNATURES);
+				
+				Log.e("Package Name=", context.getApplicationContext().getPackageName());
+				
+				for (Signature signature : packageInfo.signatures) {
+					MessageDigest md = MessageDigest.getInstance("SHA");
+					md.update(signature.toByteArray());
+					key = new String(Base64.encode(md.digest(), 0));
+				
+					// String key = new String(Base64.encodeBytes(md.digest()));
+					Log.e("Key Hash=", key);
+
+				}
+			} catch (NameNotFoundException e1) {
+				Log.e("Name not found", e1.toString());
+			}
+
+			catch (NoSuchAlgorithmException e) {
+				Log.e("No such an algorithm", e.toString());
+			} catch (Exception e) {
+				Log.e("Exception", e.toString());
+			}
+
+			return key;
+		}
 }

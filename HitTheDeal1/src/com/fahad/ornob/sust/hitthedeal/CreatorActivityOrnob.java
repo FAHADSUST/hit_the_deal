@@ -32,7 +32,7 @@ public class CreatorActivityOrnob extends FragmentActivity {
 	Button myEventsButton, createEventButton;
 	FrameLayout frameLayout;
 	LinearLayout slidingLayout;
-	NetworkImageView profileImageView;
+	public static NetworkImageView profileImageView;
 	FrameLayout anchorLayout;
 	public static Creator1 creator =null ;
 	TextView nameTv, addressTv, phnTv, emailTv, typeTv;

@@ -72,8 +72,8 @@ public class UpdateViwerProfile extends HttpServlet {
         response.setContentType("text/html");
         PrintWriter out = response.getWriter();
 
-//        String imageDataString = request.getParameter("image");
-//        String imageName = request.getParameter("image_name");
+        //String imageDataString = request.getParameter("image");
+        //String imageName = request.getParameter("image_name");
 
         String signUpkey[] = {"user_id", "user_name", "address", "phn_no"};//"phn_no" ,
         int length = signUpkey.length;
@@ -134,10 +134,10 @@ public class UpdateViwerProfile extends HttpServlet {
         response.setContentType("text/html");
         PrintWriter out = response.getWriter();
 
-//        String imageDataString = request.getParameter("image");
-//        String imageName = request.getParameter("image_name");
+        String imageDataString = request.getParameter("image");
+        String imageName = request.getParameter("image_name");
 
-        String signUpkey[] = {"user_id", "user_name", "address", "phn_no"};//"phn_no" ,
+        String signUpkey[] = {"user_id", "user_name", "address", "phn_no", "image_url"};//"phn_no" ,
         int length = signUpkey.length;
         params = new String[length];
         for (int i = 0; i < length; i++) {
@@ -146,8 +146,9 @@ public class UpdateViwerProfile extends HttpServlet {
 
 
 
-
-        String sql = "UPDATE `user` SET  user_name=?,address=?,phn_no=? WHERE user_id=?";//,phn_no=?
+        if(!imageDataString.equals("") ) ImageUpload.imageUploadToServer(getServletContext(), imageName, imageDataString);
+                
+        String sql = "UPDATE `user` SET  user_name=?,address=?,phn_no=?,image_url=? WHERE user_id=?";//,phn_no=?
         Connection con = DBConnectionHandler.getConnection();
 
         try {
@@ -156,7 +157,8 @@ public class UpdateViwerProfile extends HttpServlet {
             ps.setString(1, params[1]);
             ps.setString(2, params[2]);
             ps.setString(3, params[3]);
-            ps.setString(4, params[0]);
+            ps.setString(4, params[4]);
+            ps.setString(5, params[0]);
            
 
             int rsInt = ps.executeUpdate();

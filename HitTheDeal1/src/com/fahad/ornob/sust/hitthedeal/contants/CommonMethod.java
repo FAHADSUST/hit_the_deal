@@ -61,11 +61,8 @@ public class CommonMethod {
 					.show();
 		}
 	}
-
-	public String encodeImage(byte[] imageByteArray) {
-
-		return new String(Base64.encodeBase64(imageByteArray));
-	}
+	
+	
 
 	private void makeVolleyRequest(final Context context, final String imageString,final String file_name) {
 		if (imageString == null) {
@@ -115,6 +112,31 @@ public class CommonMethod {
 		File fileimage = new File(path, name);
 
 		return fileimage;
+	}
+	
+	public static String convertFileToString(File file) {
+		FileInputStream imageInFile;
+		String imageDataString = null;
+		try {
+			imageInFile = new FileInputStream(file);
+			byte imageData[] = new byte[(int) file.length()];
+			imageInFile.read(imageData);
+			// Converting Image byte array into Base64 String
+			imageDataString = encodeImage(imageData);
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return imageDataString;
+	}
+
+	public static String encodeImage(byte[] imageByteArray) {
+
+		return new String(Base64.encodeBase64(imageByteArray));
 	}
 	
 }

@@ -18,10 +18,13 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 
+import com.android.volley.toolbox.ImageLoader;
 import com.fahad.ornob.sust.hitthedeal.CreateEventActivityOrnob;
 import com.fahad.ornob.sust.hitthedeal.CreatorActivityOrnob;
 import com.fahad.ornob.sust.hitthedeal.EditCreatorProfileActivityOrnob;
 import com.fahad.ornob.sust.hitthedeal.R;
+import com.fahad.ornob.sust.hitthedeal.app.AppController;
+import com.fahad.ornob.sust.hitthedeal.contants.Constants;
 import com.faizmalkani.floatingactionbutton.FloatingActionButton;
 
 @SuppressLint("NewApi")
@@ -34,6 +37,9 @@ public class FragmentCreatorAbout extends Fragment {
 	Button createEventButton;
 	FloatingActionButton floatingActionButton;
 
+	ImageLoader imageLoader = AppController.getInstance().getImageLoader();
+
+	
 	@Override
 	public View onCreateView(LayoutInflater inflater,
 			@Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -91,17 +97,24 @@ public class FragmentCreatorAbout extends Fragment {
 			}
 		});
 
+		if(imageLoader == null){
+			imageLoader = AppController.getInstance().getImageLoader();
+		}
+		
 		updateProfieViews();
 
 		return view;
 	}
 
+	
 	void updateProfieViews() {
 		nameTv.setText(CreatorActivityOrnob.creator.getUserName());
 		addressTv.setText("  " + CreatorActivityOrnob.creator.getAddress());
 		phnTv.setText("  " + CreatorActivityOrnob.creator.getPhnNo());
 		emailTv.setText("  " + CreatorActivityOrnob.creator.getEmail());
 		typeTv.setText("  " + CreatorActivityOrnob.creator.getCreatorType() + "  ");
+		
+		CreatorActivityOrnob.profileImageView.setImageUrl(Constants.urlgetImgServlet+CreatorActivityOrnob.creator.getImageUrl(), imageLoader);
 	}
 
 	void slideButton() {

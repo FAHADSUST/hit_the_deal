@@ -4,6 +4,7 @@
  */
 package ornob.servlet;
 
+import com.hitthedeal.service.ImageUpload;
 import com.mysql.jdbc.Connection;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -87,6 +88,10 @@ public class UpdateEvent extends HttpServlet {
             throws ServletException, IOException {
 
 
+        String imageDataString = request.getParameter("image");
+        String imageName = request.getParameter("image_name");
+
+        
         int creator_id = Integer.parseInt(request.getParameter("creator_id"));
         String event_name = request.getParameter("event_name");
         String event_description = request.getParameter("event_description");
@@ -103,6 +108,10 @@ public class UpdateEvent extends HttpServlet {
 
         if (connection != null) {
             try {
+                
+                if(!imageDataString.equals("") ) ImageUpload.imageUploadToServer(getServletContext(), imageName, imageDataString);
+        
+                
                 PreparedStatement preparedStatement = connection.prepareStatement(Queries.UPDATE_EVENT_QUERY);
                 preparedStatement.setInt(1, creator_id);
                 preparedStatement.setString(2, event_name);

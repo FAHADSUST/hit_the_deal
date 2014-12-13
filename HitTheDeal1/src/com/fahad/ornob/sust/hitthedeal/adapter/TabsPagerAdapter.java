@@ -5,8 +5,8 @@ import com.fahad.ornob.sust.hitthedeal.R;
 import com.fahad.ornob.sust.hitthedeal.fragment.AroundMeFragment;
 import com.fahad.ornob.sust.hitthedeal.fragment.GoogleMapFragment;
 import com.fahad.ornob.sust.hitthedeal.fragment.AllEventsFragment;
-import com.fahad.ornob.sust.hitthedeal.fragment.MyFavCreatorFragment;
-import com.fahad.ornob.sust.hitthedeal.fragment.ViwerProfileFragment;
+
+
 
 import android.content.Context;
 import android.support.v4.app.Fragment;

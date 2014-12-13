@@ -151,6 +151,11 @@ public class ViwerProfileActivity extends Activity {
 		phoneMyProfileFrgTxt =(TextView)  findViewById(R.id.phoneMyProfileFrgTxt); 
 		dateCreatMyProfileFrgTxt=(TextView)  findViewById(R.id.dateCreatMyProfileFrgTxt);
 		
+		setValueToComponent();
+	}
+	
+	private void setValueToComponent() {
+	
 		emailMyProfileFrgTxt.setText(Constants.userItem.getEmail() ); 
 		if(!Constants.userItem.getAddress().isEmpty()){
 			addressMyProfileFrgTxt.setText(Constants.userItem.getAddress() ); 
@@ -191,12 +196,17 @@ public class ViwerProfileActivity extends Activity {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
-				//Event eventItem = eventItems.get(position-1);
-				Toast.makeText(ViwerProfileActivity.this, "position:"+position+" , id: ", Toast.LENGTH_SHORT).show();
-				/*
-			    Intent intent = new Intent(ViwerProfileActivity.this,EventDetailActivity.class);
-			    intent.putExtra("selectedEventId", eventItem.getEventId());
-			    startActivity(intent);*/
+				Bundle bundle = new Bundle();
+				UserItem userItem = userItems.get(position);
+				bundle.putInt("creatorId", userItem.getUser_id());
+				bundle.putInt("vId", Constants.userItem.getUser_id());
+				bundle.putString("vName", Constants.userItem.getUser_name());
+				bundle.putString("vImgUrl", Constants.userItem.getImage_url());
+
+				Intent intent = new Intent(ViwerProfileActivity.this,
+						FavouriteCreatorActivityOrnob.class);
+				intent.putExtras(bundle);
+				startActivity(intent);
 			}
 		});
 	}
@@ -287,5 +297,22 @@ public class ViwerProfileActivity extends Activity {
 		}
 		
 	}
+
+
+	@Override
+	protected void onResume() {
+		// TODO Auto-generated method stub
+		super.onResume();
+		setValueToComponent();
+		viwerNameProfileTxt.setText(Constants.userItem.getUser_name());
+		
+		//myProfileNetImgView = (NetworkImageView)findViewById(R.id.myProImageView);
+		//myProfileNetImgView.setDefaultImageResId(R.drawable.default_profic);
+		imageLoader= AppController.getInstance().getImageLoader();
+		myProfileNetImgView.setImageUrl(Constants.urlgetImgServlet+Constants.userItem.getImage_url(), imageLoader);
+		myProfileNetImgView.invalidate();
+	}
+	
+	
 		
 }

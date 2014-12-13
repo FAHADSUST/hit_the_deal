@@ -1,6 +1,7 @@
 package com.fahad.ornob.sust.hitthedeal;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.HashMap;
@@ -8,6 +9,7 @@ import java.util.Map;
 import java.util.Random;
 import java.util.regex.Pattern;
 
+import org.apache.commons.codec.binary.Base64;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -119,13 +121,17 @@ public class EditViewerProfileActivity extends Activity {
 		// TODO Auto-generated method stub
 		editViwerNameEd.setText(Constants.userItem.getUser_name());
 		
-		if (!Constants.userItem.getPhn_no().isEmpty())
-			editViwerPhoneEd.setText(Constants.userItem.getPhn_no());
-		else
+		if (!Constants.userItem.getPhn_no().isEmpty()){
+			if(Constants.userItem.getPhn_no().equals("0")) editViwerPhoneEd.setHint("Please add phone number");
+			else editViwerPhoneEd.setText(Constants.userItem.getPhn_no());
+		}else
 			editViwerPhoneEd.setHint("Please add phone number");
-		if (!Constants.userItem.getAddress().isEmpty())
-			editViwerAddressEd.setText(Constants.userItem.getAddress());
-		else
+		
+		
+		if (!Constants.userItem.getAddress().isEmpty()){
+			if(Constants.userItem.getAddress().equals("Empty")) editViwerAddressEd.setHint("Please add your address");
+			else editViwerAddressEd.setText(Constants.userItem.getAddress());
+		}else
 			editViwerAddressEd.setHint("Please add your address");
 		
 		
@@ -194,7 +200,13 @@ public class EditViewerProfileActivity extends Activity {
 					params.put("user_name", editViwerNameEd.getText().toString());
 					params.put("address", editViwerAddressEd.getText().toString());					
 					params.put("phn_no", editViwerPhoneEd.getText().toString());
-														
+					params.put("image_url", renameStr);									
+					
+					params.put("image_name", renameStr);// convertFileToString
+					if (image != null)
+						params.put("image", convertFileToString(image));
+					else
+						params.put("image", "");
 					return params;
 				}
 			};
@@ -212,6 +224,12 @@ public class EditViewerProfileActivity extends Activity {
 			if (success == 1) {
 				Toast.makeText(this, "Successfully updated.", Toast.LENGTH_SHORT).show();
 				if(pDialog.isShowing()) pDialog.dismiss();
+				Constants.userItem.setUser_name(editViwerNameEd.getText().toString());
+				Constants.userItem.setAddress(editViwerAddressEd.getText().toString());
+				Constants.userItem.setPhn_no(editViwerPhoneEd.getText().toString());
+				Constants.userItem.setImage_url(renameStr);
+				
+				
 				finish();
 			} else {
 				Toast.makeText(this, "Fail", Toast.LENGTH_SHORT).show();
@@ -276,12 +294,13 @@ public class EditViewerProfileActivity extends Activity {
 				
 				if (showWarningDialog()) {
 					pDialog.show();
+					
 					if (image != null) {
-						renameStr = Constants.userItem.getImage_url();
-						CommonMethod cm = new CommonMethod();
-						cm.uploadImage(EditViewerProfileActivity.this, renameStr, image);
+						renameStr = Constants.userItem.getEmail()+Constants.PROFIC+CommonMethod.currentTimeFrom1970()+ ".jpg";
+						//CommonMethod cm = new CommonMethod();
+						//cm.uploadImage(EditViewerProfileActivity.this, renameStr, image);
 					} else {
-						
+						renameStr = Constants.userItem.getImage_url();
 					}
 					String url=Constants.urlUpdateBiwerProfileInfo;
 					jsonUniAsync(url,  1);
@@ -342,5 +361,30 @@ public class EditViewerProfileActivity extends Activity {
 		File fileimage = new File(path, name);
 
 		return fileimage;
+	}
+	
+	public String convertFileToString(File file) {
+		FileInputStream imageInFile;
+		String imageDataString = null;
+		try {
+			imageInFile = new FileInputStream(file);
+			byte imageData[] = new byte[(int) file.length()];
+			imageInFile.read(imageData);
+			// Converting Image byte array into Base64 String
+			imageDataString = encodeImage(imageData);
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return imageDataString;
+	}
+
+	public String encodeImage(byte[] imageByteArray) {
+
+		return new String(Base64.encodeBase64(imageByteArray));
 	}
 }

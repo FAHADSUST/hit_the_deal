@@ -68,13 +68,15 @@ public class ViwerActivity extends FragmentActivity implements
 		eventNotifierServiceIntent = new Intent(ViwerActivity.this,
 				EventNotifierService.class);
 		editor = sharedPreferences.edit();
-//		if (sharedPreferences.getBoolean(Constants.SERVICE_STATUS, true)) {
-//			stopService(eventNotifierServiceIntent);
-//			editor.putBoolean(Constants.SERVICE_STATUS, false);
-//			editor.commit();
-//			isEventNotifierOn = false;
-//		}
+		///////////////////////////////notificationer////////////////
+		if (sharedPreferences.getBoolean(Constants.SERVICE_STATUS, true)) {
+			stopService(eventNotifierServiceIntent);
+			editor.putBoolean(Constants.SERVICE_STATUS, false);
+			editor.commit();
+			isEventNotifierOn = false;
+		}
 
+		////////////////////////////////////notificationer////////////////
 		GoogleMapFragment.events = new ArrayList<Event>();
 		GoogleMapFragment.markers = new ArrayList<Marker>();
 		createLocationManager();
@@ -196,12 +198,14 @@ public class ViwerActivity extends FragmentActivity implements
 	@Override
 	protected void onDestroy() {
 		cancelTimer();
-//		if (!sharedPreferences.getBoolean(Constants.SERVICE_STATUS, false)) {
-//			startService(eventNotifierServiceIntent);
-//			editor.putBoolean(Constants.SERVICE_STATUS, true);
-//			editor.commit();
-//			isEventNotifierOn = true;
-//		}
+		/////////////////////////////notificationer////////////////
+		if (!sharedPreferences.getBoolean(Constants.SERVICE_STATUS, false)) {
+			startService(eventNotifierServiceIntent);
+			editor.putBoolean(Constants.SERVICE_STATUS, true);
+			editor.commit();
+			isEventNotifierOn = true;
+		}
+		////////////////////////////////////////notificationer/////////////////
 		super.onDestroy();
 	}
 
@@ -240,9 +244,6 @@ public class ViwerActivity extends FragmentActivity implements
 		int id = item.getItemId();
 		if (id == R.id.action_settings) {
 			startActivity(new Intent(this, SettingActivity.class));
-			return true;
-		} else if (id == R.id.editprofilemenu) {
-			startActivity(new Intent(this, EditViewerProfileActivity.class));
 			return true;
 		}else if (id == R.id.myprofilemenu) {
 			startActivity(new Intent(this, ViwerProfileActivity.class));

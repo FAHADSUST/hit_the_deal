@@ -79,7 +79,7 @@ public class EditEventActivityOrnob extends Activity implements View.OnClickList
 	FrameLayout mapLayout;
 	Animation slideIn, slideOut, slideUp, slideDown;
 	ProgressBar progressBar;
-	String profileImageUrl = "";
+	
 	Calendar startDate, endDate;
 	AlertDialog alertDialog;
 	AlertDialog fromDatePickerDialog, toDatePickerDialog;
@@ -179,6 +179,7 @@ public class EditEventActivityOrnob extends Activity implements View.OnClickList
 	}
 
 	File image=null;
+	String renameStr="";
 	private static final int CAMERA_REQUEST = 1888;
 	private static final int PICK_IMAGE = 1;
 	
@@ -188,14 +189,19 @@ public class EditEventActivityOrnob extends Activity implements View.OnClickList
 		case R.id.createButton4:
 			if (validityChecking()) {
 				progressBar.setVisibility(View.VISIBLE);
-				
+				/*if(event.getEventImg().equals("") || event.getEventImg().equals("Empty")){ 
+					profileImageUrl=renameStr;
+				}else {
+					renameStr = event.getEventImg();
+					profileImageUrl=renameStr;
+				}*/
 				if(image!=null){
-					String renameStr = event.getEventImg();
-					profileImageUrl=renameStr;			
-					CommonMethod cm = new CommonMethod();
-					cm.uploadImage(EditEventActivityOrnob.this, renameStr, image);
+					renameStr = CreatorActivityOrnob.creator.getEmail()+CommonMethod.currentTimeFrom1970()+".jpg";
+							
+					//CommonMethod cm = new CommonMethod();
+					//cm.uploadImage(EditEventActivityOrnob.this, renameStr, image);
 				}else{
-					profileImageUrl="Empty";
+					renameStr = event.getEventImg();
 				}
 				
 				makeVolleyRequest();
@@ -407,11 +413,17 @@ public class EditEventActivityOrnob extends Activity implements View.OnClickList
 				params.put("start_date",
 						Long.toString(startDate.getTimeInMillis()));
 				params.put("end_date", Long.toString(endDate.getTimeInMillis()));
-				params.put("event_img", profileImageUrl);
+				params.put("event_img", renameStr);
 				params.put("event_url", linkET.getText().toString());
 				params.put("latitude", Double.toString(latLng.latitude));
 				params.put("longitude", Double.toString(latLng.longitude));
 				params.put("event_id", Integer.toString(event.getEventId()));
+				
+				params.put("image_name", renameStr);// convertFileToString
+				if (image != null)
+					params.put("image", CommonMethod.convertFileToString(image));
+				else
+					params.put("image", "");
 
 				return params;
 			}

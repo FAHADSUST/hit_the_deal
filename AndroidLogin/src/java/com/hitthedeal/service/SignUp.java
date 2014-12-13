@@ -84,7 +84,7 @@ public class SignUp extends HttpServlet {
                 json.put("success", "0");
                 
             } else {
-                 //if(!imageDataString.equals(""))
+                if(!imageDataString.equals(""))
                     ImageUpload.imageUploadToServer(getServletContext(), imageName, imageDataString);
                 
                 String sql = "INSERT INTO `hit_the_deal`.`user` (`user_id`, `user_type_id`, `user_name`, `address`, `email`, `phn_no`, `date_of_creation`, `latitude`, `longitude`, `image_url`, `password`, `creator_type_id`) VALUES (NULL, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";

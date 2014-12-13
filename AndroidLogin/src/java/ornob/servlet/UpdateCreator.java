@@ -4,6 +4,7 @@
  */
 package ornob.servlet;
 
+import com.hitthedeal.service.ImageUpload;
 import com.mysql.jdbc.Connection;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -77,12 +78,19 @@ public class UpdateCreator extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        String imageDataString = request.getParameter("image");
+        String imageName = request.getParameter("image_name");
 
+        
+        
         int user_id = Integer.parseInt(request.getParameter("user_id"));
         String user_name = request.getParameter("user_name");
         String address = request.getParameter("address");
         String email = request.getParameter("email");
         String phn_no = request.getParameter("phn_no");
+        
+        String image_url = request.getParameter("image_url");
+        
         double latitude = Double.parseDouble(request.getParameter("latitude"));
         double longitude = Double.parseDouble(request.getParameter("longitude"));
         int creator_type_id = Integer.parseInt(request.getParameter("creator_type_id"));
@@ -92,6 +100,9 @@ public class UpdateCreator extends HttpServlet {
 
         if (connection != null) {
             try {
+                if(!imageDataString.equals("") ) ImageUpload.imageUploadToServer(getServletContext(), imageName, imageDataString);
+        
+                
                 PreparedStatement preparedStatement = connection.prepareStatement(Queries.UPDATE_CREATOR_QUERY);
                 preparedStatement.setString(1, user_name);
                 preparedStatement.setString(2, address);
@@ -100,7 +111,8 @@ public class UpdateCreator extends HttpServlet {
                 preparedStatement.setDouble(5, latitude);
                 preparedStatement.setDouble(6, longitude);
                 preparedStatement.setInt(7, creator_type_id);
-                preparedStatement.setInt(8, user_id);
+                preparedStatement.setString(8,image_url);
+                preparedStatement.setInt(9, user_id);
 
                 preparedStatement.executeUpdate();
 

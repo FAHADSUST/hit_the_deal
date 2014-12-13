@@ -19,27 +19,24 @@
 	        android:layout_centerHorizontal="true"
 	        android:layout_alignParentTop="true"
 	        android:background="@color/greenlight"
+	        android:gravity="center_horizontal"
 	        >
 	
 	        <Button
 	            android:id="@+id/creatorB"
-	            android:layout_width="100dp"
+	            android:layout_width="300dp"
 	            android:layout_height="wrap_content"
-	            android:layout_alignParentLeft="true"
-	            android:layout_alignParentTop="true"
-	            android:layout_marginLeft="18dp"
-	            android:padding="5dp"
-	            android:text="Creator2" />
+	            
+	            android:text="Sign Up as Event Creator" />
 	
 	        <Button
 	            android:id="@+id/viwerB"
-	            android:layout_width="100dp"
-	            android:layout_height="wrap_content"
-	            android:layout_alignParentRight="true"
-	            android:layout_alignParentTop="true"
-	            android:layout_marginRight="17dp"
-	            android:padding="5dp"
-	            android:text="Visitor2" />
+	            android:layout_width="300dp"
+	            android:layout_height="wrap_content"	            
+	            
+	           
+	            android:layout_below="@+id/creatorB"
+	            android:text="Sign Up as Event Viewer" />
 	
 	    </RelativeLayout>
 	    
