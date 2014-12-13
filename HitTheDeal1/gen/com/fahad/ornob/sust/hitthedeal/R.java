@@ -2377,7 +2377,6 @@ containing a value of this type.
         public static final int editViwerProCaptureImgView=0x7f0500ba;
         public static final int editViwerProImgView=0x7f0500b9;
         public static final int edit_query=0x7f050045;
-        public static final int editprofilemenu=0x7f05012e;
         public static final int emailCreatSignEd=0x7f050111;
         public static final int emailLoginED=0x7f0500f3;
         public static final int emailMyProfileFrgTxt=0x7f0500fd;
@@ -2475,7 +2474,7 @@ containing a value of this type.
         public static final int my_fav_creat_inc_id=0x7f05012b;
         public static final int my_profile_info_inc_id=0x7f05012a;
         public static final int myfavCreatorsB=0x7f050129;
-        public static final int myprofilemenu=0x7f05012f;
+        public static final int myprofilemenu=0x7f05012e;
         public static final int name=0x7f0500ca;
         public static final int nameEt=0x7f05006b;
         public static final int nameTv=0x7f0500d4;

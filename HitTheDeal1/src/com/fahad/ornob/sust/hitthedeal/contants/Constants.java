@@ -101,7 +101,8 @@ public class Constants {
 	
 	public static int iconMyLocationMarker = R.drawable.icon_my_location;
 
-	public static String distKey="dist";
+	public static String Keydist="dist";
+	public static String KeyServiceOnOff="serviceOnOff";
 	
 	public static double Distance = 2;//sa.getValueSharedPref(distKey);
 	

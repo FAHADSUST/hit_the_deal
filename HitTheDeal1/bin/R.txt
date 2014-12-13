@@ -771,7 +771,6 @@ int id editViwerProBrowsImgView 0x7f0500bb
 int id editViwerProCaptureImgView 0x7f0500ba
 int id editViwerProImgView 0x7f0500b9
 int id edit_query 0x7f050045
-int id editprofilemenu 0x7f05012e
 int id emailCreatSignEd 0x7f050111
 int id emailLoginED 0x7f0500f3
 int id emailMyProfileFrgTxt 0x7f0500fd
@@ -869,7 +868,7 @@ int id myProImageView 0x7f050126
 int id my_fav_creat_inc_id 0x7f05012b
 int id my_profile_info_inc_id 0x7f05012a
 int id myfavCreatorsB 0x7f050129
-int id myprofilemenu 0x7f05012f
+int id myprofilemenu 0x7f05012e
 int id name 0x7f0500ca
 int id nameEt 0x7f05006b
 int id nameTv 0x7f0500d4

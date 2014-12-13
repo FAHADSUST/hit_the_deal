@@ -103,7 +103,7 @@ public class LoginPage extends Activity {
 		 sendBroadcast(getIntent());
 		 
 		 ///////////////////////////notificationer////////////////
-		Constants.Distance= getValueSharedPref(Constants.distKey);
+		Constants.Distance= getValueSharedPref(Constants.Keydist);
 		
 		initLogin();
 		listenerLogin();

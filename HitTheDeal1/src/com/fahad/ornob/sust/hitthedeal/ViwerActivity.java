@@ -51,7 +51,7 @@ public class ViwerActivity extends FragmentActivity implements
 	private TabsPagerAdapter mAdapter;
 	private ActionBar actionBar;
 	// Tab titles
-	private String[] tabs = { "Events in Map", "Events Around Me", "All Events" };
+	private String[] tabs = { "Mapped Events", "Around Events", "All Events" };
 
 	SharedPreferences sharedPreferences;
 	Editor editor;
@@ -200,10 +200,12 @@ public class ViwerActivity extends FragmentActivity implements
 		cancelTimer();
 		/////////////////////////////notificationer////////////////
 		if (!sharedPreferences.getBoolean(Constants.SERVICE_STATUS, false)) {
-			startService(eventNotifierServiceIntent);
-			editor.putBoolean(Constants.SERVICE_STATUS, true);
-			editor.commit();
-			isEventNotifierOn = true;
+			if(getValueSharedBooleanPref(com.fahad.ornob.sust.hitthedeal.contants.Constants.KeyServiceOnOff)){
+				startService(eventNotifierServiceIntent);
+				editor.putBoolean(Constants.SERVICE_STATUS, true);
+				editor.commit();
+				isEventNotifierOn = true;
+			}
 		}
 		////////////////////////////////////////notificationer/////////////////
 		super.onDestroy();
@@ -258,6 +260,11 @@ public class ViwerActivity extends FragmentActivity implements
 		super.onBackPressed();
 	}
 	
-	
+	public  boolean getValueSharedBooleanPref(String key){
+		SharedPreferences prefs = getSharedPreferences("my_fref", MODE_PRIVATE); 
+		boolean restoredText = prefs.getBoolean(key, true);
+		
+		return restoredText;
+	}
 
 }

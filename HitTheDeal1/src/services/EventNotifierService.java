@@ -305,14 +305,24 @@ public class EventNotifierService extends Service implements LocationListener {
 		// build notification
 		// the addAction re-use the same intent to keep the example short
 
-		Notification notification = new Notification.Builder(this)
+		/*Notification notification = new Notification.Builder(this)
 				.setContentTitle(event.getEventDescription())
 				.setContentText(event.getEventDescription())
 				.setSound(Constants.NOTIFICATION_SOUND)
 				.setSmallIcon(R.drawable.ic_launcher).setContentIntent(pIntent)
 				.addAction(R.drawable.ic_launcher, "View Event", pIntent)
-				.build();
-
+				.build();*/
+		
+		Notification notification = new Notification.Builder(this)
+		.setContentTitle(event.getEventDescription())
+		.setContentText(event.getEventDescription())
+		.setSound(Constants.NOTIFICATION_SOUND)
+		.setSmallIcon(R.drawable.ic_launcher).setContentIntent(pIntent)
+		.setContentIntent( pIntent).setAutoCancel(true)
+		.build();
+		
+		notification.flags |= Notification.FLAG_AUTO_CANCEL;
+		
 		notification.flags = Notification.PRIORITY_HIGH;
 		notificationManager.notify(notificationCount, notification);
 	}

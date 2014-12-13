@@ -37,7 +37,10 @@ public class SettingActivity extends Activity {
 		listenerSeekBar();
 		listenerToggle();
 		
-
+		
+		serviceOnOff.setChecked(getValueSharedBooleanPref(Constants.KeyServiceOnOff));
+		
+		
 	}
 	boolean click=false;
 	private void listenerToggle() {
@@ -48,12 +51,11 @@ public class SettingActivity extends Activity {
 		public void onClick(View view) {
 			if (serviceOnOff.isChecked()) {
 				click=true;
-									
-				Toast.makeText(SettingActivity.this, "ON", Toast.LENGTH_SHORT).show();
-			}
-			 else{
-									                                      //if toggle is not checked cancel the pending intent and alarm
-				Toast.makeText(SettingActivity.this, "Off", Toast.LENGTH_SHORT).show();
+				setdataIntoShaeredPref(Constants.KeyServiceOnOff, true);					
+				
+			} else{
+				 setdataIntoShaeredPref(Constants.KeyServiceOnOff, false);					
+										                                      
 			}
 				
 		}
@@ -63,7 +65,7 @@ public class SettingActivity extends Activity {
 	private void listenerSeekBar() {
 		// TODO Auto-generated method stub
 		
-		progress=(int)(getValueSharedPref(Constants.distKey)*2) - 2;
+		progress=(int)(getValueSharedPref(Constants.Keydist)*2) - 2;
 		distTxt.setText(distanceSt[progress]);
 		distSeekBar.setMax(high - low);
 		distSeekBar.setProgress(progress);
@@ -83,7 +85,7 @@ public class SettingActivity extends Activity {
 				int progModValue = progress + low;
 				distTxt.setText(distanceSt[progModValue]);
 				Constants.Distance=Double.parseDouble(distanceSt[progModValue]);
-				setdataIntoShaeredPref(Constants.distKey,Double.parseDouble(distanceSt[progModValue]));
+				setdataIntoShaeredPref(Constants.Keydist,Double.parseDouble(distanceSt[progModValue]));
 
 			}
 
@@ -105,10 +107,22 @@ public class SettingActivity extends Activity {
 		editor.putFloat(key, (float)value);
 		editor.commit();
 	}
+	public   void setdataIntoShaeredPref(String key,boolean value){
+		SharedPreferences.Editor editor = getSharedPreferences("my_fref", MODE_PRIVATE).edit();
+		
+		editor.putBoolean(key, value);
+		editor.commit();
+	}
 	
 	public  float getValueSharedPref(String key){
 		SharedPreferences prefs = getSharedPreferences("my_fref", MODE_PRIVATE); 
 		Float restoredText = prefs.getFloat(key, 2);
+		
+		return restoredText;
+	}
+	public  boolean getValueSharedBooleanPref(String key){
+		SharedPreferences prefs = getSharedPreferences("my_fref", MODE_PRIVATE); 
+		boolean restoredText = prefs.getBoolean(key, true);
 		
 		return restoredText;
 	}
