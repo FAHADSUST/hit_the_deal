@@ -76,7 +76,7 @@
 	            android:background="@drawable/user_name_ed"
 	            android:hint="Email"
 	            android:textSize="14sp"
-	            android:text="fahad@gmail.com"
+	            
 	            android:inputType="textEmailAddress"
 	            />
 	        <EditText android:id="@+id/passwordLoginED"
@@ -89,7 +89,7 @@
 	            android:textSize="14sp"
 	            android:layout_below="@+id/emailLoginED"
 	            android:inputType="textPassword"
-	            android:text="1"/>
+	            />
 
 	        <Button
 	            android:id="@+id/loginB"

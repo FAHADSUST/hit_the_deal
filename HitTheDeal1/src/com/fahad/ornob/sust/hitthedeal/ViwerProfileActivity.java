@@ -56,16 +56,16 @@ import com.google.android.gms.maps.model.Marker;
 
 public class ViwerProfileActivity extends Activity {
 
-	//FeedImageView myProImageView;
+	// FeedImageView myProImageView;
 	TextView viwerNameProfileTxt;
 	NetworkImageView myProfileNetImgView;
-	Button myProfileB,myFavCreatB;
+	Button myProfileB, myFavCreatB;
 	// Tab titles//floating_button_viwer_class
-	
+
 	ImageLoader imageLoader = AppController.getInstance().getImageLoader();
-	
+
 	FloatingActionButton floatingActionButton;
-	
+
 	@SuppressLint("NewApi")
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -73,60 +73,68 @@ public class ViwerProfileActivity extends Activity {
 		setContentView(R.layout.viwer_profile_fragment);
 		initMyProfile();
 		initMyFavCreator();
-		
+
 		if (imageLoader == null)
 			imageLoader = AppController.getInstance().getImageLoader();
 
-		
-		viwerNameProfileTxt = (TextView)findViewById(R.id.viwerNameProfileTxt);
-		myProfileNetImgView = (NetworkImageView)findViewById(R.id.myProImageView);
+		viwerNameProfileTxt = (TextView) findViewById(R.id.viwerNameProfileTxt);
+		myProfileNetImgView = (NetworkImageView) findViewById(R.id.myProImageView);
 		myProfileNetImgView.setDefaultImageResId(R.drawable.default_profic);
-		
-		myProfileB= (Button)findViewById(R.id.profileInfoB);
-		myFavCreatB= (Button)findViewById(R.id.myfavCreatorsB);
-		
+
+		myProfileB = (Button) findViewById(R.id.profileInfoB);
+		myFavCreatB = (Button) findViewById(R.id.myfavCreatorsB);
+
 		viwerNameProfileTxt.setText(Constants.userItem.getUser_name());
-		
-		myProfileNetImgView.setImageUrl(Constants.urlgetImgServlet+Constants.userItem.getImage_url(), imageLoader);
-		
+
+		myProfileNetImgView.setImageUrl(Constants.urlgetImgServlet
+				+ Constants.userItem.getImage_url(), imageLoader);
+
 		myProfileB.setOnClickListener(new View.OnClickListener() {
-			
+
 			@SuppressLint("ResourceAsColor")
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				findViewById(R.id.my_profile_info_inc_id).setVisibility(View.VISIBLE);
-				findViewById(R.id.my_fav_creat_inc_id).setVisibility(View.INVISIBLE);
-				myProfileB.setBackgroundColor(getResources().getColor(R.color.offwhite));
-				myFavCreatB.setBackgroundColor(getResources().getColor(R.color.offlightwhite));
-				
-				YoYo.with(Techniques.BounceIn) .duration(700)
-				 .playOn(findViewById(R.id.my_profile_info_inc_id));
-				YoYo.with(Techniques.FadeIn) .duration(800)
-				 .playOn(findViewById(R.id.floating_button_viwer_class)); 
-				 
+				findViewById(R.id.my_profile_info_inc_id).setVisibility(
+						View.VISIBLE);
+				findViewById(R.id.my_fav_creat_inc_id).setVisibility(
+						View.INVISIBLE);
+				myProfileB.setBackgroundColor(getResources().getColor(
+						R.color.offwhite));
+				myFavCreatB.setBackgroundColor(getResources().getColor(
+						R.color.offlightwhite));
+
+				YoYo.with(Techniques.BounceIn).duration(700)
+						.playOn(findViewById(R.id.my_profile_info_inc_id));
+				YoYo.with(Techniques.FadeIn).duration(800)
+						.playOn(findViewById(R.id.floating_button_viwer_class));
+
 			}
 		});
 		myFavCreatB.setOnClickListener(new View.OnClickListener() {
-			
+
 			@SuppressLint("ResourceAsColor")
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				myProfileB.setBackgroundColor(getResources().getColor(R.color.offlightwhite));
-				myFavCreatB.setBackgroundColor(getResources().getColor(R.color.offwhite));
-				
-				findViewById(R.id.my_profile_info_inc_id).setVisibility(View.INVISIBLE);
-				findViewById(R.id.my_fav_creat_inc_id).setVisibility(View.VISIBLE);
-				 
-				YoYo.with(Techniques.BounceIn) .duration(700)
-				 .playOn(findViewById(R.id.my_fav_creat_inc_id));
-				 YoYo.with(Techniques.FadeOut) .duration(800)
-				 .playOn(findViewById(R.id.floating_button_viwer_class)); 
+				myProfileB.setBackgroundColor(getResources().getColor(
+						R.color.offlightwhite));
+				myFavCreatB.setBackgroundColor(getResources().getColor(
+						R.color.offwhite));
+
+				findViewById(R.id.my_profile_info_inc_id).setVisibility(
+						View.INVISIBLE);
+				findViewById(R.id.my_fav_creat_inc_id).setVisibility(
+						View.VISIBLE);
+
+				YoYo.with(Techniques.BounceIn).duration(700)
+						.playOn(findViewById(R.id.my_fav_creat_inc_id));
+				YoYo.with(Techniques.FadeOut).duration(800)
+						.playOn(findViewById(R.id.floating_button_viwer_class));
 			}
 		});
-		
-		floatingActionButton = (FloatingActionButton)findViewById(R.id.floating_button_viwer_class);
+
+		floatingActionButton = (FloatingActionButton) findViewById(R.id.floating_button_viwer_class);
 		floatingActionButton.setColor(Color.parseColor("#FF9500"));
 		floatingActionButton.setDrawable(getResources().getDrawable(
 				R.drawable.floating_button_icon));
@@ -141,57 +149,58 @@ public class ViwerProfileActivity extends Activity {
 		});
 	}
 
-	
+	TextView emailMyProfileFrgTxt, addressMyProfileFrgTxt,
+			phoneMyProfileFrgTxt, dateCreatMyProfileFrgTxt;
 
-	TextView emailMyProfileFrgTxt,addressMyProfileFrgTxt,phoneMyProfileFrgTxt,dateCreatMyProfileFrgTxt;
 	private void initMyProfile() {
 		// TODO Auto-generated method stub
-		emailMyProfileFrgTxt =(TextView)  findViewById(R.id.emailMyProfileFrgTxt); 
-		addressMyProfileFrgTxt =(TextView)  findViewById(R.id.addressMyProfileFrgTxt); 
-		phoneMyProfileFrgTxt =(TextView)  findViewById(R.id.phoneMyProfileFrgTxt); 
-		dateCreatMyProfileFrgTxt=(TextView)  findViewById(R.id.dateCreatMyProfileFrgTxt);
-		
+		emailMyProfileFrgTxt = (TextView) findViewById(R.id.emailMyProfileFrgTxt);
+		addressMyProfileFrgTxt = (TextView) findViewById(R.id.addressMyProfileFrgTxt);
+		phoneMyProfileFrgTxt = (TextView) findViewById(R.id.phoneMyProfileFrgTxt);
+		dateCreatMyProfileFrgTxt = (TextView) findViewById(R.id.dateCreatMyProfileFrgTxt);
+
 		setValueToComponent();
 	}
-	
+
 	private void setValueToComponent() {
-	
-		emailMyProfileFrgTxt.setText(Constants.userItem.getEmail() ); 
-		if(!Constants.userItem.getAddress().isEmpty()){
-			addressMyProfileFrgTxt.setText(Constants.userItem.getAddress() ); 
-		}else addressMyProfileFrgTxt.setText("Please add your address.");
-		if(!Constants.userItem.getPhn_no().isEmpty())
-			phoneMyProfileFrgTxt.setText(Constants.userItem.getPhn_no() );
-		else phoneMyProfileFrgTxt.setText("Please add your phone number." );
+
+		emailMyProfileFrgTxt.setText(Constants.userItem.getEmail());
+		if (!Constants.userItem.getAddress().isEmpty()) {
+			addressMyProfileFrgTxt.setText(Constants.userItem.getAddress());
+		} else
+			addressMyProfileFrgTxt.setText("Please add your address.");
+		if (!Constants.userItem.getPhn_no().isEmpty())
+			phoneMyProfileFrgTxt.setText(Constants.userItem.getPhn_no());
+		else
+			phoneMyProfileFrgTxt.setText("Please add your phone number.");
 		CharSequence timeAgo = DateUtils.getRelativeTimeSpanString(
-				Constants.userItem.getDate_of_creation() ,
+				Constants.userItem.getDate_of_creation(),
 				System.currentTimeMillis(), DateUtils.SECOND_IN_MILLIS);
 		dateCreatMyProfileFrgTxt.setText(timeAgo);
 	}
-		
-	private static final String TAG = ViwerProfileActivity.class.getSimpleName();
+
+	private static final String TAG = ViwerProfileActivity.class
+			.getSimpleName();
 	private ListView listView;
 	private MyCreatorListViewAdapter listAdapter;
 	private ArrayList<UserItem> userItems;
 	ConnectionDetector cd;
-	
+
 	private void initMyFavCreator() {
 		// TODO Auto-generated method stub
 		cd = new ConnectionDetector(ViwerProfileActivity.this);
-		
-		userItems = new ArrayList<UserItem>();
-		
-		listView = (ListView) findViewById(R.id.myCreatorListProfileFrgListView);
-	
-	
-		listAdapter = new MyCreatorListViewAdapter(ViwerProfileActivity.this, userItems);
-		listView.setAdapter(listAdapter);
-		
-		
-		GetDataTask(Constants.urlGetMyFavCreator+"viewer_id="+Constants.userItem.getUser_id());
 
-						
-		
+		userItems = new ArrayList<UserItem>();
+
+		listView = (ListView) findViewById(R.id.myCreatorListProfileFrgListView);
+
+		listAdapter = new MyCreatorListViewAdapter(ViwerProfileActivity.this,
+				userItems);
+		listView.setAdapter(listAdapter);
+
+		GetDataTask(Constants.urlGetMyFavCreator + "viewer_id="
+				+ Constants.userItem.getUser_id());
+
 		listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view,
@@ -200,8 +209,8 @@ public class ViwerProfileActivity extends Activity {
 				UserItem userItem = userItems.get(position);
 				bundle.putInt("creatorId", userItem.getUser_id());
 				bundle.putInt("vId", Constants.userItem.getUser_id());
-				bundle.putString("vName", Constants.userItem.getUser_name());
-				bundle.putString("vImgUrl", Constants.userItem.getImage_url());
+				bundle.putString("vName", userItem.getUser_name());
+				bundle.putString("vImgUrl", userItem.getImage_url());
 
 				Intent intent = new Intent(ViwerProfileActivity.this,
 						FavouriteCreatorActivityOrnob.class);
@@ -210,28 +219,26 @@ public class ViwerProfileActivity extends Activity {
 			}
 		});
 	}
-	
-	
+
 	private void GetDataTask(String url) {
 		// TODO Auto-generated method stub
-	
-		
+
 		Cache cache = AppController.getInstance().getRequestQueue().getCache();
 		Entry entry = cache.get(url);
-		
-		if(cd.isConnectingToInternet()){
-			Toast.makeText(ViwerProfileActivity.this,"sdsd", Toast.LENGTH_SHORT).show();
-			
-			
-			JsonObjectRequest jsonReq = new JsonObjectRequest(Method.GET,
-					url, null, new Response.Listener<JSONObject>() {
+
+		if (cd.isConnectingToInternet()) {
+			Toast.makeText(ViwerProfileActivity.this, "sdsd",
+					Toast.LENGTH_SHORT).show();
+
+			JsonObjectRequest jsonReq = new JsonObjectRequest(Method.GET, url,
+					null, new Response.Listener<JSONObject>() {
 
 						@Override
 						public void onResponse(JSONObject response) {
 							VolleyLog.d(TAG, "Response: " + response.toString());
 							if (response != null) {
-								
-								parseJsonFeed(response,-1);
+
+								parseJsonFeed(response, -1);
 							}
 						}
 					}, new Response.ErrorListener() {
@@ -245,12 +252,12 @@ public class ViwerProfileActivity extends Activity {
 
 			// Adding request to volley request queue
 			AppController.getInstance().addToRequestQueue(jsonReq);
-		}else if (entry != null) {
+		} else if (entry != null) {
 			// fetch the data from cache
 			try {
 				String data = new String(entry.data, "UTF-8");
 				try {
-					parseJsonFeed(new JSONObject(data),-1);
+					parseJsonFeed(new JSONObject(data), -1);
 				} catch (JSONException e) {
 					e.printStackTrace();
 				}
@@ -261,43 +268,48 @@ public class ViwerProfileActivity extends Activity {
 		}
 	}
 
-
-
-	private  void parseJsonFeed(JSONObject response,int itemType) {
+	private void parseJsonFeed(JSONObject response, int itemType) {
 		try {
-			
-			 int success = response.getInt(DataBaseKeys.Success);
-			 if(success==1){
 
-				 JSONArray eventsJsonArray = response.getJSONArray("all");
+			int success = response.getInt(DataBaseKeys.Success);
+			if (success == 1) {
 
-					for (int i = 0; i < eventsJsonArray.length(); i++) {
-						JSONObject eventJsonObject = (JSONObject) eventsJsonArray.get(i);						
-						//public static final String  userKey[] = {"user_id", "user_type_id", "user_name", "address", "email", "phn_no", "date_of_creation", "latitude", "longitude", "image_url", "password", "creator_type_id"};
-						
-						UserItem userItem = new UserItem(eventJsonObject.getInt(DataBaseKeys.userKey[0]), eventJsonObject.getString(DataBaseKeys.userKey[2]), eventJsonObject.getString(DataBaseKeys.userKey[9]), eventJsonObject.getInt(DataBaseKeys.userKey[1]));
-						userItems.add(userItem);
-												
-						
-						
-					}
-					
-					listAdapter = new MyCreatorListViewAdapter(ViwerProfileActivity.this, userItems);
-					listView.setAdapter(listAdapter);
-					listAdapter.notifyDataSetChanged();					
-				 
-			 }else{
-				 Toast.makeText(ViwerProfileActivity.this, "Fail", Toast.LENGTH_SHORT).show();
-			 }
-			
+				JSONArray eventsJsonArray = response.getJSONArray("all");
+
+				userItems.clear();
+				for (int i = 0; i < eventsJsonArray.length(); i++) {
+					JSONObject eventJsonObject = (JSONObject) eventsJsonArray
+							.get(i);
+					// public static final String userKey[] = {"user_id",
+					// "user_type_id", "user_name", "address", "email",
+					// "phn_no", "date_of_creation", "latitude", "longitude",
+					// "image_url", "password", "creator_type_id"};
+
+					UserItem userItem = new UserItem(
+							eventJsonObject.getInt(DataBaseKeys.userKey[0]),
+							eventJsonObject.getString(DataBaseKeys.userKey[2]),
+							eventJsonObject.getString(DataBaseKeys.userKey[9]),
+							eventJsonObject.getInt(DataBaseKeys.userKey[1]));
+					userItems.add(userItem);
+
+				}
+
+				listAdapter = new MyCreatorListViewAdapter(
+						ViwerProfileActivity.this, userItems);
+				listView.setAdapter(listAdapter);
+				listAdapter.notifyDataSetChanged();
+
+			} else {
+				Toast.makeText(ViwerProfileActivity.this, "Fail",
+						Toast.LENGTH_SHORT).show();
+			}
+
 		} catch (JSONException e) {
 
-			
 			e.printStackTrace();
 		}
-		
-	}
 
+	}
 
 	@Override
 	protected void onResume() {
@@ -305,14 +317,18 @@ public class ViwerProfileActivity extends Activity {
 		super.onResume();
 		setValueToComponent();
 		viwerNameProfileTxt.setText(Constants.userItem.getUser_name());
-		
-		//myProfileNetImgView = (NetworkImageView)findViewById(R.id.myProImageView);
-		//myProfileNetImgView.setDefaultImageResId(R.drawable.default_profic);
-		imageLoader= AppController.getInstance().getImageLoader();
-		myProfileNetImgView.setImageUrl(Constants.urlgetImgServlet+Constants.userItem.getImage_url(), imageLoader);
+
+		// myProfileNetImgView =
+		// (NetworkImageView)findViewById(R.id.myProImageView);
+		// myProfileNetImgView.setDefaultImageResId(R.drawable.default_profic);
+		imageLoader = AppController.getInstance().getImageLoader();
+		myProfileNetImgView.setImageUrl(Constants.urlgetImgServlet
+				+ Constants.userItem.getImage_url(), imageLoader);
 		myProfileNetImgView.invalidate();
+
+		GetDataTask(Constants.urlGetMyFavCreator + "viewer_id="
+				+ Constants.userItem.getUser_id());
+
 	}
-	
-	
-		
+
 }

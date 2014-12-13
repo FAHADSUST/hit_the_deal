@@ -337,8 +337,8 @@ public class EventDetailActivity extends Activity {
 				Bundle bundle = new Bundle();
 				bundle.putInt("creatorId", userItem.getUser_id());
 				bundle.putInt("vId", Constants.userItem.getUser_id());
-				bundle.putString("vName", Constants.userItem.getUser_name());
-				bundle.putString("vImgUrl", Constants.userItem.getImage_url());
+				bundle.putString("vName", userItem.getUser_name());
+				bundle.putString("vImgUrl", userItem.getImage_url());
 
 				Intent intent = new Intent(EventDetailActivity.this,
 						FavouriteCreatorActivityOrnob.class);

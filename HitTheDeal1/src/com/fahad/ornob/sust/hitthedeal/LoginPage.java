@@ -438,4 +438,21 @@ public class LoginPage extends Activity {
 
 			return key;
 		}
+
+	@Override
+	protected void onResume() {
+		// TODO Auto-generated method stub
+		
+		if (mTarget3.getVisibility() == View.VISIBLE) {					
+			mTarget3.setVisibility(View.INVISIBLE);
+		}
+		
+		emailEd.setText("");
+		passEd.setText("");
+		
+		super.onResume();
+		
+	}
+	 
+	 
 }
