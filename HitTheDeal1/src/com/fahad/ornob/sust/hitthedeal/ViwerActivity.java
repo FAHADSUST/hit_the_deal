@@ -252,4 +252,12 @@ public class ViwerActivity extends FragmentActivity implements
 		return super.onOptionsItemSelected(item);
 	}
 
+	@Override
+	public void onBackPressed() {
+		// TODO Auto-generated method stub
+		super.onBackPressed();
+	}
+	
+	
+
 }

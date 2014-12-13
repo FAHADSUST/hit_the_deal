@@ -42,7 +42,7 @@
                     android:id="@+id/name"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:text="marakha"
+                    android:text=""
                     android:textSize="@dimen/feed_item_profile_name"
                     android:textStyle="bold" />
 
@@ -50,7 +50,7 @@
                     android:id="@+id/orgName"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:text="Infacy"
+                    android:text=""
                     android:textColor="@color/blue"
                     android:textSize="@dimen/feed_item_timestamp" />
 
@@ -65,7 +65,7 @@
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1.5"
-                        android:text="khamuna"
+                        android:text=""
                         android:textColor="@color/timestamp"
                         android:textSize="@dimen/feed_item_timestamp" />
 
@@ -74,7 +74,7 @@
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="2"
-                        android:text="khamuna"
+                        android:text=""
                         android:textColor="@color/timestamp"
                         android:textSize="@dimen/feed_item_timestamp" />
                 </LinearLayout>
@@ -105,7 +105,7 @@
                 android:layout_gravity="center_horizontal"
                 android:paddingLeft="5dp"
                 android:paddingRight="@dimen/feed_item_status_pad_left_right"
-                android:text="3.0" />
+                android:text="0.0" />
         </LinearLayout>
 
         <TextView
@@ -116,7 +116,7 @@
             android:paddingLeft="@dimen/feed_item_status_pad_left_right"
             android:paddingRight="@dimen/feed_item_status_pad_left_right"
             android:paddingTop="@dimen/feed_item_status_pad_top"
-            android:text="koijamu koto bujtaci nato" />
+            android:text="" />
 
         <TextView
             android:id="@+id/txtUrl"
@@ -126,7 +126,7 @@
             android:paddingBottom="10dp"
             android:paddingLeft="@dimen/feed_item_status_pad_left_right"
             android:paddingRight="@dimen/feed_item_status_pad_left_right"
-            android:text="http:moira ja bhai"
+            android:text=""
             android:textColorLink="@color/link" />
 
         <com.fahad.ornob.sust.hitthedeal.FeedImageView

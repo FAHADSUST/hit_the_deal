@@ -36,7 +36,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:padding="5dp"
-                android:text="Ornobul Islam"
+                android:text=""
                 android:textColor="@color/bluelight"
                 android:textSize="18dp"
                 android:textStyle="bold" />

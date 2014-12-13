@@ -34,7 +34,7 @@
                 android:layout_height="wrap_content"
                 android:ellipsize="end"
                 android:singleLine="true"
-                android:text="DO BAO CITY"
+                android:text=""
                 android:textColor="@color/black"
                 android:textSize="15sp"
                 android:textStyle="bold"  />
@@ -45,7 +45,7 @@
                 android:ellipsize="end"
                 android:singleLine="true"
                 android:layout_marginTop="5sp"
-                android:text="DO BAO CITY"
+                android:text=""
                 android:textColor="@color/black"
                 android:textSize="12sp"  />
 	

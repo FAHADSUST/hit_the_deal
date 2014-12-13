@@ -23,7 +23,8 @@
             android:id="@+id/feedBackUserName"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="marakha"
+            android:text=""
+            android:textColor="@color/black"
             android:textSize="@dimen/feed_item_profile_name"
             android:textStyle="bold" />
 
@@ -37,7 +38,7 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="khamuna"
+                android:text=""
                 android:textColor="@color/timestamp"
                 android:textSize="@dimen/feed_item_timestamp" />
 
@@ -46,7 +47,8 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="2.5"
-                android:text="khamuna"                
+                android:text=""   
+                android:textColor="@color/bluelight"             
                 android:textSize="@dimen/feed_item_timestamp" />
         </LinearLayout>
     </LinearLayout>

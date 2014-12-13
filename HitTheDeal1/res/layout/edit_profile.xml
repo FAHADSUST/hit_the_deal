@@ -16,7 +16,7 @@
             android:layout_width="fill_parent"
             android:layout_height="210dp"
             android:layout_gravity="top"
-            android:background="@color/darkpink" >
+             >
 
             <LinearLayout
                 android:id="@+id/lin2"
@@ -65,7 +65,7 @@
                 android:layout_gravity="center"
                 android:background="@drawable/user_name_ed"
                 android:ems="10"
-                android:hint="Phone Number"
+                android:hint="Please Add Phone Number"
                 android:inputType="text"
                 android:paddingLeft="10dp"
                 android:textColor="@color/black" />
@@ -77,7 +77,7 @@
                 android:layout_gravity="center"
                 android:background="@drawable/user_name_ed"
                 android:ems="10"
-                android:hint="Address"
+                android:hint="Please Add Address"
                 android:inputType="text"
                 android:paddingLeft="10dp"
                 android:textColor="@color/black" />

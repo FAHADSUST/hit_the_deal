@@ -171,6 +171,7 @@ public class EditViewerProfileActivity extends Activity {
 					"No network connection.", false);
 
 		} else {
+			pDialog.show();
 			StringRequest jsonReq = new StringRequest(Method.POST, url,
 					 new Response.Listener<String>() {
 						@Override
@@ -293,7 +294,7 @@ public class EditViewerProfileActivity extends Activity {
 				
 				
 				if (showWarningDialog()) {
-					pDialog.show();
+					
 					
 					if (image != null) {
 						renameStr = Constants.userItem.getEmail()+Constants.PROFIC+CommonMethod.currentTimeFrom1970()+ ".jpg";

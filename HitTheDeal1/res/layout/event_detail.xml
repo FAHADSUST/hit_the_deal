@@ -51,7 +51,7 @@
                     android:id="@+id/eventNameEvDTxt"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:text="marakha"
+                    android:text="Event Name"
                     android:textColor="@color/black"
                     android:textSize="@dimen/feed_item_profile_name"
                     android:textStyle="bold" />
@@ -60,7 +60,7 @@
                     android:id="@+id/orgNameEvDTxt"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:text="company Name"
+                    android:text="Org Name"
                     android:textColor="@color/bluelight"
                     android:textSize="@dimen/feed_item_timestamp" />
 
@@ -74,7 +74,7 @@
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1.5"
-                        android:text="khamuna"
+                        android:text=""
                         android:textColor="@color/timestamp"
                         android:textSize="@dimen/feed_item_timestamp" />
 
@@ -83,7 +83,7 @@
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="2"
-                        android:text="khamuna"
+                        android:text=""
                         android:textColor="@color/timestamp"
                         android:textSize="@dimen/feed_item_timestamp" />
                 </LinearLayout>
@@ -120,7 +120,7 @@
                     android:layout_gravity="center_horizontal"
                     android:background="@drawable/green_custom_circle_button"
                     android:gravity="center"
-                    android:text="4.5"
+                    android:text="0.0"
                     android:textColor="#4CD964"
                     android:textSize="18dp"
                     android:textStyle="bold" />
@@ -134,7 +134,7 @@
                     android:layout_weight="1"
                     android:drawablePadding="5dip"
                     android:drawableRight="@drawable/people_image"
-                    android:text="19564525"
+                    android:text="0.0"
                     android:textColor="@color/timestamp"
                     android:textSize="@dimen/feed_item_timestamp" />
             </LinearLayout>
@@ -204,7 +204,7 @@
                 android:paddingBottom="5dp"
                 android:paddingLeft="10dp"
                 android:paddingTop="5dp"
-                android:text="kaoa khamu tore moira lamu" />
+                android:text="" />
         </LinearLayout>
 
         <View

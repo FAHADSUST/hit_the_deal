@@ -149,7 +149,7 @@ public class SignupViewerPage extends EasyFacebookFragmentActivity {
 				}
 				if (showWarningDialog()) {
 					
-					pDialog.show();
+					
 					dateOfCreation = CommonMethod.currentTimeFrom1970();
 
 					jsonUniAsync(Constants.urlInsertSignUpData,
@@ -229,10 +229,12 @@ public class SignupViewerPage extends EasyFacebookFragmentActivity {
 
 		cd = new ConnectionDetector(this);
 		if (!cd.isConnectingToInternet()) {
+			
 			cd.showAlertDialogToNetworkConnection(this, "Connection loss",
 					"No network connection.", false);
 
 		} else {
+			pDialog.show();
 			StringRequest jsonReq = new StringRequest(Method.POST, url,
 					new Response.Listener<String>() {
 						@Override
@@ -419,12 +421,12 @@ public class SignupViewerPage extends EasyFacebookFragmentActivity {
 				super.onSuccess(response);
 				Toast.makeText(SignupViewerPage.this, "Successfully Login",
 				Toast.LENGTH_LONG).show();
-				String downloadUrl = "http://graph.facebook.com/"
+				/*String downloadUrl = "http://graph.facebook.com/"
 						+ getUserName() + "/picture";
 				fbUserName = getUserName();
 				fbEmail = getUserEmail();
 				userNameVEd.setText(fbUserName);
-				if(pDialog.isShowing()) pDialog.dismiss();
+				if(pDialog.isShowing()) pDialog.dismiss();*/
 				//new ImageDownloader(downloadUrl, getUserEmail());
 			}
 

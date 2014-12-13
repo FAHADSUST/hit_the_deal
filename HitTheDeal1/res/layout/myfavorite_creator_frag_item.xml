@@ -24,7 +24,7 @@
             android:id="@+id/creatorNameMyProFrag"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="marakha"
+            android:text=""
             android:textSize="@dimen/feed_item_profile_name"
             android:textColor="@color/white"
             android:textStyle="bold" />

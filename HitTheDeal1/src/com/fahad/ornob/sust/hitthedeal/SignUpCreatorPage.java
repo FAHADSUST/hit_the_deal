@@ -248,8 +248,7 @@ public class SignUpCreatorPage extends Activity {
 	Button  creatorSignUpB;
 	ImageButton creatorAddLocationB;
 	Spinner creatorTypeSpin;
-	private String[] state = { "local_business", "reataurant", "cause",
-			"cultural", "Other" };
+	
 	ArrayList<CreatorTypeItem> creatorTypeItems;
 
 	private void initCreatorSignUp() {
@@ -271,7 +270,7 @@ public class SignUpCreatorPage extends Activity {
 		creatorTypeItems = new ArrayList<CreatorTypeItem>();
 
 		ArrayAdapter<String> adapter_state = new ArrayAdapter<String>(this,
-				android.R.layout.simple_spinner_item, state);
+				android.R.layout.simple_spinner_item, Constants.state);
 		adapter_state
 				.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		creatorTypeSpin.setAdapter(adapter_state);
@@ -339,7 +338,7 @@ public class SignUpCreatorPage extends Activity {
 						CommonMethod cm = new CommonMethod();
 						cm.uploadImage(SignUpCreatorPage.this, renameStr, image);
 					}*/
-					pDialog.show();
+					
 					jsonUniAsync(Constants.urlInsertSignUpData,
 							Constants.CreatorSignUp);
 				}
@@ -427,10 +426,12 @@ public class SignUpCreatorPage extends Activity {
 
 		cd = new ConnectionDetector(this);
 		if (!cd.isConnectingToInternet()) {
+			
 			cd.showAlertDialogToNetworkConnection(this, "Connection loss",
 					"No network connection.", false);
 
 		} else {
+			pDialog.show();
 			StringRequest jsonReq = new StringRequest(Method.POST, url,
 					new Response.Listener<String>() {
 						@Override

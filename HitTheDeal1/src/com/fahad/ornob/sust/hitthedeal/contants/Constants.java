@@ -12,6 +12,9 @@ import android.net.Uri;
 import android.os.Environment;
 
 public class Constants {
+	public static final  String[] state = { "Local Business", "reataurant", "cause",
+			"cultural", "Other" };
+	
 	
 	public static final File mainFolderpath = new File(Environment.getExternalStorageDirectory(),
 			"Image keeper");
@@ -101,6 +104,8 @@ public class Constants {
 	public static String distKey="dist";
 	
 	public static double Distance = 2;//sa.getValueSharedPref(distKey);
+	
+	
 	
 	
 	
