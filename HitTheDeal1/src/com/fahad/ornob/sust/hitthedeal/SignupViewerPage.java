@@ -175,6 +175,7 @@ public class SignupViewerPage extends EasyFacebookFragmentActivity {
 		browImgB = (ImageButton) findViewById(R.id.browseViwerImgB);
 		signUpViwerB = (Button) findViewById(R.id.signupViwerB);
 		fbSignUpB = (Button) findViewById(R.id.fbSignupViwerB);
+		fbSignUpB.setVisibility(View.INVISIBLE);
 
 		userNameVEd = (EditText) findViewById(R.id.userNameViwerSignUpEd);
 		emailViwerEd = (EditText) findViewById(R.id.emailViwerSignEd);

@@ -136,11 +136,11 @@ public class LoginPage extends Activity {
 		protected void onPostExecute(String file_url) {
 			// dismiss the dialog after getting all products
 			mTarget.setVisibility(View.VISIBLE);
-			mTarget2.setVisibility(View.VISIBLE);
+			mTarget2.setVisibility(View.INVISIBLE);
 			rope = YoYo.with(Techniques.ZoomInUp).duration(2000)
 					.playOn(mTarget);
-			rope2 = YoYo.with(Techniques.SlideInUp).duration(3000)
-					.playOn(mTarget2);
+			/*rope2 = YoYo.with(Techniques.SlideInUp).duration(3000)
+					.playOn(mTarget2);*/
 			rope4 = YoYo.with(Techniques.Swing).duration(2500).playOn(mTarget4);
 
 		}
@@ -231,7 +231,8 @@ public class LoginPage extends Activity {
 
 		signUpTxt = (TextView) findViewById(R.id.signUpTxt);
 		forgetPassTxt = (TextView) findViewById(R.id.forgotPassTxt);
-
+		forgetPassTxt.setVisibility(View.INVISIBLE);
+		
 		mTarget = this.findViewById(R.id.loginRL);
 		mTarget2 = this.findViewById(R.id.fbLoginRA);
 		mTarget3 = this.findViewById(R.id.signUpRL);

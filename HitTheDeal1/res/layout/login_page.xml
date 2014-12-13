@@ -89,6 +89,7 @@
 	            android:textSize="14sp"
 	            android:layout_below="@+id/emailLoginED"
 	            android:inputType="textPassword"
+	            
 	            />
 
 	        <Button
@@ -110,7 +111,7 @@
 	            android:layout_height="wrap_content"
 	            android:layout_below="@+id/loginB"
 	            android:layout_marginTop="17dp"
-	            android:layout_alignLeft="@+id/loginB"
+	            android:layout_centerHorizontal="true"
 	            android:text="Sign Up?" 
 	            android:textColor="@color/bluedark"
 	            android:textStyle="bold"/>
@@ -121,7 +122,9 @@
 	            android:layout_alignRight="@+id/loginB"
 	            android:layout_below="@+id/loginB"
 	            android:layout_marginTop="17dp"
-	            android:text="Forgot Password?" />
+	            android:text="Forgot Password?"
+	            
+	             />
 	    </RelativeLayout>
 	    
 	    <RelativeLayout
