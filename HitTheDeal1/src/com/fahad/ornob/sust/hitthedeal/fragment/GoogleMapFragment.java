@@ -291,7 +291,7 @@ public class GoogleMapFragment extends Fragment {
 				}
 
 			} else {
-				Toast.makeText(context, "Fail", Toast.LENGTH_SHORT).show();
+				//Toast.makeText(context, "Fail", Toast.LENGTH_SHORT).show();
 			}
 
 		} catch (JSONException e) {

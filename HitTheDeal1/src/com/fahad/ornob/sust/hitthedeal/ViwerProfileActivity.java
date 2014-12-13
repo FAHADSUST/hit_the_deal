@@ -227,8 +227,7 @@ public class ViwerProfileActivity extends Activity {
 		Entry entry = cache.get(url);
 
 		if (cd.isConnectingToInternet()) {
-			Toast.makeText(ViwerProfileActivity.this, "sdsd",
-					Toast.LENGTH_SHORT).show();
+			
 
 			JsonObjectRequest jsonReq = new JsonObjectRequest(Method.GET, url,
 					null, new Response.Listener<JSONObject>() {

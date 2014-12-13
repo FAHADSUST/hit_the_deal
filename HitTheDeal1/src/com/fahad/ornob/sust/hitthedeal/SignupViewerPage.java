@@ -313,11 +313,11 @@ public class SignupViewerPage extends EasyFacebookFragmentActivity {
 				if (itemType == Constants.loginType) {
 					int userTypeID = response.getInt(DataBaseKeys.user_type_id);
 					if (userTypeID == Constants.Creator) {
-						Toast.makeText(this, "Creator", Toast.LENGTH_SHORT)
-								.show();
+//						Toast.makeText(this, "Creator", Toast.LENGTH_SHORT)
+//								.show();
 					} else {
-						Toast.makeText(this, "Visitor", Toast.LENGTH_SHORT)
-								.show();
+//						Toast.makeText(this, "Visitor", Toast.LENGTH_SHORT)
+//								.show();
 					}
 				} else if (itemType == Constants.ViwerSignUp) {
 					

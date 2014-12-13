@@ -368,8 +368,8 @@ public class SignUpCreatorPage extends Activity {
 						String catagory = String.valueOf(position);
 						String selState = (String) creatorTypeSpin
 								.getSelectedItem();
-						Toast.makeText(SignUpCreatorPage.this, catagory,
-								Toast.LENGTH_SHORT).show();
+//						Toast.makeText(SignUpCreatorPage.this, catagory,
+//								Toast.LENGTH_SHORT).show();
 						// selVersion.setText("Selected Android OS:" +
 						// selState);
 
@@ -497,11 +497,11 @@ public class SignUpCreatorPage extends Activity {
 				if (itemType == Constants.loginType) {
 					int userTypeID = response.getInt(DataBaseKeys.user_type_id);
 					if (userTypeID == Constants.Creator) {
-						Toast.makeText(this, "Creator", Toast.LENGTH_SHORT)
-								.show();
+//						Toast.makeText(this, "Creator", Toast.LENGTH_SHORT)
+//								.show();
 					} else {
-						Toast.makeText(this, "Visitor", Toast.LENGTH_SHORT)
-								.show();
+//						Toast.makeText(this, "Visitor", Toast.LENGTH_SHORT)
+//								.show();
 					}
 				} else if (itemType == Constants.CreatorTypeItem) {
 

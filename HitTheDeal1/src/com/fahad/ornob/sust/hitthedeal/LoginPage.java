@@ -312,12 +312,12 @@ public class LoginPage extends Activity {
 
 					
 					if (userTypeID == Constants.Creator) {
-						Toast.makeText(this, "Creator", Toast.LENGTH_SHORT)
-								.show();
+//						Toast.makeText(this, "Creator", Toast.LENGTH_SHORT)
+//								.show();
 						gotoNextPage(Constants.CreatorTypeID);
 					} else {
-						Toast.makeText(this, "Visitor", Toast.LENGTH_SHORT)
-								.show();
+//						Toast.makeText(this, "Visitor", Toast.LENGTH_SHORT)
+//								.show();
 						gotoNextPage(Constants.ViwerTypeID);
 					}
 				}
